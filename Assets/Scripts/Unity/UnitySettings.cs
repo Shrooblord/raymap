@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 
+#if UNITY_EDITOR
 /// <summary>
 /// Settings for Raymap
 /// </summary>
@@ -102,3 +103,4 @@ public class UnitySettings {
 		SaveTextures = EditorPrefs.GetBool(editorPrefsPrefix + "SaveTextures", SaveTextures);
 	}
 }
+#endif

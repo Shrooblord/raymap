@@ -68,30 +68,54 @@ public class Controller : MonoBehaviour {
 		// Read command line arguments
 		string[] args = System.Environment.GetCommandLineArgs();
 		string modeString = "";
-		Settings.Mode mode = UnitySettings.GameMode;
-		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
-		string lvlName = UnitySettings.MapName;
-		ExportPath = UnitySettings.ExportPath;
-		ExportAfterLoad = UnitySettings.ExportAfterLoad;
-
+		string gameDataBinFolder = "";
+		string lvlName = "";
+		Settings.Mode mode = Settings.Mode.Rayman2PC;
 
 #if UNITY_EDITOR
-		if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
+		mode = UnitySettings.GameMode;
+        gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
+        lvlName = UnitySettings.MapName;
+        ExportPath = UnitySettings.ExportPath;
+		ExportAfterLoad = UnitySettings.ExportAfterLoad;
+#endif
+
+#if UNITY_EDITOR
+        if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
 #endif
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
-		if (FileSystem.mode == FileSystem.Mode.Web) {
+
+#if UNITY_EDITOR
+        if (FileSystem.mode == FileSystem.Mode.Web) {
 			gameDataBinFolder = UnitySettings.GameDirsWeb.ContainsKey(mode) ? UnitySettings.GameDirsWeb[mode] : "";
 		} else {
 			if (UnitySettings.LoadFromMemory) {
 				lvlName = UnitySettings.ProcessName + ".exe";
 			}
 		}
+#endif
 
-		for (int i = 0; i < args.Length; i++) {
+#if UNITY_STANDALONE
+        var file = new System.IO.StreamReader("settings.ini");
+        while (!file.EndOfStream) {
+            var line = file.ReadLine().Split('=');
+            switch (line[0]) {
+                case nameof(lvlName):
+                    lvlName = line[1];
+                    break;
+                case nameof(gameDataBinFolder):
+                    gameDataBinFolder = line[1];
+                    break;
+            }
+        }
+        file.Close();
+#endif
+
+        for (int i = 0; i < args.Length; i++) {
 			switch (args[i]) {
 				case "--lvl":
 				case "-l":
@@ -162,10 +186,12 @@ public class Controller : MonoBehaviour {
 		loader.collideTransparentMaterial = collideTransparentMaterial;
 		loader.baseLightMaterial = baseLightMaterial;
 
+#if UNITY_EDITOR
 		loader.allowDeadPointers = UnitySettings.AllowDeadPointers;
 		loader.forceDisplayBackfaces = UnitySettings.ForceDisplayBackfaces;
 		loader.blockyMode = UnitySettings.BlockyMode;
 		loader.exportTextures = UnitySettings.SaveTextures;
+#endif
 
 		await Init();
 	}
