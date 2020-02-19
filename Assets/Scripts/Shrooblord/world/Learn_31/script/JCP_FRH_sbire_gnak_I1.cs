@@ -10,6 +10,8 @@ public class JCP_FRH_sbire_gnak_I1 : MonoBehaviour {
     public SectorComponent sector;
     public MovementComponent mc;
 
+    public SectorManager sectorManager;
+
     private int initSector = 0;
 
     private int timer = -1;
@@ -44,6 +46,10 @@ public class JCP_FRH_sbire_gnak_I1 : MonoBehaviour {
                             break;
                         }
                     }
+
+                    /* should work but doesn't -- OpenSpace's convenience function
+                    sector = sectorManager.GetActiveSectorWrapper(pirate.transform.position);
+                    */
                     if (!(sector == null)) {
                         pirate.sector = sector;
                     }
