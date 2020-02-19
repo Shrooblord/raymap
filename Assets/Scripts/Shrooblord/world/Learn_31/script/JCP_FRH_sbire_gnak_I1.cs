@@ -1,120 +1,83 @@
-﻿using OpenSpace;
-using OpenSpace.Object;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Shrooblord.lib;
+﻿using UnityEngine;
 
-public class JCP_FRH_sbire_gnak_I1 : MonoBehaviour {
-    public PersoBehaviour pirate;
-    public SectorComponent sector;
-    public MovementComponent mc;
+namespace CustomGame.Rayman2.Persos {
+    public class JCP_FRH_sbire_gnak_I1 : PersoController {
 
-    public SectorManager sectorManager;
+        protected override void OnStart() {
+            pos = new Vector3(-193.61f, 23.84f, 369.45f);
+            rot = Quaternion.Euler(0, 0, 0);
 
-    private int initSector = 0;
+            SetRule("Sleeping");
+        }
 
-    private int timer = -1;
-    private string state = "asleep";
+        //animNotify sfx
+        public override AnimSFX[] animSfx => new AnimSFX[] {
+            //running animation
+            new AnimSFX(2, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep",
+                volume = 0.60f,
+            }, 1, 10),
+        };
 
-    //private bool moving = false;
-    private Vector3 startPos;
-    private Vector3 endPos;
+        //Rulzez
+        void Rule_Sleeping() {
+            anim.Set(48);
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (pirate == null) {
-            foreach (PersoBehaviour pb in FindObjectsOfType<PersoBehaviour>()) {
-                string pbName = pb.perso.namePerso;
-
-                if (pbName == "JCP_FRH_sbire_gnak_I1") {
-                    //Debug.LogError(pbName);
-                    pirate = pb;
-                    mc = this.GetComponent<MovementComponent>();
-                    if (mc == null)
-                        Debug.LogError("Movement Component null!!");
+            if (rayman != null) {
+                if (Vector3.Distance(pos, rayman.pos) < 10) {
+                    SetRule("WokeUp");
                 }
             }
-        } else {
-            if (!((state == "active") || (state == "dead"))) {
-                if (initSector == 0) {
-                    //change the active Sector for this Henchman to the area with the climbing tree and the Caterpillar
-                    foreach (SectorComponent sc in FindObjectsOfType<SectorComponent>()) {
-                        if (sc.name == "Sector @ Learn_31|0x000308F4, SPO @ Learn_31|0x000276F4") {
-                            sector = sc;
-                            break;
-                        }
-                    }
+        }
 
-                    /* should work but doesn't -- OpenSpace's convenience function
-                    sector = sectorManager.GetActiveSectorWrapper(pirate.transform.position);
-                    */
-                    if (!(sector == null)) {
-                        pirate.sector = sector;
-                    }
+        Timer wakeUpTimer = new Timer();
+        void Rule_WokeUp() {
+            anim.Set(49);
 
-                    //transform
-                    pirate.transform.position = new Vector3(-193.61f, 23.84f, 369.45f);
-                    pirate.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //timer for 1s
+            wakeUpTimer.Start(1f, () => {
+                SetRule("Surprise");
+            }, false);
+        }
 
-                    //walk animation location vectors (see below)
-                    startPos = pirate.transform.position;
-                    endPos = new Vector3(-183.23f, 23.39f, 364.867f);
+        Timer surpriseTimer = new Timer();
+        void Rule_Surprise() {
+            anim.Set(6);
 
-                    initSector++;
-                } else if (initSector == 1) {
-                    //sleeping animation
-                    pirate.SetState(48);
+            //timer for 0.9s
+            surpriseTimer.Start(0.9f, () => { SetRule("RunUp"); }, false);
+        }
 
-                    timer = 90;
-                    initSector++;
-                }
+        Timer runUpTimer = new Timer();
+        void Rule_RunUp() {
+            //align with floor geometry
+            col.StickToGround();
+            col.groundDepth = 0.8f;
 
-                if (!(timer == -1)) {
-                    if (timer > 0) {
-                        timer -= 1;
-                    } else {
-                        if (state == "asleep") {
-                            //wake up and transition to idle
-                            pirate.SetState(49);
-                            pirate.autoNextState = true;
+            //move and look at where we're headed
+            Vector3 targetPos = new Vector3(-178.24f, 24.53f, 380.14f);
+            //pos = Vector3.MoveTowards(pos, targetPos, 10f * dt);
+            SetLookAt2D(targetPos, 180);
+            moveSpeed = 10f;
+            velXZ = (targetPos - pos).normalized * moveSpeed;
 
-                            state = "woke up";
-                            timer = 40;
-                        } else if (state == "woke up") {
-                            //be surprised and transition to running
-                            pirate.SetState(6);
-                            pirate.autoNextState = true;
+            runUpTimer.Start(4f, () => { SetRule("Aim"); }, false);
 
-                            state = "running up";
-                            timer = 50;
-                        } else if (state == "running up") {
-                            pirate.transform.rotation = Quaternion.Euler(0, -45, 0);
-
-                            //lerp move transform to move over level geometry
-                            StartCoroutine(mc.moveToLerp(pirate, startPos, endPos, 1.2f));
-
-                            state = "aiming";
-                            timer = 75;
-                        } else if (state == "aiming") {
-                            pirate.transform.rotation = Quaternion.Euler(0, 0, 0);
-
-                            //aim... get ready... (SHOOT!)
-                            pirate.SetState(8);
-                            pirate.autoNextState = true;
-
-                            state = "active";
-                            //inactivate timer
-                            timer = -1;
-                        }
-                    }
-                }
-            } else if (state == "active") {
-                //Henchman is alive and kicking
-            } else {
-                //Henchman is dead. send flowers
+            //If we've arrived at the destination before the timer runs out, abort the timer and just continue.
+            if (Vector3.Distance(pos, targetPos) <= 1) {
+                runUpTimer.onFinishAction();
+                runUpTimer.Abort();
             }
+        }
+
+        void Rule_Aim() {
+            anim.Set(8);
+            velXZ = Vector3.zero;
+            SetRule("LookAt");
+        }
+
+        void Rule_LookAt() {
+            SetLookAt2D(rayman.pos, 180);
         }
     }
 }
