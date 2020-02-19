@@ -3,6 +3,9 @@
 namespace CustomGame.Rayman2.Persos {
     public class JCP_FRH_sbire_gnak_I1 : PersoController {
 
+        public SHR_WaypointGraph wpGraph;
+        SHR_Waypoint targetWP;
+
         protected override void OnStart() {
             pos = new Vector3(-193.61f, 23.84f, 369.45f);
             rot = Quaternion.Euler(0, 0, 0);
@@ -22,6 +25,9 @@ namespace CustomGame.Rayman2.Persos {
         //Rulzez
         void Rule_Sleeping() {
             anim.Set(48);
+
+            if (graph != null)
+                targetWP = graph.GetNearestWaypoint(pos);
 
             if (rayman != null) {
                 if (Vector3.Distance(pos, rayman.pos) < 10) {
@@ -55,18 +61,22 @@ namespace CustomGame.Rayman2.Persos {
             col.groundDepth = 0.8f;
 
             //move and look at where we're headed
-            Vector3 targetPos = new Vector3(-178.24f, 24.53f, 380.14f);
-            //pos = Vector3.MoveTowards(pos, targetPos, 10f * dt);
-            SetLookAt2D(targetPos, 180);
-            moveSpeed = 10f;
-            velXZ = (targetPos - pos).normalized * moveSpeed;
+            //Vector3 targetPos = new Vector3(-178.24f, 24.53f, 380.14f);
 
-            runUpTimer.Start(4f, () => { SetRule("Aim"); }, false);
+            //pos = Vector3.MoveTowards(pos, targetPos, 10f * dt);
+            SetLookAt2D(targetWP.transform.position, 180);
+            moveSpeed = 10f;
+            velXZ = (targetWP.transform.position - pos).normalized * moveSpeed;
+
+            //runUpTimer.Start(16f, () => { SetRule("Aim"); }, false);
 
             //If we've arrived at the destination before the timer runs out, abort the timer and just continue.
-            if (Vector3.Distance(pos, targetPos) <= 1) {
-                runUpTimer.onFinishAction();
-                runUpTimer.Abort();
+            if (Vector3.Distance(pos, targetWP.transform.position) <= 1) {
+
+                targetWP = targetWP.getRandomNextWaypoint();
+
+                //runUpTimer.onFinishAction();
+                //runUpTimer.Abort();
             }
         }
 
