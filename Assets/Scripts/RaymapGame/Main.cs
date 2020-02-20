@@ -36,7 +36,7 @@ namespace RaymapGame
         void Awake() {
             main = this;
             persoScripts = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
-                    where t.IsClass && t.Namespace == $"CustomGame.{gameName}.Persos"
+                    where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos"
                     select t).ToArray();
 
             controller = FindObjectOfType<Controller>();
