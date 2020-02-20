@@ -36,11 +36,21 @@ public class SHR_WaypointEditor : Editor {
             if (GUILayout.Button("-", GUILayout.Width(30))) {
                 //remove forward references
                 wp.next.Remove(n);
-
+                
                 //remove backward references
                 for (int i=0; i < n.wp.prev.Count; i++) {
                     if (n.wp.prev[i].wp == wp) {
                         n.wp.prev.Remove(n.wp.prev[i--]);
+                    }
+                }
+
+                //destroy the children
+                if (wp.transform.childCount != 0) {
+                    var tr = wp.transform.Find("HDL_jumpCurve_" + n.wp.name);
+
+                    if (tr != null) {
+                        DestroyImmediate(tr.gameObject);
+                        wp.graph.jumpCurveHandles.Remove(tr);
                     }
                 }
 
@@ -90,6 +100,17 @@ public class SHR_WaypointEditor : Editor {
                         break;
                     }
                 }
+
+                //destroy the children
+                if (wp.transform.childCount != 0) {
+                    var tr = wp.transform.Find("HDL_jumpCurve_" + n.wp.name);
+
+                    if (tr != null) {
+                        DestroyImmediate(tr.gameObject);
+                        wp.graph.jumpCurveHandles.Remove(tr);
+                    }
+                }
+
                 break;
             }
 

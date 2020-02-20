@@ -14,7 +14,11 @@ namespace CustomGame {
 [ExecuteInEditMode]
 public class SHR_WaypointGraph : MonoBehaviour
 {
-    public Color graphColor;
+    //colour of the in/outgoing connections nubs on waypoint nodes
+    public Color outboundConnectionColour = Color.cyan;
+    public Color inboundConnectionColour = Color.yellow;
+
+    [ReadOnly] public List<Transform> jumpCurveHandles = new List<Transform>();
 
     //The Persos that will use this waypoint graph
     public List<string> persoNames = new List<string>();
@@ -43,9 +47,5 @@ public class SHR_WaypointGraph : MonoBehaviour
         }
 
         return closest;
-    }
-
-    private void OnDrawGizmos() {
-        graphColor = new Color(graphColor.r, graphColor.g, graphColor.b, .7f);
     }
 }
