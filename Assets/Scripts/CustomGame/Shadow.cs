@@ -1,5 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================
+//  By: Adsolution
+//================================
+
 using UnityEngine;
 
 namespace CustomGame

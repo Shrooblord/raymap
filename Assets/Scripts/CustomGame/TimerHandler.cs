@@ -1,4 +1,8 @@
-﻿using System;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +48,8 @@ namespace CustomGame {
         /// Sets Timer.active to True for the duration in seconds. After the duration, finished is set to true, and onFinish is True for one frame.
         /// </summary>
         /// <param name="seconds">Duration in seconds.</param>
-        public void Start(float seconds) {
+        public void Start(float seconds, bool reset = true) {
+            if (active && !reset) return;
             active = true;
             finished = false;
             frame = 0;
@@ -58,7 +63,7 @@ namespace CustomGame {
         /// </summary>
         /// <param name="seconds">Duration in seconds.</param>
         /// <param name="onFinishAction">Invoked after the duration.</param>
-        public void Start(float seconds, Action onFinishAction) {
+        public void Start(float seconds, Action onFinishAction, bool reset = true) {
             Start(seconds);
             this.onFinishAction = onFinishAction;
         }

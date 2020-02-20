@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;

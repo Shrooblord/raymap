@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-using System;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using UnityEngine;
 
 namespace CustomGame.Rayman2.Persos {
     public class MOM_pirate_sbire_cine_2 : PersoController {

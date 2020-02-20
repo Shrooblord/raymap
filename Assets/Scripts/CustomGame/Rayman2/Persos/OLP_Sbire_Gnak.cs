@@ -1,4 +1,8 @@
-﻿namespace CustomGame.Rayman2.Persos {
+﻿//================================
+//  By: Adsolution
+//================================
+
+namespace CustomGame.Rayman2.Persos {
     public partial class OLP_Sbire_Gnak : PersoController {
         protected override void OnStart() {
             SetVisibility(false);

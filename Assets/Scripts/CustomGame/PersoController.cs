@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using OpenSpace.Collide;
@@ -18,10 +22,18 @@ namespace CustomGame
         public Vector3 pos;
         public Quaternion rot;
         public float scale = 1;
-
+        
         public Vector3 velXZ;
         public float velY;
-        public float fricXZ, fricY;
+        public Vector3 vel {
+            get => new Vector3(velXZ.x, velY, velXZ.z);
+            set {
+                velXZ = new Vector3(value.x, 0, value.z);
+                velY = value.y;
+            }
+        }
+
+        public float fricXZ = 50, fricY = 0;
         public float moveSpeed = 10;
         public float gravity = -25;
 
@@ -32,7 +44,8 @@ namespace CustomGame
         public virtual AnimSFX[] animSfx { get; }
 
         public string rule;
-        public List<MethodBase> rules = new List<MethodBase>();
+        public Dictionary<string, MethodBase> rules = new Dictionary<string, MethodBase>();
+
         public static class StdRules
         {
             public const string
@@ -43,14 +56,11 @@ namespace CustomGame
                 Falling = nameof(Falling),
                 Climbing = nameof(Climbing);
         }
-        public MethodBase SetRule(string rule)
-        {
-            foreach (var r in rules)
-                if (r.Name.Replace("Rule_", "") == rule)
-                {
-                    this.rule = rule;
-                    return r;
-                }
+
+        public MethodBase SetRule(string rule) {
+            this.rule = rule;
+            if (rules.ContainsKey(rule))
+                return rules[rule];
             return null;
         }
 
@@ -130,15 +140,6 @@ namespace CustomGame
             visChanged = true;
         }
 
-        public void InvokeRule(string rule, bool overrideCurrent = true) {
-            if (overrideCurrent) this.rule = rule;
-            foreach (var r in rules)
-                if (rule == r.Name.Replace("Rule_", "")) {
-                    r.Invoke(this, null);
-                    break;
-                }
-        }
-
         public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
             foreach (Transform child in transform) {
                 if (child.name.Contains($"Collide Set {collideType}"))
@@ -150,14 +151,34 @@ namespace CustomGame
             return false;
         }
 
-        public AnimSFX GetSFXLayer(int anim)
-        {
+
+        public void NavDirection3D(Vector3 dir) {
+            dir.Normalize();
+            vel += dir * moveSpeed * dt;
+            SetLookAt2D(pos + dir);
+        }
+
+        public void NavDirection(Vector3 dir) {
+            dir.y = 0;
+            NavDirection3D(dir);
+        }
+
+        public void NavTowards3D(Vector3 target) {
+            NavDirection3D(target - pos);
+        }
+
+        public void NavTowards(Vector3 target) {
+            target.y = pos.y;
+            NavTowards3D(target);
+        }
+
+
+        public AnimSFX GetSFXLayer(int anim) {
             foreach (var s in animSfx)
                 if (s.anim == anim) return s;
             return null;
         }
-        public void DisableForSeconds(float seconds)
-        {
+        public void DisableForSeconds(float seconds) {
             velY = 0;
             velXZ = Vector3.zero;
             t_disable.Start(seconds);
@@ -178,13 +199,15 @@ namespace CustomGame
         public void RotateY(float angle) 
             => rot = Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y + angle, rot.eulerAngles.z);
         
+        public void SetLookAt3D(Vector3 target)
+            => rot = Matrix4x4.LookAt(pos, target, Vector3.up).rotation;
+        public void SetLookAt2D(Vector3 target, float addDegrees = 0)
+            => rot = Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, addDegrees, 0);
+        
 
-        public void SetLookAt3D(Vector3 target) {
-            rot = Matrix4x4.LookAt(pos, target, Vector3.up).rotation;
-        }
-        public void SetLookAt2D(Vector3 target, float addDegrees = 0) {
-            rot = Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, addDegrees, 0);
-        }
+        public float DistToPerso(PersoController perso)
+            => perso == null ? float.PositiveInfinity : Vector3.Distance(pos, perso.pos);
+       
 
         public Shadow shadow;
         public void SetShadow(bool enabled) {
@@ -197,13 +220,10 @@ namespace CustomGame
             hasShadow = enabled;
         }
 
-        public void InputMovement()
-        {
+        public void InputMovement() {
             if (!isMainActor) return;
-            if (lStick_s.magnitude > deadZone)
-            {
+            if (lStick_s.magnitude > deadZone) {
                 float mults = fricXZ * moveSpeed * dt * -Mathf.Clamp(lStick_s.magnitude, -1, 1);
-
                 velXZ += mults * new Vector3(
                     Mathf.Sin(rot.eulerAngles.y * Mathf.Deg2Rad) * (1f + col.ground.hit.normal.x * 0.0f), 0,
                     Mathf.Cos(rot.eulerAngles.y * Mathf.Deg2Rad) * (1f + col.ground.hit.normal.z * 0.0f));
@@ -211,19 +231,18 @@ namespace CustomGame
                     velXZ += mults * Matrix4x4.Rotate(rot).MultiplyVector(lStick.normalized);*/
             }
         }
+
         public void RotateToStick(float t = 10) {
             if (!isMainActor || lStick_s.magnitude < deadZone) return;
             rot = Quaternion.Lerp(rot, Quaternion.Euler(0, lStickAngleCam, 0),
                 t * Mathf.Clamp(lStick_s.sqrMagnitude, 0.2f, 50) * 2 * dt);
         }
 
-        public void ApplyGravity()
-        {
+        public void ApplyGravity() {
             velY = Mathf.Clamp(velY + gravity * dt, -80, 80);
         }
 
-        public void SetFriction(float horizontal, float vertical)
-        {
+        public void SetFriction(float horizontal, float vertical) {
             fricXZ = horizontal; fricY = vertical;
         }
 
@@ -239,7 +258,7 @@ namespace CustomGame
             anim.sfx = animSfx;
             foreach (var m in GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
                 if (m.Name.StartsWith("Rule_"))
-                    rules.Add(m);
+                    rules.Add(m.Name.Replace("Rule_", ""), m);
         }
 
         protected void Start() {
@@ -257,7 +276,7 @@ namespace CustomGame
             if (s != null) perso.sector = s;
             if (t_disable.active) return;
             if (isMainActor) OnInput();
-            if (!interpolate) CoreLogic();
+            if (!interpolate) LogicLoop();
         }
 
         protected void LateUpdate() {
@@ -269,10 +288,19 @@ namespace CustomGame
         }
 
         protected void FixedUpdate() {
-            if (interpolate) CoreLogic();
+            if (interpolate) LogicLoop();
         }
 
-        void CoreLogic() {
+
+        //========================================
+        //  Logic loop
+        //========================================
+        void InvokeRule(string rule) {
+            if (rules.ContainsKey(rule))
+                rules[rule].Invoke(this, null);
+        }
+
+        void LogicLoop() {
             if (outOfSector) return;
 
             col.UpdateGroundCollision();
@@ -303,7 +331,6 @@ namespace CustomGame
 
             newRule = rule != prevRule;
             prevRule = rule;
-
         }
     }
 }

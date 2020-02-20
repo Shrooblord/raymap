@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using UnityEngine;
 using OpenSpace.Collide;
 
 namespace CustomGame {

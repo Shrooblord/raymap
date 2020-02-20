@@ -1,4 +1,8 @@
-﻿namespace CustomGame.Rayman2.Anim {
+﻿//================================
+//  By: Adsolution
+//================================
+
+namespace CustomGame.Rayman2.Anim {
     public static class pirate_sbire {
         public const int
             BarrelGrab = 35,

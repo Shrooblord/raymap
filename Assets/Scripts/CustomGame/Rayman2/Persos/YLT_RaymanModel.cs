@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using UnityEngine;
 using static CustomGame.InputEx;
 using static UnityEngine.Input;
 namespace CustomGame.Rayman2.Persos

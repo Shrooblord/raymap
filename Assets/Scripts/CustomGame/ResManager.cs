@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class ResManager

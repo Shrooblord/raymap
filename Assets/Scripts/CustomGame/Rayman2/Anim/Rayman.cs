@@ -1,4 +1,8 @@
-﻿namespace CustomGame.Rayman2.Anim {
+﻿//================================
+//  By: Adsolution
+//================================
+
+namespace CustomGame.Rayman2.Anim {
     public static class Rayman {
         public const int
             None = -1,

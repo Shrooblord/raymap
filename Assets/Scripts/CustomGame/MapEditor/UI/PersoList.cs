@@ -1,5 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================
+//  By: Adsolution
+//================================
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +9,6 @@ namespace CustomGame.EditorUI {
     public class PersoList : MonoBehaviour {
         public VerticalLayoutGroup list;
         public Color colorGeneric, colorMain, colorController, colorControllerDot;
-
-        void Start() {
-            //Main.onLoad += Main_onLoad;
-        }
-        void Main_onLoad(object sender, System.EventArgs e) {
-            Load();
-        }
 
         bool loaded;
         void Update() {

@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿//================================
+//  By: Adsolution
+//================================
+
+using UnityEngine;
 
 namespace CustomGame.Rayman2.Persos {
     public class STN_cam_pluie : PersoController {
