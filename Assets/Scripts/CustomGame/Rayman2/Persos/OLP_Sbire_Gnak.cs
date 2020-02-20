@@ -12,7 +12,7 @@ namespace CustomGame.Rayman2.Persos {
             SetVisibility(true);
 
             anim.Set(Anim.pirate_sbire.BarrelJuggle);
-            SetLookAt2D(rayman.pos, 180);
+            SetLookAt2D(rayman.pos);
         }
     }
 }

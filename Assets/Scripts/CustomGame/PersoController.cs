@@ -200,9 +200,9 @@ namespace CustomGame
             => rot = Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y + angle, rot.eulerAngles.z);
         
         public void SetLookAt3D(Vector3 target)
-            => rot = Matrix4x4.LookAt(pos, target, Vector3.up).rotation;
+            => rot = Matrix4x4.LookAt(pos, target, Vector3.up).rotation * Quaternion.Euler(0, 180, 0);
         public void SetLookAt2D(Vector3 target, float addDegrees = 0)
-            => rot = Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, addDegrees, 0);
+            => rot = Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, 180, 0);
         
 
         public float DistToPerso(PersoController perso)
