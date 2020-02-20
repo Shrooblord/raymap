@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 //All possible connection types between Waypoints.
+[System.Serializable]
 public class WPConnection {
     public enum Type { WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo };
     public SHR_Waypoint wp;
@@ -39,19 +40,6 @@ public class SHR_Waypoint : MonoBehaviour {
         return next[Random.Range(0, next.Count)].wp;
     }
 
-    /*
-    //find the WPConnection information of the Waypoint that is pointing directly into us
-    private WPConnection GetBackConnection(SHR_Waypoint wp) {
-        foreach (var conn in wp.next) {
-            if (conn != null && conn.wp == this) {
-                return conn;
-            }
-        }
-
-        return null;
-    }
-    */
-
     private void OnDrawGizmos() {
         if ((graph = GetComponentInParent<SHR_WaypointGraph>()) == null) return;
 
@@ -66,13 +54,6 @@ public class SHR_Waypoint : MonoBehaviour {
 
         foreach (var conn in next) {
             if (conn != null) {
-                //If the next Waypoint does not have us as a connection even though we think it should have, add ourselves back in
-                /*
-                if (!conn.wp.prev.Contains(conn)) {
-                    conn.wp.prev.Add(new WPConnection(this, conn.type));
-                }
-                */
-
                 Gizmos.color = whiteCol;
                 Gizmos.DrawLine(transform.position + lineOffset, conn.wp.transform.position + lineOffset);
 
