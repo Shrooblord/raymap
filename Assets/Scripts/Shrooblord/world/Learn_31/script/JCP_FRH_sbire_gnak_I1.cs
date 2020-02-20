@@ -2,9 +2,9 @@
 
 namespace CustomGame.Rayman2.Persos {
     public class JCP_FRH_sbire_gnak_I1 : PersoController {
-
         public SHR_WaypointGraph wpGraph;
         SHR_Waypoint targetWP;
+        private SFXPlayer snoreSFXPlayer;
 
         protected override void OnStart() {
             pos = new Vector3(-193.61f, 23.84f, 369.45f);
@@ -12,6 +12,13 @@ namespace CustomGame.Rayman2.Persos {
 
             //Colour the Henchman. 1 = Red; 2 = Purple
             GetComponent<PersoBehaviour>().poListIndex = 2;
+
+            //snoring
+            snoreSFXPlayer = SFXPlayer.CreateOn(this, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Voice/Snoring",
+                space = SFXPlayer.Space.Point,
+                mode = SFXPlayer.Mode.Consecutive,
+            });
 
             SetRule("Sleeping");
         }
@@ -26,38 +33,36 @@ namespace CustomGame.Rayman2.Persos {
             }, 1, 10),
 
             //snoring while asleep
+            /*
             new AnimSFX(48, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Voice/Snoring",
                 space = SFXPlayer.Space.Point,
                 mode = SFXPlayer.Mode.Consecutive,
             }, 1),
+            */
 
             //wake up in surprise
             //surprise sound
             new AnimSFX(49, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/General/pimoteur",
                 space = SFXPlayer.Space.Point,
-                polyphony = SFXPlayer.Polyphony.Poly,
             }, 1),
             //heavy foot plant sound
             new AnimSFX(49, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Footstep/Land/",
                 space = SFXPlayer.Space.Point,
-                polyphony = SFXPlayer.Polyphony.Poly,
             }, 16),
 
             //swivel head in surprise
             new AnimSFX(6, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/General/surpris",
                 space = SFXPlayer.Space.Point,
-                polyphony = SFXPlayer.Polyphony.Poly,
             }, 1),
 
             //idle
             new AnimSFX(16, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Voice/Idle",
                 space = SFXPlayer.Space.Point,
-                polyphony = SFXPlayer.Polyphony.Poly,
                 mode = SFXPlayer.Mode.RandomNoRepeat
             }, 1),
         };
@@ -67,15 +72,18 @@ namespace CustomGame.Rayman2.Persos {
                 targetWP = graph.GetNearestWaypoint(pos);
         }
 
+        Timer snoringTimer = new Timer();
         //Rulzez
         void Rule_Sleeping() {
             anim.Set(48);
+
+            snoringTimer.Start(3f, () => { snoreSFXPlayer.Play(); }, false);
 
             goToNearestWaypoint();
 
             if (rayman != null) {
                 if (Vector3.Distance(pos, rayman.pos) < 6) {
-                    SetRule("WokeUp");
+                    //SetRule("WokeUp");
                 }
             }
         }
@@ -99,6 +107,7 @@ namespace CustomGame.Rayman2.Persos {
         }
 
         Timer runUpTimer = new Timer();
+        Timer waitHereTimer = new Timer();
         void Rule_RunAround() {
             //align with floor geometry
             col.StickToGround();
@@ -120,7 +129,18 @@ namespace CustomGame.Rayman2.Persos {
 
             //If we've arrived at the destination before the timer runs out, find a new target to run at
             if (Vector3.Distance(pos, targetWP.transform.position) <= 1) {
-                targetWP = targetWP.getRandomNextWaypoint();
+                //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
+                if (targetWP.waitHere > 0f) {
+                    //idle, but "loop forever" i.e. don't transition to next state; we'll do that manually from within the timer (see below)
+                    SetRule("Idle", true);
+
+                    waitHereTimer.Start(targetWP.waitHere, () => {
+                        SetRule("RunAround");
+                        targetWP = targetWP.getRandomNextWaypoint();
+                    }, false);
+                } else {
+                    targetWP = targetWP.getRandomNextWaypoint();
+                }
             }
         }
 
@@ -137,14 +157,16 @@ namespace CustomGame.Rayman2.Persos {
             }, false);
         }
 
-        void Rule_Idle() {
+        void Rule_Idle(bool loopForever) {
             anim.Set(0);
 
-            goBackToRunningTimer.Start(Random.Range(4f, 8f), () => {
-                goToNearestWaypoint();
-                anim.Set(2);
-                SetRule("RunAround");
-            }, false);
+            if (!loopForever) {
+                goBackToRunningTimer.Start(Random.Range(4f, 8f), () => {
+                    goToNearestWaypoint();
+                    anim.Set(2);
+                    SetRule("RunAround");
+                }, false);
+            }
         }
     }
 }

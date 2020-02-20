@@ -33,6 +33,7 @@ namespace CustomGame
 
         public string rule;
         public List<MethodBase> rules = new List<MethodBase>();
+        object[] ruleParams;
         public static class StdRules
         {
             public const string
@@ -43,12 +44,13 @@ namespace CustomGame
                 Falling = nameof(Falling),
                 Climbing = nameof(Climbing);
         }
-        public MethodBase SetRule(string rule)
+        public MethodBase SetRule(string rule, params object[] ruleParams)
         {
             foreach (var r in rules)
                 if (r.Name.Replace("Rule_", "") == rule)
                 {
                     this.rule = rule;
+                    this.ruleParams = ruleParams;
                     return r;
                 }
             return null;
@@ -134,7 +136,7 @@ namespace CustomGame
             if (overrideCurrent) this.rule = rule;
             foreach (var r in rules)
                 if (rule == r.Name.Replace("Rule_", "")) {
-                    r.Invoke(this, null);
+                    r.Invoke(this, ruleParams);
                     break;
                 }
         }
