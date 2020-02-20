@@ -4,12 +4,12 @@
 
 !/Assets/Scripts/
 /Assets/Scripts/*
-!/Assets/Scripts/CustomGame/
-!/Assets/Scripts/CustomGame/*
+!/Assets/Scripts/RaymapGame/
+!/Assets/Scripts/RaymapGame/*
 
 !/Assets/Resources/
 /Assets/Resources/*
-!/Assets/Resources/CustomGame
+!/Assets/Resources/RaymapGame
 
 !/ProjectSettings/
 /ProjectSettings/*
