@@ -7,60 +7,60 @@ namespace CustomGame.Rayman2.Persos {
         SHR_Waypoint targetWP;
 
         protected override void OnStart() {
-            pos = new Vector3(-188.36f, 25.2f, 384.58f);
-            rot = Quaternion.Euler(0, -104.19f, 0);
-
-            SetRule("Sleeping");
+            pos = new Vector3(-187.8f, 25.51f, 383.39f);
+            rot = Quaternion.Euler(0, -106.54f, 0);
 
             //Colour the Henchman. 1 = Red; 2 = Purple
             GetComponent<PersoBehaviour>().poListIndex = 1;
+
+            SetRule("Sleeping");
         }
 
         //animNotify sfx
         public override AnimSFX[] animSfx => new AnimSFX[] {
-        //running animation footstep plants
-        new AnimSFX(2, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Footstep/Walk",
-            space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
-            volume = 0.60f,
-        }, 1, 10),
+            //running animation footstep plants
+            new AnimSFX(2, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep/Walk",
+                space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
+                volume = 0.60f,
+            }, 1, 10),
 
-        //snoring while asleep
-        new AnimSFX(48, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Voice/Snoring",
-            space = SFXPlayer.Space.Point,
-            mode = SFXPlayer.Mode.Consecutive,
-        }, 1),
+            //snoring while asleep
+            new AnimSFX(48, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Voice/Snoring",
+                space = SFXPlayer.Space.Point,
+                mode = SFXPlayer.Mode.Consecutive,
+            }, 1),
 
-        //wake up in surprise
-        //surprise sound
-        new AnimSFX(49, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/General/pimoteur",
-            space = SFXPlayer.Space.Point,
-            polyphony = SFXPlayer.Polyphony.Poly,
-        }, 1),
-        //heavy foot plant sound
-        new AnimSFX(49, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Footstep/Land/",
-            space = SFXPlayer.Space.Point,
-            polyphony = SFXPlayer.Polyphony.Poly,
-        }, 16),
+            //wake up in surprise
+            //surprise sound
+            new AnimSFX(49, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/General/pimoteur",
+                space = SFXPlayer.Space.Point,
+                polyphony = SFXPlayer.Polyphony.Poly,
+            }, 1),
+            //heavy foot plant sound
+            new AnimSFX(49, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep/Land/",
+                space = SFXPlayer.Space.Point,
+                polyphony = SFXPlayer.Polyphony.Poly,
+            }, 16),
 
-        //swivel head in surprise
-        new AnimSFX(6, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/General/surpris",
-            space = SFXPlayer.Space.Point,
-            polyphony = SFXPlayer.Polyphony.Poly,
-        }, 1),
+            //swivel head in surprise
+            new AnimSFX(6, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/General/surpris",
+                space = SFXPlayer.Space.Point,
+                polyphony = SFXPlayer.Polyphony.Poly,
+            }, 1),
 
-        //idle
-        new AnimSFX(16, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Voice/Idle",
-            space = SFXPlayer.Space.Point,
-            polyphony = SFXPlayer.Polyphony.Poly,
-            mode = SFXPlayer.Mode.RandomNoRepeat
-        }, 1),
-    };
+            //idle
+            new AnimSFX(16, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Voice/Idle",
+                space = SFXPlayer.Space.Point,
+                polyphony = SFXPlayer.Polyphony.Poly,
+                mode = SFXPlayer.Mode.RandomNoRepeat
+            }, 1),
+        };
 
         void goToNearestWaypoint() {
             if (graph != null)
