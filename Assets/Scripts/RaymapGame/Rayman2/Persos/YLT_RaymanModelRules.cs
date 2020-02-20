@@ -285,7 +285,7 @@ namespace RaymapGame.Rayman2.Persos {
             if (newRule) scale = 1;
             if (scale <= 0) return;
             scale -= dt / 2.5f;
-            if (scale <= 0) t_respawn.Start(0.1f, Respawn);
+            if (scale <= 0) t_respawn.Start(0.1f, RespawnRay);
 
             SetFriction(1, 2);
             ApplyGravity();

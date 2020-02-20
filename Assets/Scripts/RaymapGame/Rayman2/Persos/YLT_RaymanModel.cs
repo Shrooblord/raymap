@@ -2,6 +2,7 @@
 //  By: Adsolution
 //================================
 
+using System.Collections.Generic;
 using UnityEngine;
 using static RaymapGame.InputEx;
 using static UnityEngine.Input;
@@ -152,10 +153,10 @@ namespace RaymapGame.Rayman2.Persos
         //  Rayman Actions
         //----------------------------------------
 
-        public void Respawn()
+        public void RespawnRay()
         {
             pos = startPos + Vector3.up * 0.5f;
-            rot = Quaternion.Euler(0, startRot, 0);
+            rot = startRot;
             velXZ = Vector3.zero;
             velY = 0;
             scale = 1;
@@ -173,7 +174,7 @@ namespace RaymapGame.Rayman2.Persos
             DisableForSeconds(100000);
             anim.Set(Anim.Rayman.Despawn, 1);
             if (respawn)
-                t_respawn.Start(2, Respawn);
+                t_respawn.Start(2, RespawnRay);
         }
 
         public void Jump(float height, bool forceMaxHeight, bool selfJump = false, bool slideJump = false)

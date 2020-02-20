@@ -9,6 +9,7 @@ namespace RaymapGame.Rayman2.Anim {
             Sleep = 21,
             WakeUp = 10,
             RunStart = 8,
-            RunLoop = 1;
+            RunLoop = 9,
+            RunLoopB = 1;
     }
 }

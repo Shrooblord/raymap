@@ -37,9 +37,18 @@ namespace RaymapGame.Rayman2.Persos {
             if (newRule)
                 anim.Set(Anim.Shell.RunStart, 0);
 
-            moveSpeed = 7;
+            moveSpeed = 8;
             NavTowards(rayman.pos);
             col.StickToGround();
+
+            col.wallEnabled = true;
+
+            if (anim.IsSet(Anim.Shell.RunLoop))
+                anim.SetSpeed(moveSpeed * 8);
+
+            if (CheckCollisionZone(rayman, OpenSpace.Collide.CollideType.ZDM)) {
+                Respawn();
+            }
         }
     }
 }

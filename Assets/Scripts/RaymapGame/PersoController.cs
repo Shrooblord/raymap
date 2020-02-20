@@ -45,6 +45,7 @@ namespace RaymapGame
 
         public string rule;
         public Dictionary<string, MethodBase> rules = new Dictionary<string, MethodBase>();
+        object[] ruleParams;
 
         public static class StdRules
         {
@@ -57,8 +58,9 @@ namespace RaymapGame
                 Climbing = nameof(Climbing);
         }
 
-        public MethodBase SetRule(string rule) {
+        public MethodBase SetRule(string rule, params object[] ruleParams) {
             this.rule = rule;
+            this.ruleParams = ruleParams;
             if (rules.ContainsKey(rule))
                 return rules[rule];
             return null;
@@ -71,7 +73,7 @@ namespace RaymapGame
 
         // Only get allowed in scripts
         public Vector3 startPos { get; private set; }
-        public float startRot { get; private set; }
+        public Quaternion startRot { get; private set; }
         protected Vector3 posFrame { get; private set; }
         protected Vector3 posPrev { get; private set; }
         public Vector3 deltaPos { get; private set; }
@@ -141,6 +143,7 @@ namespace RaymapGame
         }
 
         public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
+            if (perso == null) return false;
             foreach (Transform child in transform) {
                 if (child.name.Contains($"Collide Set {collideType}"))
                     if (Vector3.Distance(child.transform.position,
@@ -152,9 +155,18 @@ namespace RaymapGame
         }
 
 
+        public void Respawn() {
+            SetRule("");
+            OnStart();
+            pos = startPos;
+            rot = startRot;
+            vel = Vector3.zero;
+        }
+
         public void NavDirection3D(Vector3 dir) {
             dir.Normalize();
-            vel += dir * moveSpeed * dt;
+            velXZ += new Vector3(dir.x, 0, dir.z) * fricXZ * moveSpeed * dt;
+            velY += velY * fricY * moveSpeed * dt;
             SetLookAt2D(pos + dir);
         }
 
@@ -265,7 +277,7 @@ namespace RaymapGame
             col.controller = this;
             pos = transform.position;
             startPos = pos;
-            startRot = rot.eulerAngles.y;
+            startRot = rot;
             rot = transform.rotation;
             OnStart();
         }
@@ -297,7 +309,7 @@ namespace RaymapGame
         //========================================
         void InvokeRule(string rule) {
             if (rules.ContainsKey(rule))
-                rules[rule].Invoke(this, null);
+                rules[rule].Invoke(this, ruleParams);
         }
 
         void LogicLoop() {
