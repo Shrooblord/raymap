@@ -5,6 +5,9 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SHR_Waypoint : MonoBehaviour {
     private SHR_WaypointGraph graph;
+    //These two variables control whether the Perso should attempt jumping to or from this Waypoint from their current position towards their next target.
+    public bool jumpFromHere = false;
+    public bool jumpToHere = false;
     public List<SHR_Waypoint> next = new List<SHR_Waypoint>();
     public List<SHR_Waypoint> prev = new List<SHR_Waypoint>();
 
@@ -21,7 +24,7 @@ public class SHR_Waypoint : MonoBehaviour {
 
         foreach (var wp in prev) {
             if (prev != null) {
-                Gizmos.color = Color.green;
+                Gizmos.color = Color.blue;
                 Gizmos.DrawSphere(transform.position + (wp.transform.position - transform.position).normalized + lineOffset, .4f);
             }
         }
@@ -35,7 +38,7 @@ public class SHR_Waypoint : MonoBehaviour {
                 Gizmos.color = whiteCol;
                 Gizmos.DrawLine(transform.position + lineOffset, wp.transform.position + lineOffset);
 
-                Gizmos.color = Color.blue;
+                Gizmos.color = Color.green;
                 Gizmos.DrawSphere(transform.position + (wp.transform.position - transform.position).normalized + lineOffset, .4f);
             }
         }
