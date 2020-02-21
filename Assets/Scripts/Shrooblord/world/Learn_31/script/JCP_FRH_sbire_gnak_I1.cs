@@ -385,11 +385,12 @@ namespace CustomGame.Rayman2.Persos {
 
             //If we've arrived at the destination before the timer runs out, find a new target to run at
             if (Vector3.Distance(pos, targetWP.transform.position) <= 1.5f) {
+                runUpTimer.Abort();
+
                 //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
                 if (targetWP.waitHere > 0f) {
                     //idle, but "loop forever" i.e. don't transition to next state; we'll do that manually from within the timer (see below)
                     SetRule("Idle", true);
-                    runUpTimer.Abort();
 
                     waitHereTimer.Start(targetWP.waitHere, () => {
                         SetRule("RunAround");
@@ -409,7 +410,7 @@ namespace CustomGame.Rayman2.Persos {
 
             SetLookAt2D(rayman.pos, 180);
 
-            goBackToRunningTimer.Start(Random.Range(1f, 5f), () => {
+            goBackToRunningTimer.Start(Random.Range(1f, 3f), () => {
                 goToNearestWaypoint();
                 anim.Set(2);
                 SetRule("RunAround");
@@ -425,7 +426,7 @@ namespace CustomGame.Rayman2.Persos {
             }, false);
 
             if (!loopForever) {
-                goBackToRunningTimer.Start(Random.Range(4f, 8f), () => {
+                goBackToRunningTimer.Start(Random.Range(1.5f, 3f), () => {
                     idleVoice.Abort();
                     goToNearestWaypoint();
                     anim.Set(2);
