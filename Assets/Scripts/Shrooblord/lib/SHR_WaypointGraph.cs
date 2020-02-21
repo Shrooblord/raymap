@@ -18,8 +18,6 @@ public class SHR_WaypointGraph : MonoBehaviour
     public Color outboundConnectionColour = Color.cyan;
     public Color inboundConnectionColour = Color.yellow;
 
-    [ReadOnly] public List<Transform> jumpCurveHandles = new List<Transform>();
-
     //The Persos that will use this waypoint graph
     public List<string> persoNames = new List<string>();
 

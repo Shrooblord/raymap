@@ -31,7 +31,18 @@ public class SHR_WaypointEditor : Editor {
         foreach (var n in wp.next) {
             EditorGUILayout.BeginHorizontal();
             n.wp = (SHR_Waypoint)EditorGUILayout.ObjectField(n.wp, typeof(SHR_Waypoint), true);
+
+            //Keep track of whether the user just used the enum field
+            GUI.changed = false;
             n.type = (WPConnection.Type)EditorGUILayout.EnumPopup(n.type);
+            if (GUI.changed) {
+                //The user just changed this value. That means we need to update its pair in the next Waypoint's prev list.
+                foreach (var p in n.wp.prev) {
+                    if (p.wp == wp) {
+                        p.type = n.type;
+                    }
+                }
+            }
 
             if (GUILayout.Button("-", GUILayout.Width(30))) {
                 //remove forward references
@@ -45,14 +56,20 @@ public class SHR_WaypointEditor : Editor {
                 }
 
                 //destroy the children
-                if (wp.transform.childCount != 0) {
-                    var tr = wp.transform.Find("HDL_jumpCurve_" + n.wp.name);
+                if (n.type == WPConnection.Type.JumpTo) {
+                    if (wp.transform.childCount != 0) {
+                        if (n.jumpCurveHandle != null) {
+                            //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
 
-                    if (tr != null) {
-                        DestroyImmediate(tr.gameObject);
-                        wp.graph.jumpCurveHandles.Remove(tr);
+                            //if (tr != null) {
+                            DestroyImmediate(n.jumpCurveHandle.gameObject);
+                            //}
+
+                            n.jumpCurveHandle = null;
+                        }
                     }
                 }
+                
 
                 break;
             }
@@ -84,30 +101,46 @@ public class SHR_WaypointEditor : Editor {
 
         GUILayout.Label("Inbound Connections");
 
-        foreach (var n in wp.prev) {
+        foreach (var p in wp.prev) {
             EditorGUILayout.BeginHorizontal();
-            n.wp = (SHR_Waypoint)EditorGUILayout.ObjectField(n.wp, typeof(SHR_Waypoint), true);
-            n.type = (WPConnection.Type)EditorGUILayout.EnumPopup(n.type);
+            p.wp = (SHR_Waypoint)EditorGUILayout.ObjectField(p.wp, typeof(SHR_Waypoint), true);
+
+            //Keep track of whether the user just used the enum field
+            GUI.changed = false;
+            p.type = (WPConnection.Type)EditorGUILayout.EnumPopup(p.type);
+            if (GUI.changed) {
+                //The user just changed this value. That means we need to update its pair in the prev Waypoint's next list.
+                foreach (var n in p.wp.next) {
+                    if (n.wp == wp) {
+                        n.type = p.type;
+                    }
+                }
+            }
 
             if (GUILayout.Button("-", GUILayout.Width(30))) {
                 //remove forward references
-                wp.prev.Remove(n);
+                wp.prev.Remove(p);
 
                 //remove backward references
-                for (int i = 0; i < n.wp.next.Count; i++) {
-                    if (n.wp.next[i].wp == wp) {
-                        n.wp.next.Remove(n.wp.next[i--]);
+                for (int i = 0; i < p.wp.next.Count; i++) {
+                    if (p.wp.next[i].wp == wp) {
+                        p.wp.next.Remove(p.wp.next[i--]);
                         break;
                     }
                 }
 
                 //destroy the children
-                if (wp.transform.childCount != 0) {
-                    var tr = wp.transform.Find("HDL_jumpCurve_" + n.wp.name);
+                if (p.type == WPConnection.Type.JumpTo) {
+                    if (wp.transform.childCount != 0) {
+                        if (p.jumpCurveHandle != null) {
+                            //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
 
-                    if (tr != null) {
-                        DestroyImmediate(tr.gameObject);
-                        wp.graph.jumpCurveHandles.Remove(tr);
+                            //if (tr != null) {
+                            DestroyImmediate(p.jumpCurveHandle.gameObject);
+                            //}
+
+                            p.jumpCurveHandle = null;
+                        }
                     }
                 }
 

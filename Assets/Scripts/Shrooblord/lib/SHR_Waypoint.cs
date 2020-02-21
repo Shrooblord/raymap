@@ -10,6 +10,8 @@ public class WPConnection {
     public SHR_Waypoint wp;
     public Type type;
 
+    public Transform jumpCurveHandle;
+
     public WPConnection(SHR_Waypoint wp, Type type) {
         this.wp = wp;
         this.type = type;
@@ -22,7 +24,7 @@ public class WPConnection {
 public class SHR_Waypoint : MonoBehaviour {
     public SHR_WaypointGraph graph;
 
-    public Transform jumpCurveHandle;
+    //public Transform jumpCurveHandle;
     public float waitHere = 0.0f;       //when > 0, it causes the Perso to stop and wait on this WP for this many seconds
 
     public List<WPConnection> next = new List<WPConnection>();
@@ -57,13 +59,12 @@ public class SHR_Waypoint : MonoBehaviour {
                     case WPConnection.Type.JumpTo:
                         var midPos = (conn.wp.transform.position + transform.position) / 2;
 
-                        if (conn.wp.jumpCurveHandle == null) {
-                            conn.wp.jumpCurveHandle = new GameObject("HDL_jumpCurve_" + conn.wp.name).transform;
-                            graph.jumpCurveHandles.Add(conn.wp.jumpCurveHandle);
-                            conn.wp.jumpCurveHandle.position = midPos + Vector3.up * 5;
+                        if (conn.jumpCurveHandle == null) {
+                            conn.jumpCurveHandle = new GameObject("HDL_jumpCurve_" + name + "_" + conn.wp.name).transform;
+                            conn.jumpCurveHandle.position = midPos + Vector3.up * 5;
                         }
 
-                        var handle = conn.wp.jumpCurveHandle;
+                        var handle = conn.jumpCurveHandle;
                         
                         handle.position = new Vector3(midPos.x, handle.position.y, midPos.z);
 
@@ -116,11 +117,14 @@ public class SHR_Waypoint : MonoBehaviour {
                         break;
                     default:
                         if (transform.childCount != 0) {
-                            var tr = transform.Find("HDL_jumpCurve_" + conn.wp.name);
-                            
-                            if (tr != null) {
-                                DestroyImmediate(tr.gameObject);
-                                graph.jumpCurveHandles.Remove(tr);
+                            if (conn.jumpCurveHandle != null) {
+                                //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
+
+                                //if (tr != null) {
+                                    DestroyImmediate(conn.jumpCurveHandle.gameObject);
+                                //}
+
+                                conn.jumpCurveHandle = null;
                             }
                         }
 

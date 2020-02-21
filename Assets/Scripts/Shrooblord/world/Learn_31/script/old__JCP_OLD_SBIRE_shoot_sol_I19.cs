@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 namespace CustomGame.Rayman2.Persos {
-    public class JCP_FRH_sbire_gnak_I1 : PersoController {
-        #region Setup
+    public class old__JCP_OLD_SBIRE_shoot_sol_I19 : PersoController {
         public bool jumping;
         public bool selfJump;
         public bool slideJump;
@@ -10,7 +9,6 @@ namespace CustomGame.Rayman2.Persos {
         float jumpCutoff;
         float jumpLiftOffVelY;
         float liftOffVel;
-        Vector3 velXZStored = Vector3.zero; //in certain circumstances, we want to pause our horizontal movement for a little moment before returning to it (eg. jump anticipation)
 
         public bool strafing;
 
@@ -18,47 +16,29 @@ namespace CustomGame.Rayman2.Persos {
         SHR_Waypoint currentWP;
         SHR_Waypoint targetWP;
 
-        private SFXPlayer snoreSFXPlayer;
-        private SFXPlayer landClankSFXPlayer;
-        private SFXPlayer idleSFXPlayer;
+        public SFXPlayer snoreSFXPlayer;
 
-        private string previousRule = "";   //for keeping track of which rule to switch back to after an interrupt (eg. jumping)
-        #endregion
+        //whether we're currently airborne. We don't want to transition between states while we're airborne
+        private bool flyingToTarget = false;
 
         protected override void OnStart() {
-            pos = new Vector3(-193.61f, 23.84f, 369.45f);
-            rot = Quaternion.Euler(0, 0, 0);
+            pos = new Vector3(-187.8f, 25.51f, 383.39f);
+            rot = Quaternion.Euler(0, -106.54f, 0);
 
             //Colour the Henchman. 1 = Red; 2 = Purple
-            GetComponent<PersoBehaviour>().poListIndex = 2;
+            GetComponent<PersoBehaviour>().poListIndex = 1;
 
             SetRule("Sleeping");
 
-            #region SFX
             //snoring
             snoreSFXPlayer = SFXPlayer.CreateOn(this, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Voice/Snoring",
                 space = SFXPlayer.Space.Point,
                 mode = SFXPlayer.Mode.Consecutive,
             });
-
-            //landing clank
-            landClankSFXPlayer = SFXPlayer.CreateOn(this, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Footstep/Land",
-                space = SFXPlayer.Space.Point
-            });
-
-            //idle voice
-            idleSFXPlayer = SFXPlayer.CreateOn(this, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Voice/Idle",
-                space = SFXPlayer.Space.Point,
-                mode = SFXPlayer.Mode.Random
-            });            
-            #endregion
         }
 
         //animNotify sfx
-        #region animSFX
         public override AnimSFX[] animSfx => new AnimSFX[] {
             //running animation footstep plants
             new AnimSFX(2, new SFXPlayer.Info {
@@ -86,15 +66,12 @@ namespace CustomGame.Rayman2.Persos {
             }, 1),
 
             //idle
-            /*
             new AnimSFX(16, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Voice/Idle",
                 space = SFXPlayer.Space.Point,
-                mode = SFXPlayer.Mode.Random
+                mode = SFXPlayer.Mode.RandomNoRepeat
             }, 1),
-            */
         };
-        #endregion
 
 
         void goToNearestWaypoint() {
@@ -150,7 +127,7 @@ namespace CustomGame.Rayman2.Persos {
             }
 
 
-            //SetFriction(30, 0);
+            SetFriction(30, 0);
 
             if (strafing) moveSpeed = 7;
             else moveSpeed = 10;
@@ -216,8 +193,6 @@ namespace CustomGame.Rayman2.Persos {
             #endregion
 
             //helic = false;
-            
-            SetRule("GroundReturnHook");
         }
 
 
@@ -225,14 +200,13 @@ namespace CustomGame.Rayman2.Persos {
             #region Rule
             col.groundDepth = 0;
             col.UpdateGroundCollision();
-            animateJump();
 
             if (newRule)
                 liftOffVel = velXZ.magnitude;
 
             if (col.ground.AnyGround && velY <= 0) {
                 velY = 0;
-                //SetRule(StdRules.Ground);  <---- now handled by animateJump()
+                SetRule(StdRules.Ground);
                 return;
             } else if (col.ground.Slide) {
                 SetRule(StdRules.Sliding);
@@ -252,7 +226,6 @@ namespace CustomGame.Rayman2.Persos {
 
             ApplyGravity();
 
-            #region helic
             /*
             if (helic) {
                 if (superHelicAscend)
@@ -273,7 +246,6 @@ namespace CustomGame.Rayman2.Persos {
                 moveSpeed = 10;
             }
             */
-            #endregion
 
             //RotateToStick(6);
             //InputMovement();
@@ -321,8 +293,7 @@ namespace CustomGame.Rayman2.Persos {
             goToNearestWaypoint();
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 60) {  //6
-                    snoringTimer.Abort();
+                if (Vector3.Distance(pos, rayman.pos) < 6) {
                     SetRule("WokeUp");
                 }
             }
@@ -349,6 +320,10 @@ namespace CustomGame.Rayman2.Persos {
         Timer runUpTimer = new Timer();
         Timer waitHereTimer = new Timer();
         void Rule_RunAround() {
+            //align with floor geometry
+            col.StickToGround();
+            col.groundDepth = 0.8f;
+
             //move and look at where we're headed
             SetLookAt2D(targetWP.transform.position, 180);
             moveSpeed = 10f;
@@ -356,49 +331,47 @@ namespace CustomGame.Rayman2.Persos {
             //find out if target is a jump-to waypoint
             foreach (var conn in currentWP.next) {
                 if (conn.wp == targetWP) {
-                    velXZ = (targetWP.transform.position - pos).normalized * moveSpeed;
-
                     if (conn.type == WPConnection.Type.JumpTo) {
-                        //var tr = conn.wp.transform.Find("HDL_jumpCurve_" + currentWP.name + "_" + targetWP.name);
+                        //var tr = currentWP.transform.Find("HDL_jumpCurve_" + currentWP.name + "_" + targetWP.name);
                         //float h = tr.position.y - currentWP.transform.position.y;
-                        float h = 4;
+                        float h = 20;
 
-                        if (!jumping) {
-                            runUpTimer.Abort();
-                            waitHereTimer.Abort();
-                            previousRule = rule;
-                            velXZStored = velXZ;
-                            prepareJump(h);
-                        }
+                        Jump(h, true);
+                        velXZ = (targetWP.transform.position - pos).normalized * moveSpeed * 2;
+                    } else {
+                        velXZ = (targetWP.transform.position - pos).normalized * moveSpeed;
                     }
                 }
             }
 
             runUpTimer.Start(Random.Range(2f, 8f), () => {
-                velXZ = Vector3.zero;
+                if (!flyingToTarget) {
+                    velXZ = Vector3.zero;
 
-                if (Random.value < 0.5f)
-                    SetRule("Aim");
-                else
-                    SetRule("Idle", false);
+                    if (Random.value < 0.5f)
+                        SetRule("Aim");
+                    else
+                        SetRule("Idle");
+                }
             }, false);
 
             //If we've arrived at the destination before the timer runs out, find a new target to run at
-            if (Vector3.Distance(pos, targetWP.transform.position) <= 2f) {
-                //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
-                if (targetWP.waitHere > 0f) {
-                    //idle, but "loop forever" i.e. don't transition to next state; we'll do that manually from within the timer (see below)
-                    SetRule("Idle", true);
-                    runUpTimer.Abort();
+            if (Vector3.Distance(pos, targetWP.transform.position) <= 1) {
+                if (!flyingToTarget) {
+                    //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
+                    if (targetWP.waitHere > 0f) {
+                        //idle, but "loop forever" i.e. don't transition to next state; we'll do that manually from within the timer (see below)
+                        SetRule("Idle", true);
 
-                    waitHereTimer.Start(targetWP.waitHere, () => {
-                        SetRule("RunAround");
+                        waitHereTimer.Start(targetWP.waitHere, () => {
+                            SetRule("RunAround");
+                            currentWP = targetWP;
+                            targetWP = targetWP.getRandomNextWaypoint();
+                        }, false);
+                    } else {
                         currentWP = targetWP;
-                        targetWP = currentWP.getRandomNextWaypoint();
-                    }, false);
-                } else {
-                    currentWP = targetWP;
-                    targetWP = currentWP.getRandomNextWaypoint();
+                        targetWP = targetWP.getRandomNextWaypoint();
+                    }
                 }
             }
         }
@@ -416,70 +389,21 @@ namespace CustomGame.Rayman2.Persos {
             }, false);
         }
 
-        Timer idleVoice = new Timer();
-        void Rule_Idle(bool loopForever) {
+        void Rule_Idle(bool loopForever = false) {
             anim.Set(0);
-
-            idleVoice.Start(Random.Range(1f, 4f), () => {
-                idleSFXPlayer.Play();
-            }, false);
 
             if (!loopForever) {
                 goBackToRunningTimer.Start(Random.Range(4f, 8f), () => {
-                    idleVoice.Abort();
                     goToNearestWaypoint();
                     anim.Set(2);
                     SetRule("RunAround");
                 }, false);
             }
         }
-
-        void prepareJump(float h) {
-            velXZ = Vector3.zero;
-
-            if (anim.currAnim == 14) {
-                if (perso.currentFrame == 11) {
-                    anim.Set(10); //transition to airborne anim; transitions to 11 (airborne loop)
-                }
-            } else if (anim.currAnim == 10) {
-                velXZ = velXZStored;
-                //Debug.LogError("velXZ: " + velXZ.ToString());
-                Jump(h, true);
-            } else {
-                anim.Set(14); //anticipation
-            }
-        }
-
-        //called from Rule_Air when reaching apex of jump
-        void animateJump() {
-                switch (anim.currAnim) {
-                case 11:                //airborne loop
-                    if (!jumping)
-                        anim.Set(12);   //apex of jump; transitions to 13 (jump declination loop)
-                    break;
-                case 13:                //jump declination loop
-                    if (velY == 0f) {
-                        velXZ = Vector3.zero;
-                        landClankSFXPlayer.Play();
-                        anim.Set(15);   //landing transition
-                    }
-                    break;
-                case 15:
-                    if (perso.currentFrame == 12) {
-                        SetRule(StdRules.Ground);
-                    }
-                    break;
-                default:                //do nothing by default; we must still be in an animation transition
-                    break;
-            }
-        }
-
-        //called when Rule_Ground returns; use to switch state machine back to where it was when it got interrupted
-        void Rule_GroundReturnHook() {
-            if (previousRule != "") {
-                //SetRule(previousRule);
-                SetRule("Idle", false);
-            }
-        }
     }
 }
+
+
+
+
+
