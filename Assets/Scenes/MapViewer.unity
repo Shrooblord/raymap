@@ -151,18 +151,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 807706100}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 170689531}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 807706100}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 170689531}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &328801
 Transform:
   m_ObjectHideFlags: 0
@@ -237,18 +240,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 1385383180}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1695459968}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1695459968}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1385383180}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &55238462
 Transform:
   m_ObjectHideFlags: 0
@@ -293,18 +299,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1035406196}
   waitHere: 0
   next:
   - wp: {fileID: 1370636768}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 260133051}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1370636768}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 260133051}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &79844444
 Transform:
   m_ObjectHideFlags: 0
@@ -319,6 +328,87 @@ Transform:
   - {fileID: 1047976016}
   m_Father: {fileID: 1775811473}
   m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &117593122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 117593124}
+  - component: {fileID: 117593123}
+  m_Layer: 0
+  m_Name: SHR_WP_Jumps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &117593123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117593122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outboundConnectionColour: {r: 1, g: 0, b: 0.9632826, a: 1}
+  inboundConnectionColour: {r: 0.95799816, g: 1, b: 0.015686274, a: 1}
+  persoNames:
+  - JCP_FRH_sbire_gnak_I1
+--- !u!4 &117593124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117593122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -188.33, y: 22.5, z: 355.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2070182594}
+  - {fileID: 1115810028}
+  - {fileID: 1286140703}
+  - {fileID: 481183987}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &126497116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 126497117}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_jmp2_jmp3 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &126497117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126497116}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.6649933, y: 6.3500004, z: 5.5700073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1115810028}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170689530
 GameObject:
@@ -350,22 +440,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1711953095}
   waitHere: 0
   next:
   - wp: {fileID: 328800}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 2073851785}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1385383180}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 328800}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 2073851785}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1385383180}
     type: 1
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &170689532
 Transform:
   m_ObjectHideFlags: 0
@@ -380,36 +475,6 @@ Transform:
   - {fileID: 35009855}
   m_Father: {fileID: 1775811473}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &198453860
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 198453861}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp1_jmp2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &198453861
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198453860}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.139984, y: 5.05361, z: -1.8649902}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2013118255}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &200699808
 GameObject:
@@ -441,11 +506,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 329137341}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev: []
 --- !u!4 &200699810
 Transform:
@@ -565,20 +630,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 673805284}
   waitHere: 0
   next:
   - wp: {fileID: 79844443}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1695459968}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 79844443}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1695459968}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 807706100}
     type: 1
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &260133052
 Transform:
   m_ObjectHideFlags: 0
@@ -624,20 +693,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 1497299900}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 807706100}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 200699809}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 807706100}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1497299900}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &329137342
 Transform:
   m_ObjectHideFlags: 0
@@ -730,22 +803,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 560754608}
   waitHere: 0
   next:
   - wp: {fileID: 1992037851}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1847427148}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1001617865}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1992037851}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1847427148}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1001617865}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &446832559
 Transform:
   m_ObjectHideFlags: 0
@@ -806,6 +884,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &481183986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 481183987}
+  - component: {fileID: 481183988}
+  m_Layer: 0
+  m_Name: jmp4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &481183987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481183986}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.9299927, y: 1.7562752, z: 14.119995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1044414144}
+  - {fileID: 1645615815}
+  m_Father: {fileID: 117593124}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &481183988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481183986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 117593123}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1286140702}
+    type: 1
+    jumpCurveHandle: {fileID: 1044414144}
+  - wp: {fileID: 1115810027}
+    type: 1
+    jumpCurveHandle: {fileID: 1645615815}
+  prev:
+  - wp: {fileID: 1115810027}
+    type: 1
+    jumpCurveHandle: {fileID: 126497117}
+  - wp: {fileID: 2070182593}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!1 &486948329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,22 +1257,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1521501813}
   waitHere: 0
   next:
   - wp: {fileID: 260133051}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 329137341}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 328800}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1001617865}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 328800}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 329137341}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &807706101
 Transform:
   m_ObjectHideFlags: 0
@@ -1215,58 +1359,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &877584986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 877584988}
-  - component: {fileID: 877584987}
-  m_Layer: 0
-  m_Name: jmp3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &877584987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877584986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 2094091853}
-  jumpCurveHandle: {fileID: 1025147788}
-  waitHere: 0
-  next:
-  - wp: {fileID: 2013118254}
-    type: 0
-  prev:
-  - wp: {fileID: 1422657682}
-    type: 1
---- !u!4 &877584988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877584986}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.130005, y: 1.6019039, z: 14.040009}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2094091854}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878624502
 GameObject:
@@ -1427,7 +1519,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &977189304
 GameObject:
@@ -1543,16 +1635,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 446832558}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 807706100}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 446832558}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1001617866
 Transform:
   m_ObjectHideFlags: 0
@@ -1567,36 +1661,6 @@ Transform:
   - {fileID: 1521501813}
   m_Father: {fileID: 1775811473}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1025147787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1025147788}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp2_jmp3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1025147788
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025147787}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1349945, y: 5.611824, z: 5.529999}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1422657681}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1035406195
 GameObject:
@@ -1628,6 +1692,36 @@ Transform:
   m_Father: {fileID: 1370636769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1044414143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044414144}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_jmp3 (1)_jmp3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1044414144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044414143}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.529999, y: 4.373272, z: -0.040008545}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481183987}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047976015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1750,36 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 79844444}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1051385785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1051385786}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_jmp1_jmp2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1051385786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051385785}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.139984, y: 5.59, z: -1.8649902}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2070182594}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109753672
@@ -1838,6 +1962,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114724231}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1115810026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115810028}
+  - component: {fileID: 1115810027}
+  m_Layer: 0
+  m_Name: jmp2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1115810027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115810026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 117593123}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1286140702}
+    type: 1
+    jumpCurveHandle: {fileID: 1355196606}
+  - wp: {fileID: 481183988}
+    type: 1
+    jumpCurveHandle: {fileID: 126497117}
+  prev:
+  - wp: {fileID: 2070182593}
+    type: 1
+    jumpCurveHandle: {fileID: 1051385786}
+  - wp: {fileID: 481183988}
+    type: 1
+    jumpCurveHandle: {fileID: 1645615815}
+--- !u!4 &1115810028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115810026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.399994, y: 0.37825394, z: 2.980011}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1355196606}
+  - {fileID: 126497117}
+  m_Father: {fileID: 117593124}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162811862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,11 +2137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 1385383180}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev: []
 --- !u!4 &1248739924
 Transform:
@@ -2096,6 +2281,62 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86cd3730e8c5fa04e99f1476c0536921, type: 3}
+--- !u!1 &1286140701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1286140703}
+  - component: {fileID: 1286140702}
+  m_Layer: 0
+  m_Name: jmp3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1286140702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286140701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 117593123}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2070182593}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 1115810027}
+    type: 1
+    jumpCurveHandle: {fileID: 1355196606}
+  - wp: {fileID: 481183988}
+    type: 1
+    jumpCurveHandle: {fileID: 1044414144}
+--- !u!4 &1286140703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286140701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.130005, y: 1.6019039, z: 14.040009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 117593124}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1340982556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2165,6 +2406,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2767972ea6a35e4e921a997791ebdff, type: 3}
+--- !u!1 &1355196605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355196606}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_jmp2_jmp3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1355196606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355196605}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.1349945, y: 5.611824, z: 5.529999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1115810028}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1370636767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2195,18 +2466,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1047976016}
   waitHere: 0
   next:
   - wp: {fileID: 1992037851}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 79844443}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1992037851}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 79844443}
     type: 1
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1370636769
 Transform:
   m_ObjectHideFlags: 0
@@ -2351,79 +2625,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 35009855}
   waitHere: 0
   next:
   - wp: {fileID: 2073851785}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 55238461}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 170689531}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1248739923}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1695459968}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 55238461}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 2073851785}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 170689531}
     type: 1
---- !u!1 &1422657680
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1422657681}
-  - component: {fileID: 1422657682}
-  m_Layer: 0
-  m_Name: jmp2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1422657681
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422657680}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.399994, y: 0.37825394, z: 2.980011}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1025147788}
-  m_Father: {fileID: 2094091854}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1422657682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422657680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 2094091853}
-  jumpCurveHandle: {fileID: 198453861}
-  waitHere: 0
-  next:
-  - wp: {fileID: 877584987}
-    type: 1
-  prev:
-  - wp: {fileID: 2013118254}
-    type: 1
+    jumpCurveHandle: {fileID: 0}
 --- !u!1 &1444678341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,18 +2948,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 1695459968}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 329137341}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 329137341}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1695459968}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1497299901
 Transform:
   m_ObjectHideFlags: 0
@@ -2832,6 +3063,36 @@ Transform:
   m_Father: {fileID: 1001617866}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1645615814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1645615815}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_jmp4_jmp2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1645615815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645615814}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.6649933, y: 4.8099995, z: -5.569977}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481183987}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673719827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,24 +3153,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1839680518}
   waitHere: 0
   next:
   - wp: {fileID: 260133051}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1385383180}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 55238461}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1497299900}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 260133051}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 1497299900}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 55238461}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1695459969
 Transform:
   m_ObjectHideFlags: 0
@@ -3098,18 +3365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outboundConnectionColour: {r: 0, g: 1, b: 1, a: 1}
   inboundConnectionColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  jumpCurveHandles:
-  - {fileID: 560754608}
-  - {fileID: 1935458422}
-  - {fileID: 1047976016}
-  - {fileID: 1035406196}
-  - {fileID: 0}
-  - {fileID: 1839680518}
-  - {fileID: 673805284}
-  - {fileID: 1521501813}
-  - {fileID: 35009855}
-  - {fileID: 1673719828}
-  - {fileID: 1711953095}
   persoNames:
   - JCP_FRH_sbire_gnak_I1
   - JCP_OLD_SBIRE_shoot_sol_I19
@@ -3244,14 +3499,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 446832558}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 446832558}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1847427149
 Transform:
   m_ObjectHideFlags: 0
@@ -3326,18 +3582,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 1935458422}
   waitHere: 0
   next:
   - wp: {fileID: 1370636768}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 446832558}
     type: 1
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1370636768}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 446832558}
     type: 1
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &1992037852
 Transform:
   m_ObjectHideFlags: 0
@@ -3353,7 +3612,7 @@ Transform:
   m_Father: {fileID: 1775811473}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2013118253
+--- !u!1 &2070182592
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3361,8 +3620,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2013118255}
-  - component: {fileID: 2013118254}
+  - component: {fileID: 2070182594}
+  - component: {fileID: 2070182593}
   m_Layer: 0
   m_Name: jmp1
   m_TagString: Untagged
@@ -3370,40 +3629,44 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2013118254
+--- !u!114 &2070182593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013118253}
+  m_GameObject: {fileID: 2070182592}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 2094091853}
-  jumpCurveHandle: {fileID: 0}
+  graph: {fileID: 117593123}
   waitHere: 0
   next:
-  - wp: {fileID: 1422657682}
+  - wp: {fileID: 1115810027}
     type: 1
-  prev:
-  - wp: {fileID: 877584987}
+    jumpCurveHandle: {fileID: 1051385786}
+  - wp: {fileID: 481183988}
     type: 0
---- !u!4 &2013118255
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 1286140702}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &2070182594
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013118253}
+  m_GameObject: {fileID: 2070182592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.8799896, y: 0.27103424, z: 6.7099915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 198453861}
-  m_Father: {fileID: 2094091854}
+  - {fileID: 1051385786}
+  m_Father: {fileID: 117593124}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2073851784
@@ -3436,16 +3699,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 1775811472}
-  jumpCurveHandle: {fileID: 0}
   waitHere: 0
   next:
   - wp: {fileID: 1385383180}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   - wp: {fileID: 170689531}
     type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1385383180}
     type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!4 &2073851786
 Transform:
   m_ObjectHideFlags: 0
@@ -3459,57 +3724,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1775811473}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2094091852
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2094091854}
-  - component: {fileID: 2094091853}
-  m_Layer: 0
-  m_Name: SHR_WP_Jumps
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2094091853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094091852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outboundConnectionColour: {r: 1, g: 0, b: 0.9632826, a: 1}
-  inboundConnectionColour: {r: 0.95799816, g: 1, b: 0.015686274, a: 1}
-  jumpCurveHandles:
-  - {fileID: 198453861}
-  - {fileID: 1025147788}
-  persoNames:
-  - JCP_FRH_sbire_gnak_I1
---- !u!4 &2094091854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094091852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -188.33, y: 22.5, z: 355.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2013118255}
-  - {fileID: 1422657681}
-  - {fileID: 877584988}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

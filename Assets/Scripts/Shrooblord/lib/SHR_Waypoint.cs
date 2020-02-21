@@ -59,9 +59,18 @@ public class SHR_Waypoint : MonoBehaviour {
                     case WPConnection.Type.JumpTo:
                         var midPos = (conn.wp.transform.position + transform.position) / 2;
 
+                        //Add a new Jump Curve Handle transform
                         if (conn.jumpCurveHandle == null) {
                             conn.jumpCurveHandle = new GameObject("HDL_jumpCurve_" + name + "_" + conn.wp.name).transform;
                             conn.jumpCurveHandle.position = midPos + Vector3.up * 5;
+                        }
+                        //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides
+                        foreach (var p in conn.wp.prev) {
+                            if (p.wp == this) {
+                                if (p.jumpCurveHandle == null) {
+                                    p.jumpCurveHandle = conn.jumpCurveHandle;
+                                }
+                            }
                         }
 
                         var handle = conn.jumpCurveHandle;

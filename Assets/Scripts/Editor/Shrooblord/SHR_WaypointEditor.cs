@@ -57,8 +57,8 @@ public class SHR_WaypointEditor : Editor {
 
                 //destroy the children
                 if (n.type == WPConnection.Type.JumpTo) {
-                    if (wp.transform.childCount != 0) {
-                        if (n.jumpCurveHandle != null) {
+                    if (n.jumpCurveHandle != null)  {
+                        if (wp.transform.childCount != 0) {
                             //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
 
                             //if (tr != null) {
@@ -131,8 +131,8 @@ public class SHR_WaypointEditor : Editor {
 
                 //destroy the children
                 if (p.type == WPConnection.Type.JumpTo) {
-                    if (wp.transform.childCount != 0) {
-                        if (p.jumpCurveHandle != null) {
+                    if (p.jumpCurveHandle != null) {
+                        if (p.wp.transform.childCount != 0) {
                             //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
 
                             //if (tr != null) {

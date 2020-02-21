@@ -52,7 +52,7 @@ namespace CustomGame.Rayman2.Persos {
             idleSFXPlayer = SFXPlayer.CreateOn(this, new SFXPlayer.Info {
                 path = "Rayman2/Henchman/Voice/Idle",
                 space = SFXPlayer.Space.Point,
-                mode = SFXPlayer.Mode.Random
+                mode = SFXPlayer.Mode.RandomNoRepeat
             });            
             #endregion
         }
@@ -353,15 +353,15 @@ namespace CustomGame.Rayman2.Persos {
             SetLookAt2D(targetWP.transform.position, 180);
             moveSpeed = 10f;
 
+            velXZ = (targetWP.transform.position - pos).normalized * moveSpeed;
+
             //find out if target is a jump-to waypoint
             foreach (var conn in currentWP.next) {
                 if (conn.wp == targetWP) {
-                    velXZ = (targetWP.transform.position - pos).normalized * moveSpeed;
-
                     if (conn.type == WPConnection.Type.JumpTo) {
-                        //var tr = conn.wp.transform.Find("HDL_jumpCurve_" + currentWP.name + "_" + targetWP.name);
-                        //float h = tr.position.y - currentWP.transform.position.y;
-                        float h = 4;
+                        var tr = conn.jumpCurveHandle;
+                        float h = tr.position.y - currentWP.transform.position.y;
+                        //float h = 6;
 
                         if (!jumping) {
                             runUpTimer.Abort();
@@ -384,7 +384,7 @@ namespace CustomGame.Rayman2.Persos {
             }, false);
 
             //If we've arrived at the destination before the timer runs out, find a new target to run at
-            if (Vector3.Distance(pos, targetWP.transform.position) <= 2f) {
+            if (Vector3.Distance(pos, targetWP.transform.position) <= 1.5f) {
                 //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
                 if (targetWP.waitHere > 0f) {
                     //idle, but "loop forever" i.e. don't transition to next state; we'll do that manually from within the timer (see below)
@@ -420,7 +420,7 @@ namespace CustomGame.Rayman2.Persos {
         void Rule_Idle(bool loopForever) {
             anim.Set(0);
 
-            idleVoice.Start(Random.Range(1f, 4f), () => {
+            idleVoice.Start(Random.Range(2f, 4f), () => {
                 idleSFXPlayer.Play();
             }, false);
 
