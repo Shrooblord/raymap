@@ -6,6 +6,7 @@ namespace CustomGame.Rayman2.Persos {
         public bool jumping;
         public bool selfJump;
         public bool slideJump;
+        private float jumpApex = 1;                //jump apex
         public float groundDepth = 0.5f;
         float jumpCutoff;
         float jumpLiftOffVelY;
@@ -22,7 +23,6 @@ namespace CustomGame.Rayman2.Persos {
         private SFXPlayer landClankSFXPlayer;
         private SFXPlayer idleSFXPlayer;
 
-        private string previousRule = "";   //for keeping track of which rule to switch back to after an interrupt (eg. jumping)
         private bool lookAtRay = false;
         private bool noIdle = true;
         #endregion
@@ -101,7 +101,7 @@ namespace CustomGame.Rayman2.Persos {
             this.slideJump = slideJump;
             jumping = true;
             //helic = false;
-            rule = StdRules.Air;
+            //rule = StdRules.Air;
 
             float am = Mathf.Sqrt((1920f / 97) * height);
             jumpLiftOffVelY = slideJump ? apprVel.y / 2 : 0;
@@ -114,19 +114,17 @@ namespace CustomGame.Rayman2.Persos {
             else
                 anim.Set(Anim.Rayman.JumpRunStart, 1);
             */
+
+            SetRule(StdRules.Air);
         }
 
 
 
         //***  Rulzez  ***//
         //Rule_Ground and Rule_Air hijacked from YLT_RaymanModelRules.cs
-        void Rule_Ground() {
-            #region Rule
+        void Ground() {
             col.groundDepth = groundDepth;
             col.UpdateGroundCollision();
-
-            //if (newRule && lStick.magnitude < deadZone)
-            //    velXZ = Vector3.zero;
 
             slideJump = false;
             selfJump = false;
@@ -141,77 +139,11 @@ namespace CustomGame.Rayman2.Persos {
                 SetRule(StdRules.Air); return;
             }
 
-
             //SetFriction(30, 0);
 
             if (strafing) moveSpeed = 7;
             else moveSpeed = 10;
-
-            //InputMovement();
-            //RotateToStick(10);
-            //rot = Quaternion.Slerp(rot, Quaternion.Euler(0, rot.eulerAngles.y, 0), dt * 10);
-            #endregion
-            #region Animation
-            /*
-            if (velXZ.magnitude < 0.05f) {
-                t_runStart.Start(0.033f);
-                if (newRule) {
-                    if (helic)
-                        anim.Set(Anim.Rayman.HelicLandIdle, 1);
-                    else
-                        anim.Set(Anim.Rayman.LandIdle, 1);
-                } else {
-                    anim.Set(Anim.Rayman.Idle, 0);
-                }
-                if (anim.currAnim == Anim.Rayman.RunStop)
-                    anim.SetSpeed(40);
-                else anim.SetSpeed(25);
-            } else if (velXZ.magnitude < 5) {
-                if (newRule) {
-                    if (helic)
-                        anim.Set(Anim.Rayman.HelicLandWalk, 1);
-                    else
-                        anim.Set(Anim.Rayman.LandWalk, 1);
-                } else
-                    anim.Set(Anim.Rayman.Walk, 0);
-                float spd = velXZ.magnitude * moveSpeed * 1.5f;
-
-                if (anim.currAnim == Anim.Rayman.HelicLandWalk)
-                    anim.SetSpeed(spd / 2);
-                else
-                    anim.SetSpeed(spd);
-            } else {
-                if (newRule) {
-                    if (helic)
-                        anim.Set(Anim.Rayman.HelicLandWalk, 1);
-                    else
-                        anim.Set(Anim.Rayman.LandRun, 1);
-                } else {
-                    if (anim.currAnim == Anim.Rayman.RunStart)
-                        anim.SetSpeed(200);
-                    else if (anim.IsSet(Anim.Rayman.SlideToRun))
-                        anim.SetSpeed(30);
-                    else
-                        anim.Set(Anim.Rayman.Run, 0, velXZ.magnitude * moveSpeed * 0.5f);
-                }
-
-                if (anim.currAnim == Anim.Rayman.HelicLandWalk || anim.currAnim == Anim.Rayman.LandRun)
-                    anim.SetSpeed(60);
-            }
-
-            if ((anim.currAnim == Anim.Rayman.RunStop || velXZ.magnitude < 0.05f) && lStick.magnitude >= deadZone) {
-                anim.Set(Anim.Rayman.RunStart, 1);
-            } else if (velXZ.magnitude > 5 && lStick.magnitude < deadZone) {
-                anim.Set(Anim.Rayman.RunStop, 1);
-            }
-            */
-            #endregion
-
-            //helic = false;
-            
-            SetRule("GroundReturnHook");
         }
-
 
         void Rule_Air() {
             #region Rule
@@ -344,10 +276,12 @@ namespace CustomGame.Rayman2.Persos {
         Timer runUpTimer = new Timer();
         Timer waitHereTimer = new Timer();
         void Rule_RunAround() {
+            //stick to ground, set movespeed and other ground-based rules and functionality
+            Ground();
+
             //move and look at where we're headed
             if (!lookAtRay)
                 SetLookAt2D(targetWP.transform.position, 180);
-            moveSpeed = 10f;
             Vector3 dir = (targetWP.transform.position - pos).normalized;
 
             velXZ = dir * moveSpeed;
@@ -360,7 +294,7 @@ namespace CustomGame.Rayman2.Persos {
                         
                     //DELETE ME (TEMPORARY UNTIL CALCULUS BELOW IMPLEMENTED)
                         
-                        float h = 7;
+                        jumpApex = 7;
                         
                     //END-DELETE ME
 
@@ -432,10 +366,10 @@ namespace CustomGame.Rayman2.Persos {
                         if (!jumping) {
                             runUpTimer.Abort();
                             waitHereTimer.Abort();
-                            previousRule = rule;
                             velXZStored = velXZ;
                             lookAtRay = true;
-                            prepareJump(h);
+
+                            PrepareJump();
                         }
                     }
                 }
@@ -443,13 +377,12 @@ namespace CustomGame.Rayman2.Persos {
 
             //time-out function; we didn't get to a next waypoint in time, so let's stop running around and do something else
             runUpTimer.Start(Random.Range(2f, 8f), () => {
-                velXZ = Vector3.zero;
-
                 //do something interesting...
                 //...
 
                 //or idle behaviour
                 if (!noIdle) {
+                    velXZ = Vector3.zero;
                     if (Random.value < 0.5f)
                         SetRule("Aim", false);
                     else
@@ -458,8 +391,8 @@ namespace CustomGame.Rayman2.Persos {
             }, false);
 
             //If we've arrived at the destination before the timer runs out, find a new target to run at
-            if (Vector3.Distance(pos, targetWP.transform.position) <= 1.5f) {
-                runUpTimer.Abort();
+            if (Vector3.Distance(pos, targetWP.transform.position) <= 2.5f) {
+                //runUpTimer.Abort();
 
                 //if the waypoint is defined as a "wait here for X seconds" waypoint, do that first. otherwise, just go to the next waypoint
                 if (targetWP.waitHere > 0f) {
@@ -476,10 +409,6 @@ namespace CustomGame.Rayman2.Persos {
                     targetWP = currentWP.getRandomNextWaypoint();
                 }
             }
-
-            previousRule = rule;
-            //stick to the floor geometry and other ground-based convenience functionality
-            SetRule(StdRules.Ground);
         }
 
         Timer goBackToRunningTimer = new Timer();
@@ -516,7 +445,8 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
 
-        void prepareJump(float h) {
+        void PrepareJump() {
+            Debug.LogError("preparing jump...");
             velXZ = Vector3.zero;
 
             if (anim.currAnim == 14) {
@@ -529,7 +459,7 @@ namespace CustomGame.Rayman2.Persos {
                 if (lookAtRay)
                     SetLookAt2D(rayman.pos, 180);
 
-                Jump(h, true);
+                Jump(jumpApex, true);
             } else {
                 if (!lookAtRay)
                     anim.Set(14); //anticipation
@@ -550,12 +480,17 @@ namespace CustomGame.Rayman2.Persos {
                         velXZ = Vector3.zero;
                         landClankSFXPlayer.Play();
                         lookAtRay = false;
+                        Ground();
                         anim.Set(15);   //landing transition
                     }
                     break;
                 case 15:
+                    Ground();
                     if (perso.currentFrame == 12) {
-                        SetRule(StdRules.Ground);
+                        //goToNearestWaypoint();
+                        //anim.Set(2);
+                        //SetRule("RunAround");
+                        SetRule("Test");
                     }
                     break;
                 default:                //do nothing by default; we must still be in an animation transition
@@ -563,16 +498,11 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
 
-        //called when Rule_Ground returns; use to switch state machine back to where it was when it got interrupted
-        void Rule_GroundReturnHook() {
-            if (previousRule != "") {
-                Debug.LogError(previousRule);
-
-                string pr = previousRule;
-                previousRule = "";
-
-                SetRule(pr);
-            }
+        Timer test = new Timer();
+        void Rule_Test() {
+            test.Start(0.3f, () => {
+                SetRule("RunAround");
+            }, false);
         }
     }
 }
