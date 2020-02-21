@@ -6,7 +6,7 @@ using UnityEngine;
 //All possible connection types between Waypoints.
 [System.Serializable]
 public class WPConnection {
-    public enum Type { WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo };
+    public enum Type { NONE, WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo };
     public SHR_Waypoint wp;
     public Type type;
 
