@@ -8,7 +8,6 @@ namespace CustomGame.Rayman2.Persos {
         public bool selfJump;
         public bool slideJump;
         //private float jumpCutoff;
-        private float s2;                   //distance between jump apex and landing point
         private float vy_0;                 //instantaneous vertical velocity (used for jumps)
         private Vector3 jumpDir = Vector3.zero;
 
@@ -201,24 +200,6 @@ namespace CustomGame.Rayman2.Persos {
             jumping = true;
             SetRule(StdRules.Air);
         }
-        
-        private Vector3 JumpParabola(float apex, Vector3 start, Vector3 end) {
-            //1) Find t
-            float t = Mathf.Sqrt( 2*(apex) / Mathf.Abs(gravity) );
-            Debug.LogError("t: " + t);
-
-            //2) find and set instantaneous vertical velocity vy_0
-            // dy = vy_0 * t - 0.5g(t^2)
-            // dy + 0.5g(t^2) = vy_0 * t
-            // (dy + 0.5g(t^2)) / t = vy_0
-            vy_0 = (apex + (0.5f * Mathf.Abs(gravity) * Mathf.Pow(t, 2))) / t;
-            Debug.LogError("vy_0: " + vy_0);
-
-            //3) find and return instantaneous horizontal velocity vxz_0
-            // v = s * dt
-            //return s * t * jumpDir;
-            return (end - start) * t;
-        }
 
         void animateJump() {
             switch (anim.currAnim) {
@@ -254,16 +235,13 @@ namespace CustomGame.Rayman2.Persos {
                 return;
             }
 
-            //gravity = -25;
-
             if (jumping) {
-                //gravity = -25; //-13;
+                gravity = -13;
                 if (velY <= 0) {
-                    //velXZ = JumpParabola(pos.y, pos, WPTarget.transform.position);
                     jumping = false;
                 }
             } else {
-                //gravity = -25;
+                gravity = -25;
             }
 
             ApplyGravity();
@@ -403,23 +381,40 @@ namespace CustomGame.Rayman2.Persos {
             if (!lookAtRay)
                 SetLookAt2D(WPTarget.transform.position, 180);
 
-            #region Parabolic Movement Calculus Part 1
-            //Parabola with start C and end T and apex H
+            #region Parabolic Movement Calculus
+            //Paraboloid with start C and end T and apex H
             Vector3 C = WPCurrent.transform.position;
             Vector3 H = conn.jumpCurveHandle.position;
-            Vector3 T = WPTarget.transform.position;
-            float jumpApex = Mathf.Sqrt( Mathf.Pow(H.y - C.y, 2) );
-            Debug.LogError("apex: " + jumpApex);
+            Vector3 T = WPTarget.transform.position;            
+
+            float apex = Mathf.Sqrt(Mathf.Pow(H.y - C.y, 2));
+            //Debug.LogError("apex: " + apex);
+
+            //find t; we need to split the curve in half because of the differences in gravity up and down, and because the points might start / end on different heights
+            //first half of the curve
+            float t1 = Mathf.Sqrt( 2 * apex / 13 );         //g = 13 while jumping
+            //Debug.LogError("t1: " + t1);
+            //second half of the curve
+            float t2 = Mathf.Sqrt( 2 * Mathf.Sqrt(Mathf.Pow(T.y - H.y, 2)) / 25 );         //g = 25 while falling
+            //Debug.LogError("t2: " + t2);
+            float t = (t1 + t2);
+            //Debug.LogError("t: " + t);
+
+            //2) find and set instantaneous vertical velocity vy_0
+            // dy = vy_0 * t - 0.5g(t^2)
+            // dy + 0.5g(t^2) = vy_0 * t
+            // (dy + 0.5g(t^2)) / t = vy_0
+            vy_0 = (apex + (0.5f * 13 * Mathf.Pow(t1, 2))) / t1;
+
+            //3) find and return instantaneous horizontal velocity vxz_0
+            // v = s / dt
             Vector3 jumpDir = (WPTarget.transform.position - pos).normalized;
             //Debug.LogError("jumpDir: " + jumpDir);
+            float jumpDist = Vector3.Distance(C, T);
+            //Debug.LogError("jumpDist: " + jumpDist);
+            velXZ = jumpDir * (jumpDist / t);
 
-            s2 = Vector2.Distance(new Vector2(H.x, H.z), new Vector2(T.x, T.z));       //distance ||Hxz - Txz||
-
-            //Debug.LogError("s1: " + s1);
-
-            velXZ = JumpParabola(jumpApex, C, T);
             //Debug.LogError("velXZ: " + velXZ);
-            //The rest of part 2 is inside Rule_Air (as that is when vy = 0 is called)
             #endregion
 
             if (!jumping) {
@@ -451,10 +446,16 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
 
+        Timer LandedTimer = new Timer();
         void Rule_Land() {
+            //timeout catch in case something goes wrong; transition to next state
+            LandedTimer.Start(2, () => {
+                SetRule("RunAround");
+            }, false);
+
             switch (anim.currAnim) {
                 case 13:                //jump declination loop
-                    if (velY == 0f) {
+                    if (velY <= 0f) {
                         Ground();
                         velXZ = Vector3.zero;
                         landClankSFXPlayer.Play();
@@ -466,6 +467,7 @@ namespace CustomGame.Rayman2.Persos {
                 case 15:
                     Ground();
                     if (perso.currentFrame == 12) {
+                        LandedTimer.Abort();
                         SetRule("RunAround");
                     }
                     break;
