@@ -14,7 +14,7 @@ namespace RaymapGame
         public MonoBehaviour controller;
         public bool groundEnabled = true;
         public bool wallEnabled = true;
-        public float radius = 0.5f;
+        public float radius = 0.375f;
         public float bottom = 0.5f;
         public float top = 1;
         public float groundDepth = 0.25f;
@@ -41,7 +41,7 @@ namespace RaymapGame
         //  Continuous Raycasting
         //========================================
         public static int raycastDepth = 5;
-        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterialType types = CollideMaterialType.Any) {
+        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterial.Type types = CollideMaterial.Type.Any) {
             bool hit = Physics.Raycast(origin, direction, out var newhit, distance, 1 << 9, QueryTriggerInteraction.Ignore);
             /*
             RaycastHit newhit = new RaycastHit();
@@ -59,9 +59,9 @@ namespace RaymapGame
             return new CollideInfo(newhit);
         }
 
-        public CollideInfo RaycastGround(CollideMaterialType types = CollideMaterialType.Any)
+        public CollideInfo RaycastGround(CollideMaterial.Type types = CollideMaterial.Type.Any)
             => Raycast(pos + Vector3.up * 1, Vector3.down, 1 + groundDepth, types);
-        public CollideInfo RaycastCeiling(CollideMaterialType types = CollideMaterialType.Any)
+        public CollideInfo RaycastCeiling(CollideMaterial.Type types = CollideMaterial.Type.Any)
             => Raycast(pos + Vector3.up * top, Vector3.up, ceilingHeight, types);
 
 

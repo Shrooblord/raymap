@@ -35,7 +35,7 @@ namespace RaymapGame {
             get => (CollideMaterialType)mat.type;
             set { mat.type = (ushort)type; }
         }
-
+        
         public CollideInfo(RaycastHit hit) { 
             var c = hit.collider?.GetComponent<CollideComponent>();
             if (c != null) {

@@ -131,16 +131,23 @@ namespace RaymapGame
             visChanged = true;
         }
 
-        public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
-            if (perso == null || t_disable.active) return false;
-            foreach (Transform child in transform) {
+
+        Collider collider;
+        public bool StoodOnByPerso(PersoController perso) {
+            return perso.col.ground.hit.collider == collider;
+        }
+
+        public float GetCollisionRadius(CollideType collideType) {
+            if (perso == null || t_disable.active) return 0;
+            foreach (Transform child in transform)
                 if (child.name.Contains($"Collide Set {collideType}"))
-                    if (Vector3.Distance(child.transform.position,
-                        perso.pos + (perso.col == null ? Vector3.zero : Vector3.up * perso.col.bottom))
-                        <= child.localScale.magnitude + (perso.col == null ? 0 : perso.col.radius))
-                        return true;
-            }
-            return false;
+                    return child.localScale.magnitude;
+            return 0;
+        }
+
+        public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
+            return !(perso == null || t_disable.active)
+                && DistToPerso(perso) < GetCollisionRadius(collideType) + perso.GetCollisionRadius(collideType);
         }
 
         public bool IsInLevelSector(string lvlName, int sectorIndex) {
@@ -257,6 +264,7 @@ namespace RaymapGame
         //========================================
         protected void Awake() {
             visible = true;
+            collider = GetComponentInChildren<MeshCollider>();
             perso = GetComponent<PersoBehaviour>();
             gameObject.AddComponent<Interpolation>().fixedTimeController = this;
             anim = gameObject.AddComponent<AnimHandler>();

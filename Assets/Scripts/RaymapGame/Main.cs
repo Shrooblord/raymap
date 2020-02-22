@@ -33,71 +33,65 @@ namespace RaymapGame
             return main._mainActor = mainActor = perso;
         }
 
+        public static Type[] GetPersoScripts() {
+            return persoScripts = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
+                            where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos"
+                            select t).ToArray();
+        }
+
 
         void Awake() {
             main = this;
-            persoScripts = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
-                    where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos"
-                    select t).ToArray();
-
+            GetPersoScripts();
             controller = FindObjectOfType<Controller>();
             music = GetComponent<AudioSource>();
             env = gameObject.AddComponent<EnvHandler>();
-        }
-
-        void Start() {
-            Time.fixedDeltaTime = 1f / 144;
-            Timer.StartNew(0.5f, () => StartCoroutine(Load()));
             onLoad += Main_onLoad;
         }
 
+        void Update() {
+            if (!loaded && controller.loadedPersos)
+                Load();
 
-        IEnumerator Load() {
-            FindObjectOfType<EnvHandler>().Enable();
-
-            while (!canLoad) yield return new WaitForEndOfFrame();
-
-            while (canLoad) {
-
-                // Remove colliders on everything but actual world collision
-                foreach (var col in FindObjectsOfType<Collider>())
-                    if (col.GetComponent<CollideComponent>() == null)
-                        Destroy(col);
-
-
-                // Apply perso scripts
-                foreach (var pb in FindObjectsOfType<PersoBehaviour>())
-                    if (pb.GetComponent<PersoController>() == null)
-                        foreach (var scr in persoScripts) {
-                            if (scr.Name.ToLowerInvariant() == pb.perso.namePerso.ToLowerInvariant())
-                                pb.gameObject.AddComponent(scr);
-                            else if (scr.Name.ToLowerInvariant() == pb.perso.nameModel.ToLowerInvariant())
-                                pb.gameObject.AddComponent(scr);
-                            else if (scr.Name.ToLowerInvariant() == pb.perso.nameFamily.ToLowerInvariant())
-                                pb.gameObject.AddComponent(scr);
-                        }
-
-
-                // Find the player Rayman perso and set as Main Actor
-                if (mainActor == null)
-                    SetMainActor((Rayman2.Persos.YLT_RaymanModel)PersoController.GetPersoName("Rayman"));
-
-
-                if (!loaded) Timer.StartNew(2, () => onLoad.Invoke(this, EventArgs.Empty));
-                loaded = true;
-                yield return new WaitForSeconds(0.5f);
-            }
-            yield return null;
-        }
-
-
-        // Debug/cheat stuff
-        void Update() { 
+            // Debug/cheat stuff
             if (Input.GetKeyDown(KeyCode.D))
                 showMainActorDebug = !showMainActorDebug;
 
             if (Input.GetKeyDown(KeyCode.H) && mainActor is Rayman2.Persos.YLT_RaymanModel ray)
                 ray.hasSuperHelic = !ray.hasSuperHelic;
+        }
+
+
+        public void Load() {
+            Time.fixedDeltaTime = 1f / 144;
+            FindObjectOfType<EnvHandler>().Enable();
+            /*
+            // Remove colliders on everything but actual world collision
+            foreach (var col in FindObjectsOfType<Collider>())
+                if (col.GetComponent<CollideComponent>() == null)
+                    Destroy(col);*/
+
+
+            // Apply perso scripts
+            foreach (var pb in FindObjectsOfType<PersoBehaviour>())
+                if (pb.GetComponent<PersoController>() == null)
+                    foreach (var scr in persoScripts) {
+                        if (scr.Name.ToLowerInvariant() == pb.perso.namePerso.ToLowerInvariant())
+                            pb.gameObject.AddComponent(scr);
+                        else if (scr.Name.ToLowerInvariant() == pb.perso.nameModel.ToLowerInvariant())
+                            pb.gameObject.AddComponent(scr);
+                        else if (scr.Name.ToLowerInvariant() == pb.perso.nameFamily.ToLowerInvariant())
+                            pb.gameObject.AddComponent(scr);
+                    }
+
+
+            // Find the player Rayman perso and set as Main Actor
+            if (mainActor == null)
+                SetMainActor((Rayman2.Persos.YLT_RaymanModel)PersoController.GetPersoName("Rayman"));
+
+
+            onLoad.Invoke(this, EventArgs.Empty);
+            loaded = true;
         }
     }
 }

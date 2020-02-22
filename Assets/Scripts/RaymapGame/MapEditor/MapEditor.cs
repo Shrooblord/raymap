@@ -18,6 +18,10 @@ namespace RaymapGame.EditorUI {
 
             if (Input.GetKeyDown(KeyCode.E))
                 persoList.gameObject.SetActive(!persoList.gameObject.activeSelf);
+
+            if (Input.GetMouseButtonDown(0)) {
+                Camera.main.ScreenPointToRay(Input.mousePosition);
+            }
         }
     }
 }
