@@ -66,6 +66,7 @@ public class AnimHandler : MonoBehaviour
     void Awake()
     {
         perso = gameObject.GetComponent<PersoBehaviour>();
+        Set(perso.state.index);
     }
     void Start()
     {

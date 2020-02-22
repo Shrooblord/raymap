@@ -132,9 +132,12 @@ namespace RaymapGame
         }
 
 
-        Collider collider;
         public bool StoodOnByPerso(PersoController perso) {
-            return perso.col.ground.hit.collider == collider;
+            foreach (var c in GetComponentsInChildren<Collider>()) {
+                if (perso.col.ground.hit.collider == c)
+                    return true;
+            }
+            return false;
         }
 
         public float GetCollisionRadius(CollideType collideType) {
@@ -264,7 +267,6 @@ namespace RaymapGame
         //========================================
         protected void Awake() {
             visible = true;
-            collider = GetComponentInChildren<MeshCollider>();
             perso = GetComponent<PersoBehaviour>();
             gameObject.AddComponent<Interpolation>().fixedTimeController = this;
             anim = gameObject.AddComponent<AnimHandler>();
