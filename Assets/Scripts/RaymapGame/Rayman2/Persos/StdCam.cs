@@ -13,6 +13,8 @@ namespace RaymapGame.Rayman2.Persos {
         public bool isRay => targ is YLT_RaymanModel;
         public Vector3 posOffset = new Vector3(0, 4, -7.5f);
 
+        public override bool interpolate => false;
+
         protected override void OnStart() {
             col.controller = this;
             lStickAngle_s = lStickAngle;

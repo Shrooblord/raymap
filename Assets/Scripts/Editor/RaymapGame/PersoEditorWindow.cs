@@ -12,15 +12,17 @@ namespace RaymapGame.PersoEditor {
         }
 
 
-        public MethodBody body = new MethodBody(/*
-            new MethodInvoke(TypeData.loaded.actions["SetFriction"]),
-            new MethodInvoke(TypeData.loaded.actions["SetRule"])
-            */);
+        //public MethodBody body = new MethodBody(/*
+            //new MethodInvoke(TypeData.loaded.actions["SetFriction"]),
+           // new MethodInvoke(TypeData.loaded.actions["SetRule"])
+           // */);
 
         void OnGUI() {
-            foreach (var a in body.body) {
-                a.Inspect(EditorMode.UnityInspector);
-            }
+            //foreach (var t in TypeData.loaded.actions.Values)
+              //  GUILayout.Label(t.Name);
+            //foreach (var a in body.body) {
+                //a.Inspect(EditorMode.UnityInspector);
+            //}
         }
     }
 }

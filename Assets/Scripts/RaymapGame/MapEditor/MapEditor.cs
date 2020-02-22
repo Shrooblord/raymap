@@ -14,8 +14,6 @@ namespace RaymapGame.EditorUI {
         }
 
         void Update() {
-            if (!Main.loaded) return;
-
             if (Input.GetKeyDown(KeyCode.E))
                 persoList.gameObject.SetActive(!persoList.gameObject.activeSelf);
 

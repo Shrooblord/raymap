@@ -10,12 +10,9 @@ namespace RaymapGame.EditorUI {
         public VerticalLayoutGroup list;
         public Color colorGeneric, colorMain, colorController, colorControllerDot;
 
-        bool loaded;
-        void Update() {
-            if (!loaded) {
-                loaded = true;
-                Load();
-            }
+        void Start() => Main.onLoad += Main_onLoad;
+        void Main_onLoad(object sender, System.EventArgs e) {
+            Load();
         }
 
         public void Load() {

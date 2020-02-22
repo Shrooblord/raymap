@@ -6,23 +6,6 @@ using UnityEngine;
 using OpenSpace.Collide;
 
 namespace RaymapGame {
-    public enum CollideMaterialType : ushort {
-        Any = ushort.MaxValue,
-        Generic = 0,
-        Slide = 1 << 0,
-        Trampoline = 1 << 1,
-        GrabbableLedge = 1 << 2,
-        Wall = 1 << 3,
-        HangableCeiling = 1 << 5,
-        ClimbableWall = 1 << 6,
-        Electric = 1 << 7,
-        LavaDeathWarp = 1 << 8,
-        FallTrigger = 1 << 9,
-        HurtTrigger = 1 << 10,
-        DeathWarp = 1 << 11,
-        Water = 1 << 14,
-        NoCollision = 1 << 15,
-    }
 
     public struct CollideInfo {
         public GeometricObjectElementCollideTriangles collide;
@@ -31,14 +14,14 @@ namespace RaymapGame {
         public CollideMaterial mat => collide.gameMaterial.collideMaterial;
         public bool isValid;
         public CollideType collideType => collide.geo.type;
-        public CollideMaterialType type {
-            get => (CollideMaterialType)mat.type;
+        public CollideMaterial.Type type {
+            get => (CollideMaterial.Type)mat.type;
             set { mat.type = (ushort)type; }
         }
         
         public CollideInfo(RaycastHit hit) { 
             var c = hit.collider?.GetComponent<CollideComponent>();
-            if (c != null) {
+            if (c != null && hit.point != Vector3.zero) {
                 isValid = true;
                 collide = c.collide;
                 this.hit = hit;

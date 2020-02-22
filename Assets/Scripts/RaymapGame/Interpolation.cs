@@ -2,21 +2,16 @@
 //  By: Adsolution
 //================================
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace RaymapGame
-{
-    public interface IInterpolate
-    {
+namespace RaymapGame {
+    public interface IInterpolate {
         bool interpolate { get; }
         Vector3 interpolPos { get; }
         Quaternion interpolRot { get; }
     }
 
-    public class Interpolation : MonoBehaviour
-    {
+    public class Interpolation : MonoBehaviour {
         public static float deltaPosThreshold = 8;
 
         Vector3 pprev;
@@ -24,8 +19,7 @@ namespace RaymapGame
         public MonoBehaviour fixedTimeController;
         IInterpolate ipl;
 
-        void Update()
-        {
+        void Update() {
             if (fixedTimeController == null) return;
             if (ipl == null) {
                 if (fixedTimeController is IInterpolate i)
