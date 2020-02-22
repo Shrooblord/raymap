@@ -65,11 +65,11 @@ namespace RaymapGame
         public void Load() {
             Time.fixedDeltaTime = 1f / 144;
             FindObjectOfType<EnvHandler>().Enable();
-            /*
+            
             // Remove colliders on everything but actual world collision
             foreach (var col in FindObjectsOfType<Collider>())
                 if (col.GetComponent<CollideComponent>() == null)
-                    Destroy(col);*/
+                    Destroy(col);
 
 
             // Apply perso scripts
