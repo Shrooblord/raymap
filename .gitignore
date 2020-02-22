@@ -7,6 +7,11 @@
 !/Assets/Scripts/RaymapGame/
 !/Assets/Scripts/RaymapGame/*
 
+!/Assets/Scripts/Editor/
+/Assets/Scripts/Editor/*
+!/Assets/Scripts/Editor/RaymapGame/
+!/Assets/Scripts/Editor/RaymapGame/*
+
 !/Assets/Resources/
 /Assets/Resources/*
 !/Assets/Resources/RaymapGame
