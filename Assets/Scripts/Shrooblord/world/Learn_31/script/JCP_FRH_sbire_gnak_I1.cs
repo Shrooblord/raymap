@@ -7,7 +7,9 @@ namespace CustomGame.Rayman2.Persos {
         public bool jumping;
         public bool selfJump;
         public bool slideJump;
-        private float jumpApex = 1;                //jump apex
+        private float jumpApex = 1;         //jump apex
+        private float s2;                   //distance between jump apex and landing point
+
         public float groundDepth = 0.5f;
         float jumpCutoff;
         float jumpLiftOffVelY;
@@ -17,8 +19,8 @@ namespace CustomGame.Rayman2.Persos {
         public bool strafing;
 
         public SHR_WaypointGraph wpGraph;
-        SHR_Waypoint currentWP;
-        SHR_Waypoint targetWP;
+        SHR_Waypoint WPCurrent;
+        SHR_Waypoint WPTarget;
 
         private SFXPlayer snoreSFXPlayer;
         private SFXPlayer landClankSFXPlayer;
@@ -115,13 +117,13 @@ namespace CustomGame.Rayman2.Persos {
 
         void GoToNearestWaypoint() {
             if (graph != null)
-                currentWP = targetWP;
-            targetWP = graph.GetNearestWaypoint(pos);
+                WPCurrent = WPTarget;
+            WPTarget = graph.GetNearestWaypoint(pos);
         }
 
         WPConnection GetConnection() {
-            foreach (var conn in currentWP.next) {
-                if (conn.wp == targetWP) {
+            foreach (var conn in WPCurrent.next) {
+                if (conn.wp == WPTarget) {
                     return conn;
                 }
             }
@@ -130,7 +132,7 @@ namespace CustomGame.Rayman2.Persos {
         }
 
         void SetVelXZ() {
-            Vector3 dir = (targetWP.transform.position - pos).normalized;
+            Vector3 dir = (WPTarget.transform.position - pos).normalized;
             velXZ = dir * moveSpeed;
         }
 
@@ -154,6 +156,15 @@ namespace CustomGame.Rayman2.Persos {
             */
 
             SetRule(StdRules.Air);
+        }
+        
+        //First half of the jump parabola happens to be the exact same calculation as the second half
+        private Vector3 JumpParabola(float h_max_or_y0, float s, Vector3 dir) {
+            //1) Find t
+            float t = Mathf.Sqrt( 2*(h_max_or_y0) / Mathf.Abs(gravity) );
+            Debug.LogError("t: " + t);
+            //2) Find and return v_xz
+            return s * t * dir;
         }
 
         void animateJump() {
@@ -196,6 +207,7 @@ namespace CustomGame.Rayman2.Persos {
             if (jumping) {
                 gravity = -13;
                 if (velY < jumpCutoff)
+                    velXZ = JumpParabola(pos.y, s2, transform.forward);  //- because all persos have "forwards" pointing behind them...
                     jumping = false;
             } else {
                 gravity = -25;
@@ -294,6 +306,7 @@ namespace CustomGame.Rayman2.Persos {
         }
 
         Timer surpriseTimer = new Timer();
+
         void Rule_Surprise() {
             anim.Set(6);
 
@@ -309,97 +322,57 @@ namespace CustomGame.Rayman2.Persos {
 
             //move and look at where we're headed
             if (!lookAtRay)
-                SetLookAt2D(targetWP.transform.position, 180);
+                SetLookAt2D(WPTarget.transform.position, 180);
             SetVelXZ();
             anim.Set(2);
 
-            if (Vector3.Distance(pos, targetWP.transform.position) <= 0.5f) {                
-                currentWP = targetWP;
-                targetWP = currentWP.getRandomNextWaypoint();
+            if (Vector3.Distance(pos, WPTarget.transform.position) <= 0.5f) {                
+                WPCurrent = WPTarget;
+                WPTarget = WPCurrent.getRandomNextWaypoint();
 
                 SetVelXZ();
                 WPConnection conn = GetConnection();
                 if (conn.type == WPConnection.Type.JumpTo) {
-                    var tr = conn.jumpCurveHandle;
-
-                    //DELETE ME (TEMPORARY UNTIL CALCULUS BELOW IMPLEMENTED)
-                        jumpApex = 7;
-                    //END-DELETE ME
-
-                    #region Parabolic Movement Calculus
-                    #region // * * * OUTLINE * * * //
-                    //typical parabolic motion using velocities:
-                    // h(t) = gt^2  +  v.y_start * t  +  h_start
-                    // h(t) = -10^2 +  v.y_start * t  +  """0"""   <--- probably more like WPend.pos.y - WPstart.pos.y
-
-                    //axis of symmetry for parabola:
-                    //  x_max = -b / 2a
-                    // where a = g; b = v.y_start; x_max = t_at_h_max
-                    // t_at_h_max = t_final / 2   <--- we know the value of t_final, because we decide it beforehand, eg. 4s
-                    // 2 = -(v.y_start) / -20
-                    // 2 * 20 = v.y_start
-                    // v.y_start = 40
-
-                    //so when you try and solve for h_maximum using this technique:
-                    //  h(t) = gt^2  +  v.y_start * t  +  h_start
-                    //  h(2) = -10 * (2^2)  +  40 * 2  +  0
-                    //  h(2) = -40 + 80 = 40
-                    //
-                    //However, ***we*** *decide* how high the jump is (as that is simply the height of the handle)
-                    //  h_maximum = handle.pos.y
-                    //Say that it's 40
-                    //  h(t) = gt^2  +  v.y_start * t  +  h_start
-                    //  40 = h(2) = -10 * (2^2)  +  v.y_start * 2 + 0
-                    //  40 = -40 + v.y_start * 2
-                    //  80 = v.y_start * 2
-                    //  40 = v.y_start
-
-                    //we could calculate in advance at what time a jump would land given a starting velocity:
-                    //  h(t) = 0
-                    //  gt^2  +  v.y_start * t  +  h_start = 0
-                    // -10t^2 +  40 * t + 0 = 0
-                    // --> apply x = (-b (+/-) sqrt(b^2 - 4ac)) / 2a
-                    //         where x = t; a = -10; b = 40; c = 0
-                    // t = (-40 (+/-) sqrt(40^2 - 0)) / 2*-10
-                    // t = (-40 (+/-) 40) / -20
-                    // --> -40+40 = 0 so one solution is   t = 0s (that's the starting condition, so makes sense)
-                    // --> -40-40 / -20 = -80 / -20 = 4 so t = 4s (and this equals the 4s we set in the initial conditions (see above), so that makes perfect sense)
-
-                    //however, we instead will know the *time* the pirate will land (determine this beforehand; i.e. say "this jump will take 4 seconds; period."
-                    //  and from this *determine* what its initial velocity in both horizontal and vertical movement components must be
-                    // velY = v.y_start  <--- done! see above
-                    // velHor will be determined based on the horizontal distance to point h_maximum, and the time it'll take to get from h = 0 to h = h_maximum,
-                    //   and on the horizontal distance from point h_maximum to the end (it's the same!), and the time it'll take to get from h = h_maximum to h = 0
-
-                    //also keep in mind that gravity = -13 while jumping = true, and gravity = -25 in all other cases
-                    //  use this information to calculate the "two halves" (before and after the apex of the jump)
-                    //  of the problem separately, though using exactly the same technique
-                    //this means the velXY needs to change in mid-air to trace the parabola we expect. so write a rule for that inside the "if (velY < jumpCutoff)" of Rule_Air
-
-                    //we can then multiply this horizontal movement by the directional vector dir (given above) to get the velocity in World Space
-                    // velXZ = dir * velHor
-
-                    #endregion
-                    #region // * * * IMPLEMENTATION * * * //
-
-
-
-
-
-
-
-                    #endregion
-                    #endregion
-
-                    if (!jumping) {
-                        velXZStored = velXZ;
-                        lookAtRay = true;
-                        SetRule("PrepareJump");
-                    }
+                    SetRule("JumpAround", conn);
                 }
             }
         }
 
+        //Jumping between Waypoints
+        void Rule_JumpAround(WPConnection conn) {
+            var tr = conn.jumpCurveHandle;
+
+            //move and look at where we're headed
+            if (!lookAtRay)
+                SetLookAt2D(WPTarget.transform.position, 180);
+
+            #region Parabolic Movement Calculus Part 1
+            //Parabola with start C and end T and apex H
+            Vector3 C = WPCurrent.transform.position;
+            Vector3 H = conn.jumpCurveHandle.position;
+            Vector3 T = WPTarget.transform.position;
+            jumpApex = Mathf.Sqrt( Mathf.Pow(H.y, 2) - Mathf.Pow(C.y, 2) );
+            Debug.LogError("apex: " + jumpApex);
+            Vector3 dir = (WPTarget.transform.position - pos).normalized;
+            Debug.LogError("dir: " + dir);
+
+            float s1 = Vector2.Distance(new Vector2(C.x, C.z), new Vector2(H.x, H.z)); //distance ||Cxz - Hxz||
+            s2 = Vector2.Distance(new Vector2(H.x, H.z), new Vector2(T.x, T.z));       //distance ||Hxz - Txz||
+
+            Debug.LogError("s1: " + s1);
+
+            velXZ = JumpParabola(jumpApex, s1, dir);
+            Debug.LogError("velXZ: " + velXZ);
+            //The rest of part 2 is inside Rule_Air (as that is when vy = 0 is called)
+            #endregion
+
+            if (!jumping) {
+                velXZStored = velXZ;
+                SetRule("PrepareJump");
+            }
+        }
+
+        //Animation and transition into becoming airborne
         void Rule_PrepareJump() {
             velXZ = Vector3.zero;
 
@@ -420,11 +393,6 @@ namespace CustomGame.Rayman2.Persos {
                 else
                     anim.Set(10); //straight up ignore the anticipation animation if we're supposed to be "strafe-jumping" (recall the Fairy Glade Pirate?)
             }
-        }
-
-        //Jumping between Waypoints
-        void Rule_JumpAround() {
-        
         }
 
         void Rule_Land() {
