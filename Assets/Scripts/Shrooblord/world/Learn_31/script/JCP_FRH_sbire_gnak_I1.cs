@@ -7,16 +7,18 @@ namespace CustomGame.Rayman2.Persos {
         public bool jumping;
         public bool selfJump;
         public bool slideJump;
-        private float jumpApex = 1;         //jump apex
+        //private float jumpCutoff;
         private float s2;                   //distance between jump apex and landing point
+        private float vy_0;                 //instantaneous vertical velocity (used for jumps)
+        private Vector3 jumpDir = Vector3.zero;
 
         public float groundDepth = 0.5f;
-        float jumpCutoff;
-        float jumpLiftOffVelY;
-        float liftOffVel;
         Vector3 velXZStored = Vector3.zero; //in certain circumstances, we want to pause our horizontal movement for a little moment before returning to it (eg. jump anticipation)
 
         public bool strafing;
+
+        public float visionRadius = 10f;
+        public float visionAngle = 200f;
 
         public SHR_WaypointGraph wpGraph;
         SHR_Waypoint WPCurrent;
@@ -28,6 +30,9 @@ namespace CustomGame.Rayman2.Persos {
 
         private bool lookAtRay = false;
         private bool noIdle = true;
+
+        private Vector3 debugTarget = Vector3.zero;
+        private enum DebugType { FindWaypointTarget, WalkToWaypoint, JumpToWaypoint, VisionCone, SeeRayman, AimAtRayman, ShootAtRayman, TossKegAtRayman, HookRayman };
         #endregion
 
         protected override void OnStart() {
@@ -92,7 +97,61 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
 
         #region Functions
-        void Ground() {
+
+        #region DEBUG
+        Color FindDebugDrawColour(DebugType type) {
+            switch (type) {
+                case DebugType.FindWaypointTarget:
+                    return Color.blue;
+
+                case DebugType.WalkToWaypoint:
+                case DebugType.JumpToWaypoint:
+                case DebugType.SeeRayman:
+                    return Color.green;
+
+                case DebugType.VisionCone:
+                    return Color.magenta;
+
+                case DebugType.AimAtRayman:
+                    return Color.cyan;
+
+                case DebugType.ShootAtRayman:
+                case DebugType.TossKegAtRayman:
+                    return Color.red;
+
+                case DebugType.HookRayman:
+                    return Color.black;
+
+                default:
+                    return Color.white;
+            }
+        }
+
+        void DrawVisionCone(float angle, float radius) {
+            Color col = FindDebugDrawColour(DebugType.VisionCone);
+
+            Vector3 left  = pos + radius *  angle / 2 * transform.forward;
+            Vector3 right = pos + radius * -angle / 2 * transform.forward;
+
+            Debug.DrawLine(pos,   left, col);
+            Debug.DrawLine(pos,  right, col);
+            Debug.DrawLine(left, right, col);
+        }
+
+        //All the things the Henchman is thinking right now
+        void DrawMind() {
+            DrawVisionCone(visionAngle, visionRadius);
+            //need to keep track of what my "target(s)" is/are at any time, i.e. is it a Waypoint, or Rayman, or both? ---> prob a List of Vec3s then
+            //draw line to target and a ball on the target(, and offset these in Y so they're not in the ground(?))
+        }
+        #endregion
+
+        //every tick
+        protected override void OnUpdate() {
+            //DrawMind();
+        }
+
+        void Ground() {   
             col.groundDepth = groundDepth;
             col.UpdateGroundCollision();
 
@@ -136,35 +195,29 @@ namespace CustomGame.Rayman2.Persos {
             velXZ = dir * moveSpeed;
         }
 
-        public void Jump(float height, bool forceMaxHeight, bool selfJump = false, bool slideJump = false) {
-            this.selfJump = selfJump;
-            this.slideJump = slideJump;
+        public void Jump() {
+            velY = vy_0;
+            //jumpCutoff = vy_0 * 0.01f;
             jumping = true;
-            //helic = false;
-            //rule = StdRules.Air;
-
-            float am = Mathf.Sqrt((1920f / 97) * height);
-            jumpLiftOffVelY = slideJump ? apprVel.y / 2 : 0;
-            jumpCutoff = am * 0.65f + jumpLiftOffVelY;
-            velY = am * 1.25f + jumpLiftOffVelY;
-
-            /*
-            if (velXZ.magnitude < moveSpeed / 2 || !selfJump)
-                anim.Set(Anim.Rayman.JumpIdleStart, 1);
-            else
-                anim.Set(Anim.Rayman.JumpRunStart, 1);
-            */
-
             SetRule(StdRules.Air);
         }
         
-        //First half of the jump parabola happens to be the exact same calculation as the second half
-        private Vector3 JumpParabola(float h_max_or_y0, float s, Vector3 dir) {
+        private Vector3 JumpParabola(float apex, Vector3 start, Vector3 end) {
             //1) Find t
-            float t = Mathf.Sqrt( 2*(h_max_or_y0) / Mathf.Abs(gravity) );
+            float t = Mathf.Sqrt( 2*(apex) / Mathf.Abs(gravity) );
             Debug.LogError("t: " + t);
-            //2) Find and return v_xz
-            return s * t * dir;
+
+            //2) find and set instantaneous vertical velocity vy_0
+            // dy = vy_0 * t - 0.5g(t^2)
+            // dy + 0.5g(t^2) = vy_0 * t
+            // (dy + 0.5g(t^2)) / t = vy_0
+            vy_0 = (apex + (0.5f * Mathf.Abs(gravity) * Mathf.Pow(t, 2))) / t;
+            Debug.LogError("vy_0: " + vy_0);
+
+            //3) find and return instantaneous horizontal velocity vxz_0
+            // v = s * dt
+            //return s * t * jumpDir;
+            return (end - start) * t;
         }
 
         void animateJump() {
@@ -188,10 +241,7 @@ namespace CustomGame.Rayman2.Persos {
             col.UpdateGroundCollision();
             animateJump();
 
-            if (newRule)
-                liftOffVel = velXZ.magnitude;
-
-            if (col.ground.AnyGround && velY <= 0) {
+            if (col.ground.AnyGround && velY <= 0) {//<= jumpCutoff) {
                 velY = 0;
                 //SetRule(StdRules.Ground);  <---- now handled by animateJump()
                 SetRule("Land");
@@ -204,13 +254,16 @@ namespace CustomGame.Rayman2.Persos {
                 return;
             }
 
+            //gravity = -25;
+
             if (jumping) {
-                gravity = -13;
-                if (velY < jumpCutoff)
-                    velXZ = JumpParabola(pos.y, s2, transform.forward);  //- because all persos have "forwards" pointing behind them...
+                //gravity = -25; //-13;
+                if (velY <= 0) {
+                    //velXZ = JumpParabola(pos.y, pos, WPTarget.transform.position);
                     jumping = false;
+                }
             } else {
-                gravity = -25;
+                //gravity = -25;
             }
 
             ApplyGravity();
@@ -287,6 +340,10 @@ namespace CustomGame.Rayman2.Persos {
 
             GoToNearestWaypoint();
 
+            //While sleeping, his """vision""" radius is greatly reduced, but he does have 360 degrees """field of view"""
+            //  Then we can still use the same logic for detecting where Rayman is, but have it seem like the Pirate only noticed him because he "heard" Ray come close
+            //...
+
             if (rayman != null) {
                 if (Vector3.Distance(pos, rayman.pos) < 60) {  //6
                     snoringTimer.Abort();
@@ -351,18 +408,17 @@ namespace CustomGame.Rayman2.Persos {
             Vector3 C = WPCurrent.transform.position;
             Vector3 H = conn.jumpCurveHandle.position;
             Vector3 T = WPTarget.transform.position;
-            jumpApex = Mathf.Sqrt( Mathf.Pow(H.y, 2) - Mathf.Pow(C.y, 2) );
+            float jumpApex = Mathf.Sqrt( Mathf.Pow(H.y - C.y, 2) );
             Debug.LogError("apex: " + jumpApex);
-            Vector3 dir = (WPTarget.transform.position - pos).normalized;
-            Debug.LogError("dir: " + dir);
+            Vector3 jumpDir = (WPTarget.transform.position - pos).normalized;
+            //Debug.LogError("jumpDir: " + jumpDir);
 
-            float s1 = Vector2.Distance(new Vector2(C.x, C.z), new Vector2(H.x, H.z)); //distance ||Cxz - Hxz||
             s2 = Vector2.Distance(new Vector2(H.x, H.z), new Vector2(T.x, T.z));       //distance ||Hxz - Txz||
 
-            Debug.LogError("s1: " + s1);
+            //Debug.LogError("s1: " + s1);
 
-            velXZ = JumpParabola(jumpApex, s1, dir);
-            Debug.LogError("velXZ: " + velXZ);
+            velXZ = JumpParabola(jumpApex, C, T);
+            //Debug.LogError("velXZ: " + velXZ);
             //The rest of part 2 is inside Rule_Air (as that is when vy = 0 is called)
             #endregion
 
@@ -386,7 +442,7 @@ namespace CustomGame.Rayman2.Persos {
                 if (lookAtRay)
                     SetLookAt2D(rayman.pos, 180);
 
-                Jump(jumpApex, true);
+                Jump();
             } else {
                 if (!lookAtRay)
                     anim.Set(14); //anticipation
