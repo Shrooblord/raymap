@@ -62,6 +62,16 @@ namespace RaymapGame.Rayman2.Persos
 
         };
 
+        public static class StdRules {
+            public const string
+                Air = nameof(Air),
+                Ground = nameof(Ground),
+                Sliding = nameof(Sliding),
+                Swimming = nameof(Swimming),
+                Falling = nameof(Falling),
+                Climbing = nameof(Climbing);
+        }
+
         protected override void OnStart()
         {
             cam = Camera.main.GetComponent<StdCam>();

@@ -4,9 +4,10 @@
 
 using UnityEngine;
 using static RaymapGame.InputEx;
+using static RaymapGame.Rayman2.Persos.YLT_RaymanModel;
 
 namespace RaymapGame.Rayman2.Persos {
-    public class StdCam : PersoController {
+    public partial class StdCam : PersoController {
         public PersoController targ => Main.mainActor;
         public Camera cam;
         public bool isRay => targ is YLT_RaymanModel;
@@ -127,7 +128,7 @@ namespace RaymapGame.Rayman2.Persos {
                 }
                 else if (lStickAngle > -160 && lStickAngle < 160 && persoRule != StdRules.Sliding)
                 {
-                    RotateYSmooth(Mathf.Clamp(-lStickAngle_s * new Vector3(targ.apprVel.x, 0, targ.apprVel.z).magnitude
+                    RotateY(Mathf.Clamp(-lStickAngle_s * new Vector3(targ.apprVel.x, 0, targ.apprVel.z).magnitude
                         * mvrotspd, -120, 120), 1);
                 }
                 else if (targ.velXZ.magnitude > 2)
@@ -146,7 +147,7 @@ namespace RaymapGame.Rayman2.Persos {
 
 
                 if (rStick_s.magnitude > deadZone)
-                    RotateYSmooth(-rStick_s.x, 90);
+                    RotateY(-rStick_s.x, 90);
             }
             else
             {

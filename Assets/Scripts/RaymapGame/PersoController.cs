@@ -43,20 +43,9 @@ namespace RaymapGame
 
         public virtual AnimSFX[] animSfx { get; }
 
-        public string rule;
+        public string rule = "";
         public Dictionary<string, MethodBase> rules = new Dictionary<string, MethodBase>();
         object[] ruleParams;
-
-        public static class StdRules
-        {
-            public const string
-                Air = nameof(Air),
-                Ground = nameof(Ground),
-                Sliding = nameof(Sliding),
-                Swimming = nameof(Swimming),
-                Falling = nameof(Falling),
-                Climbing = nameof(Climbing);
-        }
 
         public MethodBase SetRule(string rule, params object[] ruleParams) {
             this.rule = rule;
@@ -143,7 +132,7 @@ namespace RaymapGame
         }
 
         public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
-            if (perso == null) return false;
+            if (perso == null || t_disable.active) return false;
             foreach (Transform child in transform) {
                 if (child.name.Contains($"Collide Set {collideType}"))
                     if (Vector3.Distance(child.transform.position,
@@ -152,6 +141,10 @@ namespace RaymapGame
                         return true;
             }
             return false;
+        }
+
+        public bool IsInLevelSector(string lvlName, int sectorIndex) {
+            return Main.lvlName == lvlName && perso.sector == Main.controller.sectorManager.sectors[sectorIndex];
         }
 
 
@@ -163,25 +156,29 @@ namespace RaymapGame
             vel = Vector3.zero;
         }
 
-        public void NavDirection3D(Vector3 dir) {
+        public void NavDirection3D(Vector3 dir, float t_rot = -1) {
             dir.Normalize();
             velXZ += new Vector3(dir.x, 0, dir.z) * fricXZ * moveSpeed * dt;
             velY += velY * fricY * moveSpeed * dt;
-            SetLookAt2D(pos + dir);
+            SetLookAt2D(pos + dir, t_rot);
         }
 
-        public void NavDirection(Vector3 dir) {
+        public void NavDirection(Vector3 dir, float t_rot = -1) {
             dir.y = 0;
-            NavDirection3D(dir);
+            NavDirection3D(dir, t_rot);
         }
 
-        public void NavTowards3D(Vector3 target) {
-            NavDirection3D(target - pos);
+        public void NavTowards3D(Vector3 target, float t_rot = -1) {
+            NavDirection3D(target - pos, t_rot);
         }
 
-        public void NavTowards(Vector3 target) {
+        public void NavTowards(Vector3 target, float t_rot = -1) {
             target.y = pos.y;
-            NavTowards3D(target);
+            NavTowards3D(target, t_rot);
+        }
+
+        public void NavForwards() {
+            NavTowards3D(pos - transform.forward);
         }
 
 
@@ -198,24 +195,20 @@ namespace RaymapGame
         Timer t_disable = new Timer();
 
         public void RotateToAngle(float angle, float t = 10)
-            => rot = Quaternion.Lerp(rot, Quaternion.Euler(0, angle, 0), t * dt);
+            => rot = Quaternion.Slerp(rot, Quaternion.Euler(0, angle, 0), t * dt);
         public void RotateToDestination(Vector3 dest, float t = 10)
             => RotateToAngle(Matrix4x4.LookAt(pos, dest, Vector3.up).rotation.eulerAngles.y);
 
-        public void SetRotYSmooth(float angle, float t)
-            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), t * dt);
-        public void RotateYSmooth(float angle, float t) 
-            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y + angle, rot.eulerAngles.z), t * dt);
-        public void SetRotY(float angle) 
-            => rot = Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z);
-        public void RotateY(float angle) 
-            => rot = Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y + angle, rot.eulerAngles.z);
-        
-        public void SetLookAt3D(Vector3 target)
-            => rot = Matrix4x4.LookAt(pos, target, Vector3.up).rotation * Quaternion.Euler(0, 180, 0);
-        public void SetLookAt2D(Vector3 target, float addDegrees = 0)
-            => rot = Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, 180, 0);
-        
+        public void SetRotY(float angle, float t = -1)
+            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), t == -1 ? 1 : t * dt);
+        public void RotateY(float angle, float t = -1) 
+            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y + angle, rot.eulerAngles.z), t == -1 ? 1 : t * dt);        
+        public void SetLookAt3D(Vector3 target, float t = -1)
+            => rot = Quaternion.Slerp(rot, Matrix4x4.LookAt(pos, target, Vector3.up).rotation * Quaternion.Euler(0, 180, 0), t == -1 ? 1 : t * dt);
+        public void SetLookAt2D(Vector3 target, float t = -1)
+            => rot = Quaternion.Slerp(rot, Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, 180, 0), t == -1 ? 1 : t * dt);
+
+
 
         public float DistToPerso(PersoController perso)
             => perso == null ? float.PositiveInfinity : Vector3.Distance(pos, perso.pos);
@@ -287,7 +280,7 @@ namespace RaymapGame
             var s = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
             if (s != null) perso.sector = s;
             if (t_disable.active) return;
-            if (isMainActor) OnInput();
+            if (isMainActor || (Main.main.alwaysControlRayman && this is YLT_RaymanModel)) OnInput();
             if (!interpolate) LogicLoop();
         }
 
@@ -308,7 +301,7 @@ namespace RaymapGame
         //  Logic loop
         //========================================
         void InvokeRule(string rule) {
-            if (rules.ContainsKey(rule))
+            if (rules.ContainsKey(rule) && rule != "")
                 rules[rule].Invoke(this, ruleParams);
         }
 

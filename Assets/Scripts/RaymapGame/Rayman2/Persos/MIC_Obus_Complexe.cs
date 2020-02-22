@@ -3,6 +3,9 @@
 //================================
 
 namespace RaymapGame.Rayman2.Persos {
+    /// <summary>
+    /// Walking Shell
+    /// </summary>
     public class MIC_Obus_Complexe : PersoController {
 
         bool inAlertRadius => DistToPerso(rayman) < 15;
@@ -12,12 +15,13 @@ namespace RaymapGame.Rayman2.Persos {
             SetRule("");
             t_fallAsleep.Abort();
             anim.Set(Anim.Shell.WakeUp);
-            t_wakeUp.Start(1.5f, () => SetRule("Chasing"), false);
+            t_wakeUp.Start(1.75f, () => SetRule("Chasing", 135), false);
         }
 
 
         protected override void OnStart() {
             SetRule("Idle");
+            SetShadow(true);
         }
 
         void Rule_Idle() {
@@ -26,28 +30,33 @@ namespace RaymapGame.Rayman2.Persos {
             t_fallAsleep.Start(8, () => SetRule("Sleep"), false);
         }
 
+        
         void Rule_Sleep() {
             anim.Set(Anim.Shell.Sleep);
             if (inAlertRadius) WakeUp(); 
         }
 
         Timer t_wakeUp = new Timer();
-        
-        void Rule_Chasing() {
-            if (newRule)
+        Timer t_runStart = new Timer();
+
+        void Rule_Chasing(float t_rot) {
+            if (newRule) {
                 anim.Set(Anim.Shell.RunStart, 0);
+                t_runStart.Start(0.3f);
+            }
 
-            moveSpeed = 8;
-            NavTowards(rayman.pos);
-            col.StickToGround();
-
-            col.wallEnabled = true;
-
-            if (anim.IsSet(Anim.Shell.RunLoop))
+            if (t_runStart.finished) {
                 anim.SetSpeed(moveSpeed * 8);
+                moveSpeed = 8;
+                //SetLookAt2D(rayman.pos, 13500);
+                NavTowards(rayman.pos);
+                col.StickToGround();
+                col.wallEnabled = true;
+            }
 
             if (CheckCollisionZone(rayman, OpenSpace.Collide.CollideType.ZDM)) {
                 Respawn();
+                rayman.Despawn();
             }
         }
     }

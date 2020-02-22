@@ -2,8 +2,6 @@
 //  By: Adsolution
 //================================
 
-using UnityEngine;
-
 namespace RaymapGame.Rayman2.Persos {
     public class MOM_pirate_sbire_cine_2 : PersoController {
         protected override void OnStart() {
@@ -13,7 +11,7 @@ namespace RaymapGame.Rayman2.Persos {
         void Rule_WaitForRayman() {
             if (rayman == null) return;
 
-            if (Vector3.Distance(pos, rayman.pos) <= 34)
+            if (DistToPerso(rayman) < 50)
                 SetRule("JumpDownCine1");
 
             SetRotY(180);

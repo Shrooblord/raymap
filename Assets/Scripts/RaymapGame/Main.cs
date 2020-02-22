@@ -13,6 +13,7 @@ namespace RaymapGame
         public PersoController _mainActor; // Inspector display only
         public static bool useFixedTimeWithInterpolation = true;
         public static Main main;
+        public bool alwaysControlRayman;
         public static PersoController mainActor;
         public static Type[] persoScripts;
         public static Rayman2.Persos.StdCam cam;

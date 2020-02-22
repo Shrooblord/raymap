@@ -1,4 +1,8 @@
-﻿namespace RaymapGame.PersoEditor {
+﻿//================================
+//  By: Adsolution
+//================================
+
+namespace RaymapGame.PersoEditor {
     public enum EditorMode {
         UnityInspector, InGame
     }
