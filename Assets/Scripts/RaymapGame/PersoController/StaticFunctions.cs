@@ -8,9 +8,8 @@ namespace RaymapGame {
         //========================================
         //  Static Functions
         //========================================
-        public static YLT_RaymanModel GetRayman() {
-            return GetPersoModel("YLT_RaymanModel") as YLT_RaymanModel;
-        }
+        public static YLT_RaymanModel GetRayman()
+            => GetPersoModel<YLT_RaymanModel>("YLT_RaymanModel");
         public static YLT_RaymanModel rayman => Main.rayman;
 
         public static PersoController GetPersoFamily(string persoName)
