@@ -185,14 +185,20 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1037429326}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &51209005
 Transform:
   m_ObjectHideFlags: 0
@@ -237,6 +243,50 @@ Transform:
   m_Father: {fileID: 1419454684}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &102268054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102268055}
+  - component: {fileID: 102268056}
+  m_Layer: 0
+  m_Name: HDL_drillPath_SHR_WP_Drill1_SHR_WP_Drill2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102268055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102268054}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.0400085, y: -0.5699997, z: 7.2349854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 545668331}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &102268056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102268054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drillTravelTime: 0.69
 --- !u!1 &125996528
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +467,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &388947006
 GameObject:
@@ -467,11 +517,15 @@ MonoBehaviour:
   next:
   - wp: {fileID: 2062462165}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2062462165}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!1 &469719538
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +569,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &486948329
 GameObject:
@@ -561,7 +615,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &507779430
 GameObject:
@@ -591,6 +645,64 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1419454684}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &545668329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545668331}
+  - component: {fileID: 545668330}
+  m_Layer: 0
+  m_Name: SHR_WP_Drill1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &545668330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545668329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1717087096}
+  waitHere: 0
+  next:
+  - wp: {fileID: 707161400}
+    type: 2
+    drillTime: 0.69
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 102268055}
+  prev:
+  - wp: {fileID: 2024936022}
+    type: 0
+    drillTime: 2
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
+--- !u!4 &545668331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545668329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.210007, y: -12.448347, z: 10.600006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 102268055}
+  m_Father: {fileID: 1717087097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &549858797
@@ -683,7 +795,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &632741859
 GameObject:
@@ -719,20 +831,30 @@ MonoBehaviour:
   next:
   - wp: {fileID: 2125924506}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 885275730}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 125996529}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2125924506}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 885275730}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 25298918}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1999969853}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1181759354}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &632741861
 Transform:
   m_ObjectHideFlags: 0
@@ -747,6 +869,36 @@ Transform:
   - {fileID: 125996529}
   m_Father: {fileID: 1247102638}
   m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &637128609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637128610}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_Drill2_SHR_WP_Drill3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &637128610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637128609}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.300003, y: 7.2372417, z: 2.1700134}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 707161401}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &669531107
 GameObject:
@@ -832,6 +984,64 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669531107}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &707161399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 707161401}
+  - component: {fileID: 707161400}
+  m_Layer: 0
+  m_Name: SHR_WP_Drill2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &707161400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707161399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1717087096}
+  waitHere: 0
+  next:
+  - wp: {fileID: 824326940}
+    type: 1
+    drillTime: 2
+    jumpCurveHandle: {fileID: 637128610}
+    drillPathHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 545668330}
+    type: 2
+    drillTime: 2
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 102268055}
+--- !u!4 &707161401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707161399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1300049, y: -13.090523, z: 25.070007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 637128610}
+  m_Father: {fileID: 1717087097}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &751796677
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +1101,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1377309609}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &824326939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 824326941}
+  - component: {fileID: 824326940}
+  m_Layer: 0
+  m_Name: SHR_WP_Drill3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &824326940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824326939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1717087096}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2024936022}
+    type: 2
+    drillTime: 3.14
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 1114750614}
+  prev:
+  - wp: {fileID: 707161400}
+    type: 1
+    drillTime: 2
+    jumpCurveHandle: {fileID: 637128610}
+    drillPathHandle: {fileID: 0}
+--- !u!4 &824326941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824326939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.729996, y: -12.616039, z: 29.410004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1114750614}
+  m_Father: {fileID: 1717087097}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &874870024
 GameObject:
@@ -956,7 +1224,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878624502
 GameObject:
@@ -1033,7 +1301,7 @@ RectTransform:
   - {fileID: 669531108}
   - {fileID: 1781294053}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1074,26 +1342,40 @@ MonoBehaviour:
   next:
   - wp: {fileID: 632741860}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 25298918}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 2029924892}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1527682310}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 975933401}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 632741860}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 125996529}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 975933401}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1527682310}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &885275731
 Transform:
   m_ObjectHideFlags: 0
@@ -1144,17 +1426,25 @@ MonoBehaviour:
   next:
   - wp: {fileID: 885275730}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 885275730}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &975933402
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,7 +1493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -150.00003}
+  m_AnchoredPosition: {x: 200, y: -150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 0, y: 1}
 --- !u!23 &977189306
@@ -1317,23 +1607,35 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1514819016}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 51209004}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1365383581}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1514819016}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 51209004}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1645115718}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1037429327
 Transform:
   m_ObjectHideFlags: 0
@@ -1438,7 +1740,7 @@ RectTransform:
   m_Children:
   - {fileID: 206473931}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1529,6 +1831,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114724231}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1114750613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1114750614}
+  - component: {fileID: 1114750615}
+  m_Layer: 0
+  m_Name: HDL_drillPath_SHR_WP_Drill3_SHR_WP_Drill4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1114750614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114750613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.7649994, y: -4.369999, z: -7.880005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 824326941}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1114750615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114750613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drillTravelTime: 3.14
 --- !u!1 &1162811862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,7 +1909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -200.00003, y: 150}
+  m_AnchoredPosition: {x: -200, y: 150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 0}
 --- !u!23 &1162811864
@@ -1659,7 +2005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1247102637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1707,7 +2053,7 @@ Transform:
   - {fileID: 1419454684}
   - {fileID: 388947007}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1267960011
 PrefabInstance:
@@ -1764,7 +2110,7 @@ PrefabInstance:
     - target: {fileID: 4187644304884916959, guid: 86cd3730e8c5fa04e99f1476c0536921,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4187644304884916959, guid: 86cd3730e8c5fa04e99f1476c0536921,
         type: 3}
@@ -1936,7 +2282,9 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev: []
 --- !u!4 &1347107639
 Transform:
@@ -2016,7 +2364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200.00003, y: -150.00003}
+  m_AnchoredPosition: {x: -200, y: -150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 1}
 --- !u!23 &1372588409
@@ -2100,35 +2448,55 @@ MonoBehaviour:
   next:
   - wp: {fileID: 51209004}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1527682310}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1037429326}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1645115718}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 780159964}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1347107638}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 885275730}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 2029924892}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1527682310}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 51209004}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1037429326}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1365383581}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1377309609
 Transform:
   m_ObjectHideFlags: 0
@@ -2179,14 +2547,20 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1999969853}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 507779431}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2062462165}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 91853442}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2062462165}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1419454684
 Transform:
   m_ObjectHideFlags: 0
@@ -2314,17 +2688,25 @@ MonoBehaviour:
   next:
   - wp: {fileID: 2084687399}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2125924506}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 751796678}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2084687399}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2125924506}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1920419723}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1485632015
 Transform:
   m_ObjectHideFlags: 0
@@ -2583,7 +2965,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514819015
 GameObject:
@@ -2619,23 +3001,35 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1999969853}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1037429326}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1658324010}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1999969853}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1037429326}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 150536346}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1514819017
 Transform:
   m_ObjectHideFlags: 0
@@ -2685,17 +3079,25 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 885275730}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 885275730}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1527682311
 Transform:
   m_ObjectHideFlags: 0
@@ -2835,7 +3237,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1701416323
 MonoBehaviour:
@@ -2883,6 +3285,57 @@ MonoBehaviour:
   modifier: 0.75
   animationSpeed: 30
   materials: []
+--- !u!1 &1717087095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1717087097}
+  - component: {fileID: 1717087096}
+  m_Layer: 0
+  m_Name: SHR_WP_Drills
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1717087096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717087095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outboundConnectionColour: {r: 0, g: 0.9379053, b: 1, a: 1}
+  inboundConnectionColour: {r: 0.9701193, g: 1, b: 0.015686274, a: 1}
+  persoNames:
+  - JCP_FRH_sbire_gnak_I1
+--- !u!4 &1717087097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717087095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -174.72658, y: 36.92944, z: 359.16257}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 545668331}
+  - {fileID: 707161401}
+  - {fileID: 824326941}
+  - {fileID: 2024936021}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1781294052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,7 +3439,9 @@ MonoBehaviour:
   next:
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev: []
 --- !u!4 &1965624584
 Transform:
@@ -3036,23 +3491,35 @@ MonoBehaviour:
   next:
   - wp: {fileID: 632741860}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1181759354}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1514819016}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1419454683}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 507779431}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1514819016}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2090250876}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &1999969854
 Transform:
   m_ObjectHideFlags: 0
@@ -3068,6 +3535,63 @@ Transform:
   m_Father: {fileID: 1247102638}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2024936020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2024936021}
+  - component: {fileID: 2024936022}
+  m_Layer: 0
+  m_Name: SHR_WP_Drill4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2024936021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024936020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.800003, y: -14.451561, z: 13.649994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1717087097}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2024936022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024936020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1717087096}
+  waitHere: 0
+  next:
+  - wp: {fileID: 545668330}
+    type: 0
+    drillTime: 2
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 824326940}
+    type: 2
+    drillTime: 2
+    jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 1114750614}
 --- !u!1 &2029924891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3132,23 +3656,35 @@ MonoBehaviour:
   next:
   - wp: {fileID: 2084687399}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1005243716}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 388947008}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1419454683}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 2084687399}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 2088189764}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 388947008}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1419454683}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 91853442}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &2062462166
 Transform:
   m_ObjectHideFlags: 0
@@ -3198,17 +3734,25 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1485632014}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2062462165}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 2088189764}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1485632014}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 2062462165}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1005243716}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &2084687400
 Transform:
   m_ObjectHideFlags: 0
@@ -3288,32 +3832,50 @@ MonoBehaviour:
   next:
   - wp: {fileID: 975933401}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1999969853}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1514819016}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 150536346}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1965624583}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1999969853}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 975933401}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1514819016}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1658324010}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 1377309608}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 780159964}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &2090250877
 Transform:
   m_ObjectHideFlags: 0
@@ -3363,17 +3925,25 @@ MonoBehaviour:
   next:
   - wp: {fileID: 1485632014}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 1920419723}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 632741860}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
   prev:
   - wp: {fileID: 1485632014}
     type: 1
+    drillTime: 2
     jumpCurveHandle: {fileID: 751796678}
+    drillPathHandle: {fileID: 0}
   - wp: {fileID: 632741860}
     type: 0
+    drillTime: 2
     jumpCurveHandle: {fileID: 0}
+    drillPathHandle: {fileID: 0}
 --- !u!4 &2125924507
 Transform:
   m_ObjectHideFlags: 0
