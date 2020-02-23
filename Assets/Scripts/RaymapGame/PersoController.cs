@@ -8,6 +8,7 @@ using UnityEngine;
 using OpenSpace.Collide;
 using static RaymapGame.InputEx;
 using RaymapGame.Rayman2.Persos;
+using System.Linq;
 
 namespace RaymapGame {
     public partial class PersoController : MonoBehaviour, IInterpolate {
@@ -233,11 +234,9 @@ namespace RaymapGame {
             if (wp == null) {
                 if ((wp = GetNearestWaypoint()) == null)
                     return false;
-                if (wp.next != null && Vector3.Distance(wp.next.pos, pos) < Vector3.Distance(wp.next.pos, wp.pos)) {
+                if (wp.next != null && DistTo(wp.next.pos) < Vector3.Distance(wp.pos, wp.next.pos))
                     wp = wp.next;
-                }
             }
-
             if (InWaypointRadius(wp))
                 wp = wp.next;
             if (wp == null)
@@ -345,8 +344,10 @@ namespace RaymapGame {
             gameObject.AddComponent<Interpolation>().fixedTimeController = this;
             anim = gameObject.AddComponent<AnimHandler>();
             anim.sfx = animSfx;
-            foreach (var m in GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance))
-                if (m.Name.StartsWith("Rule_"))
+
+            // Get rules
+            foreach (var m in GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(x => !x.IsPublic && x.Name.StartsWith("Rule_")))
                     rules.Add(m.Name.Replace("Rule_", ""), m);
         }
 

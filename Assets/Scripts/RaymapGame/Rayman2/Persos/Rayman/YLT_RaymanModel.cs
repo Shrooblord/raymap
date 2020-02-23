@@ -162,8 +162,7 @@ namespace RaymapGame.Rayman2.Persos {
         //  Rayman Actions
         //----------------------------------------
 
-        public void RespawnRay()
-        {
+        public void RespawnRay() {
             pos = startPos + Vector3.up * 0.5f;
             rot = startRot;
             velXZ = Vector3.zero;

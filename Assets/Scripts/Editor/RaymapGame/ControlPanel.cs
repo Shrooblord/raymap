@@ -10,17 +10,42 @@ namespace RaymapGame {
             GetWindow(typeof(ControlPanel));
         }
 
-        public static void CreateNewPersoScript(string persoNameOrModelOrFamily, string englishName, string author = "") {
-            string newPath = $"Assets/Scripts/RaymapGame/Rayman2/Persos/{persoNameOrModelOrFamily}.cs";
-            if (File.Exists(newPath)) {
-                t_error.Start(3);
-                return;
+        public static string persoPath => $"Assets/Scripts/RaymapGame/{Main.gameName}/Persos";
+
+
+
+        public static void CreatePersoScript(PersoBehaviour pb, string description, string author, string rank) {
+            string baseName = "";
+            string newName = "";
+            string newDir = "";
+            switch (rank) {
+                case "Family":
+                    newName = pb.perso.nameFamily;
+                    newDir = $"{persoPath}/{pb.perso.nameFamily}";
+                    break;
+                case "Model":
+                    baseName = pb.perso.nameFamily;
+                    newName = pb.perso.nameModel;
+                    newDir = $"{persoPath}/{pb.perso.nameFamily}/Models/{pb.perso.nameModel}";
+                    break;
+                case "Instance":
+                    baseName = pb.perso.nameModel;
+                    newName = pb.perso.namePerso;
+                    newDir = $"{persoPath}/{pb.perso.nameFamily}/Models/{pb.perso.nameModel}/Instances";
+                    break;
             }
-            var scr = new StreamReader("Assets/Scripts/RaymapGame/PersoEditor/NewPersoScript.txt");
+            
+            if (!Directory.Exists(newDir))
+                Directory.CreateDirectory(newDir);
+            string newPath = $"{newDir}/{newName}.cs";
+            if (File.Exists(newPath)) return;
+
+            var scr = new StreamReader($"Assets/Scripts/RaymapGame/PersoEditor/Objects/NewScript_{rank}.txt");
             var outs = scr.ReadToEnd()
                 .Replace("Author", author)
-                .Replace("NewPersoScript", persoNameOrModelOrFamily)
-                .Replace("Description", englishName).Split(new string[] { "~~~" }, System.StringSplitOptions.RemoveEmptyEntries);
+                .Replace("NewScript", newName)
+                .Replace("DerivedScript", baseName)
+                .Replace("Description", description).Split(new string[] { "~~" }, System.StringSplitOptions.RemoveEmptyEntries);
 
             var newScr = new StreamWriter(newPath);
             if (author != "") newScr.Write(outs[0]);
@@ -52,31 +77,42 @@ namespace RaymapGame {
             persos = FindObjectsOfType<PersoController>();
         }
 
-        void FixedUpdate() {
-            t_scan.Start(1.5f, RescanLevel, false);
-        }
 
-
-        static string englishName = "";
+        static string author = System.Environment.UserName;
+        static string description = "";
 
         public void OnGUI() {
             Header("Create Perso Script");
 
-            Main.GetPersoScripts();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("English name:", GUILayout.Width(nameWidth));
-            englishName = GUILayout.TextField(englishName);
+            GUILayout.Label("Author:", GUILayout.Width(nameWidth));
+            author = GUILayout.TextField(author);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("English description:", GUILayout.Width(nameWidth));
+            description = GUILayout.TextField(description);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Create from Selected Perso", GUILayout.Width(nameWidth));
-            float bw = 50;
-            if (GUILayout.Button("Name"))
-                CreateNewPersoScript(GetSelectedPersoBehaviour().perso.namePerso, englishName);
-            if (GUILayout.Button("Model"))
-                CreateNewPersoScript(GetSelectedPersoBehaviour().perso.nameModel, englishName);
-            if (GUILayout.Button("Family"))
-                CreateNewPersoScript(GetSelectedPersoBehaviour().perso.nameFamily, englishName);
+            if (GUILayout.Button("Family")) {
+                var pb = GetSelectedPersoBehaviour();
+                CreatePersoScript(pb, description, author, "Family");
+            }
+            if (GUILayout.Button("Model")) {
+                var pb = GetSelectedPersoBehaviour();
+                CreatePersoScript(pb, description, author, "Family");
+                CreatePersoScript(pb, description, author, "Model");
+
+            }
+            if (GUILayout.Button("Instance")) {
+                var pb = GetSelectedPersoBehaviour();
+                CreatePersoScript(pb, description, author, "Family");
+                CreatePersoScript(pb, description, author, "Model");
+                CreatePersoScript(pb, description, author, "Instance");
+
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -86,16 +122,45 @@ namespace RaymapGame {
             }
             GUILayout.EndHorizontal();
 
+
+
+
             Header("Perso Scripts");
 
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Live Preview", GUILayout.Width(nameWidth));
+            if (GUILayout.Button("Reload Scripts")) {
+                Main.GetPersoScripts();
+            }
+            if (GUILayout.Button("Update Live Scene")) {
+                RescanLevel();
+            }
+            GUILayout.EndHorizontal();
+
+
+
+            float ind = 25;
+            int columns = Mathf.CeilToInt((Screen.width - ind) / 100);
+            float oWidth = Screen.width / columns;
+
             foreach (var s in Main.persoScripts) {
-                EditorGUILayout.BeginToggleGroup(s.Name, true);
+                int i = 0;
+                EditorGUILayout.ToggleLeft(s.Name, true);
                 foreach (var p in persos) {
                     if (p.GetType() == s) {
-                        EditorGUILayout.ObjectField(p, typeof(PersoController), true);
+                        if (i == 0) {
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Space(ind);
+                        }
+                        EditorGUILayout.ObjectField(p, typeof(PersoController), true, GUILayout.MaxWidth(oWidth));
+                        i++;
+                    }
+                    if (i > 0 && (i == columns || System.Array.IndexOf(persos, p) == persos.Length - 1)) {
+                        GUILayout.EndHorizontal();
+                        i = 0;
                     }
                 }
-                EditorGUILayout.EndToggleGroup();
             }
         }
     }

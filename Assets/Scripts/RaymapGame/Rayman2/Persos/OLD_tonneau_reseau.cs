@@ -14,8 +14,8 @@ namespace RaymapGame.Rayman2.Persos {
             SetRule("Wait");
             SetFriction(0.7f, 5);
             navRotYSpeed = 0;
-            gravity = -2;
-            moveSpeed = 3;
+            gravity = -3;
+            moveSpeed = 4;
         }
 
         void Rule_Wait() {
@@ -28,10 +28,14 @@ namespace RaymapGame.Rayman2.Persos {
                 SetRule("Sink");
         }
 
+        public virtual void OnSink() { }
+
         void Rule_Sink() {
-            SetFriction(1.5f, 5);
-            if (pos.y - startPos.y < -2)
+            SetFriction(2, 5);
+            if (pos.y - startPos.y < -2) {
                 Reset();
+                OnSink();
+            }
             else ApplyGravity();
         }
     }

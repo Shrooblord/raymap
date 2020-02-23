@@ -104,6 +104,7 @@ namespace RaymapGame
         Vector3 wallPush, ceilPush;
         public void UpdateWallCollision()
         {
+            if (!wallEnabled) return;
             wallPush = new Vector3();
             wall = new CollideInfo();
             var most = new Vector3();

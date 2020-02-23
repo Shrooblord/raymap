@@ -6,6 +6,7 @@ using System;
 using RaymapGame.Rayman2.Persos;
 using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace RaymapGame
 {
@@ -16,7 +17,7 @@ namespace RaymapGame
         public bool alwaysControlRayman;
         public static PersoController mainActor;
         public static YLT_RaymanModel rayman;
-        public static Type[] persoScripts;
+        public static Type[] persoScripts = new Type[0];
         public static StdCam cam;
         public static EnvHandler env;
         public static Controller controller;
@@ -36,7 +37,7 @@ namespace RaymapGame
 
         public static Type[] GetPersoScripts() {
             return persoScripts = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
-                            where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos"
+                            where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos" && !t.IsAbstract
                             select t).ToArray();
         }
 
@@ -63,6 +64,11 @@ namespace RaymapGame
         }
 
 
+        public void ApplyPersoScript(PersoBehaviour pb, ref List<Type> list, ref int iterator) {
+            pb.gameObject.AddComponent(list[iterator]);
+            list.Remove(list[iterator--]);
+        }
+
         public void Load() {
             Time.fixedDeltaTime = 1f / 144;
             FindObjectOfType<EnvHandler>().Enable();
@@ -77,19 +83,18 @@ namespace RaymapGame
                 gr.gameObject.AddComponent<WaypointGraph>();
             }
 
-            // Apply perso scripts
+            // Apply perso scripts with (Name > Model > Family) priority
             foreach (var pb in FindObjectsOfType<PersoBehaviour>()) {
-                foreach (var scr in persoScripts) {
-                    var con = pb.gameObject;
-                    //var con = new GameObject(scr.Name);
-                    //pb.transform.parent = con.transform;
-                    if (scr.Name.ToLowerInvariant() == pb.perso.namePerso.ToLowerInvariant())
-                        con.AddComponent(scr);
-                    else if (scr.Name.ToLowerInvariant() == pb.perso.nameModel.ToLowerInvariant())
-                        con.AddComponent(scr);
-                    else if (scr.Name.ToLowerInvariant() == pb.perso.nameFamily.ToLowerInvariant())
-                        con.AddComponent(scr);
+                Type matchName = null, matchModel = null, matchFamily = null;
+                foreach (var s in persoScripts) {
+                    string name = s.Name.ToLowerInvariant();
+                    if (name == pb.perso.namePerso.ToLowerInvariant()) matchName = s;
+                    if (name == pb.perso.nameModel.ToLowerInvariant()) matchModel = s;
+                    if (name == pb.perso.nameFamily.ToLowerInvariant()) matchFamily = s;
                 }
+                if (matchName != null) pb.gameObject.AddComponent(matchName);
+                else if (matchModel != null) pb.gameObject.AddComponent(matchModel);
+                else if (matchFamily != null) pb.gameObject.AddComponent(matchFamily);
             }
 
             // Find the player Rayman perso and set as Main Actor

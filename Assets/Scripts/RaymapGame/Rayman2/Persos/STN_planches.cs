@@ -24,7 +24,7 @@ namespace RaymapGame.Rayman2.Persos {
             SetRule("Wait");
         }
 
-        protected void Rule_Wait() {
+        void Rule_Wait() {
             switch (type) {
                 case 950: break;
                 default:

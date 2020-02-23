@@ -158,7 +158,7 @@ namespace RaymapGame.Rayman2.Persos {
 
 
                 if (rStick_s.magnitude > deadZone)
-                    RotateY(-rStick_s.x, 90);
+                    RotateY(-rStick_s.x * 90, 1);
             }
             else
             {
