@@ -9,8 +9,10 @@ using UnityEngine;
 namespace RaymapGame.EditorUI {
     public class MapEditor : MonoBehaviour {
         public PersoList persoList;
-        void Start() {
-            persoList.gameObject.SetActive(false);
+        void Start() => Main.onLoad += Main_onLoad;
+
+        void Main_onLoad(object sender, System.EventArgs e) {
+            persoList.Load();
         }
 
         void Update() {

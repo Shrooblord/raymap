@@ -33,7 +33,7 @@ namespace RaymapGame {
                 else transform.position = ipl.interpolPos;
                 pprev = transform.position;
 
-                //if (ipl.interpolRot == Quaternion.identity) return;
+
                 transform.rotation = Quaternion.Slerp(rprev, ipl.interpolRot, Time.deltaTime / Time.fixedDeltaTime);
                 rprev = transform.rotation;
             }

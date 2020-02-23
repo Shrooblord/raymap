@@ -2,14 +2,12 @@
 //  By: Adsolution
 //================================
 
-using System.Collections.Generic;
 using UnityEngine;
 using static RaymapGame.InputEx;
 using static UnityEngine.Input;
-namespace RaymapGame.Rayman2.Persos
-{
-    public partial class YLT_RaymanModel : PersoController
-    {
+
+namespace RaymapGame.Rayman2.Persos {
+    public partial class YLT_RaymanModel : PersoController {
         public StdCam cam;
 
         public bool jumping;
@@ -26,6 +24,9 @@ namespace RaymapGame.Rayman2.Persos
         bool superHelicAscend;
         float superHelicRev;
 
+        public bool onRespawn;
+        public override bool resetOnRayDeath => false;
+
         CollideInfo colClimb;
 
         Timer t_runStop = new Timer();
@@ -37,6 +38,7 @@ namespace RaymapGame.Rayman2.Persos
             DebugLabel("Has Super Helic", hasSuperHelic);
         }
 
+        public override float activeRadius => 100000;
 
         public override AnimSFX[] animSfx => new AnimSFX[]
         {
@@ -59,7 +61,6 @@ namespace RaymapGame.Rayman2.Persos
 
             new AnimSFX(Anim.Rayman.Despawn, new SFXPlayer.Info { path = "Rayman2/Rayman/despawn", volume = 0.6f }),
             new AnimSFX(Anim.Rayman.Respawn, new SFXPlayer.Info { path = "Rayman2/Rayman/respawn", volume = 0.85f }),
-
         };
 
         public static class StdRules {
@@ -72,8 +73,7 @@ namespace RaymapGame.Rayman2.Persos
                 Climbing = nameof(Climbing);
         }
 
-        protected override void OnStart()
-        {
+        protected override void OnStart() {
             cam = Camera.main.GetComponent<StdCam>();
 
             switch (Main.lvlName)
@@ -91,8 +91,8 @@ namespace RaymapGame.Rayman2.Persos
         }
 
 
-        protected override void OnUpdate()
-        {
+        protected override void OnUpdate() {
+            onRespawn = false;
             col.wallEnabled = true;
 
             if (col.ground.DeathWarp ||
@@ -112,8 +112,7 @@ namespace RaymapGame.Rayman2.Persos
 
 
 
-        protected override void OnInput()
-        {
+        protected override void OnInput() {
             if (iShootDown)
                 Despawn();
 
@@ -172,6 +171,7 @@ namespace RaymapGame.Rayman2.Persos
             scale = 1;
             selfJump = false;
             helic = false;
+            onRespawn = true;
 
             SetRule(StdRules.Air);
             DisableForSeconds(1.8f);
@@ -179,8 +179,7 @@ namespace RaymapGame.Rayman2.Persos
             if (cam != null)
                 cam.ResetInstant();
         }
-        public void Despawn(bool respawn = true)
-        {
+        public void Despawn(bool respawn = true) {
             DisableForSeconds(100000);
             anim.Set(Anim.Rayman.Despawn, 1);
             if (respawn)

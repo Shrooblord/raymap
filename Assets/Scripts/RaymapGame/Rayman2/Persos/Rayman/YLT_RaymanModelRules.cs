@@ -232,7 +232,8 @@ namespace RaymapGame.Rayman2.Persos {
                 velY = 0;
                 anim.Set(Anim.Rayman.ClimbWallStart, 1);
 
-                pos = col.wall.hit.point + col.wall.hit.normal * 0.5f;
+                if (col.wall.hit.point != Vector3.zero)
+                    pos = col.wall.hit.point + col.wall.hit.normal * 0.5f;
                 colClimb = col.wall;
             }
 

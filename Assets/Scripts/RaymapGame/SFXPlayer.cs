@@ -21,9 +21,9 @@ namespace RaymapGame
             public string path;
             public Polyphony polyphony;
             public Mode mode;
-            public Space space;
+            public Space space = Space.Point;
             public float volume = 1;
-            public float pointMinRadius = 5;
+            public float pointMinRadius = 12;
             public float pointMaxRadius = 75;
         }
 

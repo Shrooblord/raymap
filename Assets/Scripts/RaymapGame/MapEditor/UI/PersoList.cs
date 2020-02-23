@@ -10,10 +10,6 @@ namespace RaymapGame.EditorUI {
         public VerticalLayoutGroup list;
         public Color colorGeneric, colorMain, colorController, colorControllerDot;
 
-        void Start() => Main.onLoad += Main_onLoad;
-        void Main_onLoad(object sender, System.EventArgs e) {
-            Load();
-        }
 
         public void Load() {
             foreach (var p in FindObjectsOfType<PersoBehaviour>()) {

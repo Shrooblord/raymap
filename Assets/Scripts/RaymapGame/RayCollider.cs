@@ -9,11 +9,10 @@ using OpenSpace.Collide;
 
 namespace RaymapGame
 {
-    public class RayCollider
-    {
+    public class RayCollider {
         public MonoBehaviour controller;
         public bool groundEnabled = true;
-        public bool wallEnabled = true;
+        public bool wallEnabled;
         public float radius = 0.375f;
         public float bottom = 0.5f;
         public float top = 1;
@@ -83,6 +82,7 @@ namespace RaymapGame
             var p = pos;
             if (groundEnabled) {
                 ground = RaycastGround();
+                platformPerso = ground.hit.collider?.GetComponentInParent<PersoController>();
                 groundFar = Raycast(p + Vector3.up * 1, Vector3.down, 1 + 10);
             }
             else {
@@ -90,10 +90,14 @@ namespace RaymapGame
                 groundFar = new CollideInfo();
             }
         }
-        
+
+        public PersoController platformPerso;
+
         public void StickToGround() => StickToGround(ref perso.pos);
         public void StickToGround(ref Vector3 pos)
         {
+            if (platformPerso != null)
+                perso.pos += platformPerso.deltaPos;
             pos.y = ground.hit.point.y;
         }
 

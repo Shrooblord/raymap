@@ -20,8 +20,9 @@ namespace RaymapGame.Rayman2.Persos {
 
 
         protected override void OnStart() {
-            SetRule("Idle");
             SetShadow(true);
+            SetWallCollision(true);
+            SetRule("Idle");
         }
 
         void Rule_Idle() {
@@ -51,11 +52,10 @@ namespace RaymapGame.Rayman2.Persos {
                 //SetLookAt2D(rayman.pos, 13500);
                 NavTowards(rayman.pos);
                 col.StickToGround();
-                col.wallEnabled = true;
             }
 
             if (CheckCollisionZone(rayman, OpenSpace.Collide.CollideType.ZDM)) {
-                Respawn();
+                Reset();
                 rayman.Despawn();
             }
         }

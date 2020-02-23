@@ -9,10 +9,8 @@ using OpenSpace.Collide;
 using static RaymapGame.InputEx;
 using RaymapGame.Rayman2.Persos;
 
-namespace RaymapGame
-{
-    public partial class PersoController : MonoBehaviour, IInterpolate
-    {
+namespace RaymapGame {
+    public partial class PersoController : MonoBehaviour, IInterpolate {
         //========================================
         //  Variables
         //========================================
@@ -42,6 +40,9 @@ namespace RaymapGame
         public RayCollider col = new RayCollider();
 
         public virtual AnimSFX[] animSfx { get; }
+
+        public virtual float activeRadius => 75;
+        public virtual bool resetOnRayDeath => true;
 
         public string rule = "";
         public Dictionary<string, MethodBase> rules = new Dictionary<string, MethodBase>();
@@ -73,8 +74,10 @@ namespace RaymapGame
         public bool visible { get; private set; }
         bool visChanged;
 
-        public bool isMainActor => this == Main.mainActor;
-        public bool outOfSector => perso.sector != Main.controller.sectorManager.GetActiveSectorWrapper(pos);
+        public PersoController mainActor => Main.mainActor;
+        public bool isMainActor => this == mainActor;
+        public bool outOfSector => perso.sector != mainActor.perso.sector;
+        public bool outOfActiveRadius => Main.mainActor == null || DistToPerso(mainActor) > activeRadius;
         public Vector3 apprVelXZCam => Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyVector(lStick3D_s);
 
         public string persoName => perso.perso.namePerso;
@@ -118,19 +121,17 @@ namespace RaymapGame
             return GetPersoModel("YLT_RaymanModel") as YLT_RaymanModel;
         }
 
-        public static YLT_RaymanModel rayman { get {
-                if (_rayman == null) _rayman = GetRayman();
-                return _rayman;
-            }
-        }
-        static YLT_RaymanModel _rayman;
-
+        public static YLT_RaymanModel rayman => Main.rayman;
         public void SetVisibility(bool visible) {
             if (this.visible == visible) return;
             this.visible = visible;
             visChanged = true;
         }
 
+
+        public float DistTo(Vector3 point) {
+            return Vector3.Distance(pos, point);
+        }
 
         public bool StoodOnByPerso(PersoController perso) {
             foreach (var c in GetComponentsInChildren<Collider>()) {
@@ -153,12 +154,20 @@ namespace RaymapGame
                 && DistToPerso(perso) < GetCollisionRadius(collideType) + perso.GetCollisionRadius(collideType);
         }
 
+        public bool IsInLevel(string lvlName) {
+            return lvlName.ToLowerInvariant() == Main.lvlName.ToLowerInvariant();
+        }
         public bool IsInLevelSector(string lvlName, int sectorIndex) {
             return Main.lvlName == lvlName && perso.sector == Main.controller.sectorManager.sectors[sectorIndex];
         }
 
+        public bool IsWithinCyl(Vector3 centre, float radius, float maxHeight) {
+            centre.y = 0;
+            return !(Vector3.Distance(centre, new Vector3(pos.x, 0, pos.z)) > radius || pos.y > maxHeight);
+        }
 
-        public void Respawn() {
+
+        public void Reset() {
             SetRule("");
             OnStart();
             pos = startPos;
@@ -166,29 +175,76 @@ namespace RaymapGame
             vel = Vector3.zero;
         }
 
-        public void NavDirection3D(Vector3 dir, float t_rot = -1) {
+        public float navRotYSpeed = 1;
+        public void NavDirection3D(Vector3 dir) {
             dir.Normalize();
             velXZ += new Vector3(dir.x, 0, dir.z) * fricXZ * moveSpeed * dt;
             velY += velY * fricY * moveSpeed * dt;
-            SetLookAt2D(pos + dir, t_rot);
+            if (navRotYSpeed > 0) SetLookAt2D(pos + dir, navRotYSpeed);
         }
 
-        public void NavDirection(Vector3 dir, float t_rot = -1) {
+        public void NavDirection(Vector3 dir) {
             dir.y = 0;
-            NavDirection3D(dir, t_rot);
+            NavDirection3D(dir);
         }
 
-        public void NavTowards3D(Vector3 target, float t_rot = -1) {
-            NavDirection3D(target - pos, t_rot);
+        public void NavTowards3D(Vector3 target) {
+            NavDirection3D(target - pos);
         }
 
-        public void NavTowards(Vector3 target, float t_rot = -1) {
+        public void NavTowards(Vector3 target) {
             target.y = pos.y;
-            NavTowards3D(target, t_rot);
+            NavTowards3D(target);
         }
 
         public void NavForwards() {
             NavTowards3D(pos - transform.forward);
+        }
+
+
+        public Waypoint GetNearestWaypoint() {
+            Waypoint closest = null;
+            float cdist = 1000000;
+            foreach (var wp in Waypoint.all) {
+                float dist = DistTo(wp.transform.position);
+                if (dist < cdist) {
+                    cdist = dist;
+                    closest = wp;
+                }
+            }
+            return closest;
+        }
+
+
+        public bool InWaypointRadius(Waypoint wp) {
+            var ch = transform.GetChild(0);
+            float dist = DistTo(wp.pos);
+            if (ch == null) return dist < 2;
+            else return dist < ch.transform.localScale.magnitude;
+        }
+
+        public void NavToWaypoint(Waypoint wp) {
+            NavTowards(wp.pos);
+        }
+
+
+        Waypoint wp;
+        public bool NavNearestWaypointGraph() {
+            if (wp == null) {
+                if ((wp = GetNearestWaypoint()) == null)
+                    return false;
+                if (wp.next != null && Vector3.Distance(wp.next.pos, pos) < Vector3.Distance(wp.next.pos, wp.pos)) {
+                    wp = wp.next;
+                }
+            }
+
+            if (InWaypointRadius(wp))
+                wp = wp.next;
+            if (wp == null)
+                return true;
+
+            NavToWaypoint(wp);
+            return false;
         }
 
 
@@ -218,6 +274,15 @@ namespace RaymapGame
         public void SetLookAt2D(Vector3 target, float t = -1)
             => rot = Quaternion.Slerp(rot, Matrix4x4.LookAt(pos, new Vector3(target.x, pos.y, target.z), Vector3.up).rotation * Quaternion.Euler(0, 180, 0), t == -1 ? 1 : t * dt);
 
+        DsgVarComponent dsg;
+        public T GetDsgVar<T>(string name) {
+            for (int v = 0; v < dsg.dsgVarEntries.Length; v++)
+                if (dsg.dsgVarEntries[v].NiceVariableName == name) {
+                    var e = dsg.editableEntries[v]?.valueInitial?.val;
+                    if (e != null) return Dsg.GetValue<T>(e);
+                }
+            return default;
+        }
 
 
         public float DistToPerso(PersoController perso)
@@ -233,6 +298,14 @@ namespace RaymapGame
                 shadow = null;
             }
             hasShadow = enabled;
+        }
+
+        public void SetWallCollision(bool enabled) {
+            col.wallEnabled = enabled;
+        }
+        public void SetWallCollision(bool enabled, float radius) {
+            col.wallEnabled = enabled;
+            col.radius = radius;
         }
 
         public void InputMovement() {
@@ -268,6 +341,7 @@ namespace RaymapGame
         protected void Awake() {
             visible = true;
             perso = GetComponent<PersoBehaviour>();
+            dsg = GetComponent<DsgVarComponent>();
             gameObject.AddComponent<Interpolation>().fixedTimeController = this;
             anim = gameObject.AddComponent<AnimHandler>();
             anim.sfx = animSfx;
@@ -279,18 +353,19 @@ namespace RaymapGame
         protected void Start() {
             col.controller = this;
             pos = transform.position;
+            rot = transform.rotation;
             startPos = pos;
             startRot = rot;
-            rot = transform.rotation;
             OnStart();
         }
 
+        bool ActiveChecks() => /*perso == null ||*/ outOfActiveRadius /*|| outOfSector*/ || t_disable.active;
+
         protected void Update() {
-            if (perso == null) return;
-            var s = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
-            if (s != null) perso.sector = s;
-            if (t_disable.active) return;
-            if (isMainActor || (Main.main.alwaysControlRayman && this is YLT_RaymanModel)) OnInput();
+            if (isMainActor || (Main.main.alwaysControlRayman && this is YLT_RaymanModel)) {
+                perso.sector = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
+                OnInput();
+            }
             if (!interpolate) LogicLoop();
         }
 
@@ -316,7 +391,10 @@ namespace RaymapGame
         }
 
         void LogicLoop() {
-            if (outOfSector) return;
+            if (ActiveChecks()) return;
+            if (rayman != null && resetOnRayDeath && rayman.onRespawn) {
+                Reset(); return;
+            }
 
             col.UpdateGroundCollision();
             col.UpdateWaterCollision();
