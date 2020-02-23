@@ -3,34 +3,33 @@
 //================================
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace RaymapGame.Rayman2.Persos {
     /// <summary>
     /// Floating Barrel
     /// </summary>
-    public partial class OLD_tonneau_reseau : PersoController {
-        public override AnimSFX[] animSfx => new AnimSFX[] { };
-
+    public partial class OLD_tonneau_reseau : tonneau_vase {
         protected override void OnStart() {
-            SetRule("Wait");
-            SetFriction(0.7f, 5);
-            navRotYSpeed = 0;
-            gravity = -3;
             moveSpeed = 4;
+            gravity = -3;
+            navRotYSpeed = 0;
+            SetFriction(1, 5);
+            SetRule("Wait");
         }
 
-        void Rule_Wait() {
+        protected void Rule_Wait() {
             if (StoodOnByPerso(rayman))
                 SetRule("Navigate");
         }
 
-        void Rule_Navigate() {
+        protected void Rule_Navigate() {
             if (NavNearestWaypointGraph())
                 SetRule("Sink");
         }
 
         public virtual void OnSink() { }
 
-        void Rule_Sink() {
+        protected void Rule_Sink() {
             SetFriction(2, 5);
             if (pos.y - startPos.y < -2) {
                 Reset();
