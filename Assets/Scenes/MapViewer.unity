@@ -121,7 +121,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &328799
+--- !u!1 &25298917
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,142 +129,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 328801}
-  - component: {fileID: 328800}
+  - component: {fileID: 25298918}
   m_Layer: 0
-  m_Name: SHR_WP_Walk7
+  m_Name: HDL_jumpCurve_SHR_WP_Walk2_SHR_WP_branchLowBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &328800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 807706100}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 170689531}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 807706100}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 170689531}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &328801
+--- !u!4 &25298918
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.910004, y: -4.938736, z: -1.1400146}
+  m_GameObject: {fileID: 25298917}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.915009, y: 27.940046, z: -0.22998047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &20359324
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 20359326}
-  - component: {fileID: 20359325}
-  m_Layer: 0
-  m_Name: SHR_WP_3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &20359325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20359324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1970725101}
-    type: 2
-    jumpCurveHandle: {fileID: 53206855}
-  prev:
-  - wp: {fileID: 1036145627}
-    type: 2
-    jumpCurveHandle: {fileID: 1816949146}
---- !u!4 &20359326
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20359324}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.369995, y: -6.408352, z: 13.76001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 53206855}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &35009854
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 35009855}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_Walk2_SHR_WP_Walk4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &35009855
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35009854}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.300018, y: 7.2464695, z: -3.394989}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 170689532}
+  m_Father: {fileID: 885275731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &53206854
+--- !u!1 &51209003
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,313 +159,143 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 53206855}
+  - component: {fileID: 51209005}
+  - component: {fileID: 51209004}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_3_SHR_WP_4
+  m_Name: SHR_WP_Walk5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &53206855
+--- !u!114 &51209004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51209003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1377309608}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1037429326}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 1377309608}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &51209005
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53206854}
+  m_GameObject: {fileID: 51209003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.690002, y: -6.9454174, z: 17.019958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &91853441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91853442}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_branchHighest_SHR_WP_branchHighest_platformLanding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &91853442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91853441}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7649994, y: 12.050001, z: 8.724976}
+  m_LocalPosition: {x: -4.7899933, y: 3.5599976, z: -0.960022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 20359326}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &55238460
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 55238462}
-  - component: {fileID: 55238461}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &55238461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55238460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1385383180}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1695459968}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1695459968}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1385383180}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &55238462
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55238460}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.979996, y: -7.4994106, z: 5.76001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &79844442
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 79844444}
-  - component: {fileID: 79844443}
-  m_Layer: 0
-  m_Name: SHR_WP_branchLowTip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &79844443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79844442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1370636768}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 260133051}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1370636768}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 260133051}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &79844444
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79844442}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.74, y: 11.866709, z: -9.28}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1047976016}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &117593122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 117593124}
-  - component: {fileID: 117593123}
-  m_Layer: 0
-  m_Name: SHR_WP_Jumps
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &117593123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117593122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outboundConnectionColour: {r: 1, g: 0, b: 0.9632826, a: 1}
-  inboundConnectionColour: {r: 0.95799816, g: 1, b: 0.015686274, a: 1}
-  persoNames:
-  - JCP_FRH_sbire_gnak_I1
---- !u!4 &117593124
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117593122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -188.33, y: 22.5, z: 355.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2070182594}
-  - {fileID: 1115810028}
-  - {fileID: 1286140703}
-  - {fileID: 481183987}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &170689530
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 170689532}
-  - component: {fileID: 170689531}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &170689531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170689530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 328800}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 2073851785}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1385383180}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 328800}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 2073851785}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1385383180}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &170689532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170689530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.960007, y: -6.2782936, z: 15.579987}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 35009855}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &200699808
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 200699810}
-  - component: {fileID: 200699809}
-  m_Layer: 0
-  m_Name: SHR_WP_PurpleSleep
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &200699809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200699808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 329137341}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev: []
---- !u!4 &200699810
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200699808}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.9799957, y: -5.894781, z: -9.179993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1775811473}
+  m_Father: {fileID: 1419454684}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &125996528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 125996529}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_branchLowBase_SHR_WP_Walk2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &125996529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125996528}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.914993, y: 9.029999, z: 0.23001099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 632741861}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &150536345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 150536346}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_Walk0_SHR_WP_Walk7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &150536346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150536345}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.25, y: 7.2800007, z: 9.540009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2090250877}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206473930
 GameObject:
@@ -654,268 +371,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &211583144
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 211583146}
-  - component: {fileID: 211583145}
-  m_Layer: 0
-  m_Name: SHR_WP_JumpArcTesting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &211583145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211583144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outboundConnectionColour: {r: 0, g: 0.57662654, b: 1, a: 0.64705884}
-  inboundConnectionColour: {r: 0.98725134, g: 0.015686274, b: 1, a: 0.83137256}
-  persoNames:
-  - JCP_FRH_sbire_gnak_I1
---- !u!4 &211583146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211583144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -192.19122, y: 31.74032, z: 363.04266}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1071936302}
-  - {fileID: 1036145628}
-  - {fileID: 20359326}
-  - {fileID: 1970725102}
-  - {fileID: 243708501}
-  - {fileID: 2002813453}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &227060524
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 227060525}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_5_SHR_WP_6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &227060525
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227060524}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9450073, y: 12.859997, z: -6.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 243708501}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &243708499
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 243708501}
-  - component: {fileID: 243708500}
-  m_Layer: 0
-  m_Name: SHR_WP_5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &243708500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243708499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
-  waitHere: 0
-  next:
-  - wp: {fileID: 2002813454}
-    type: 2
-    jumpCurveHandle: {fileID: 227060525}
-  prev:
-  - wp: {fileID: 1970725101}
-    type: 2
-    jumpCurveHandle: {fileID: 1867453957}
---- !u!4 &243708501
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243708499}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.4900055, y: -7.5125637, z: 14.309998}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 227060525}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &260133050
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 260133052}
-  - component: {fileID: 260133051}
-  m_Layer: 0
-  m_Name: SHR_WP_branchLowBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &260133051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260133050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 79844443}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1695459968}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 79844443}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1695459968}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 807706100}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &260133052
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260133050}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4299927, y: 11.867968, z: -4.7099915}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1839680518}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &329137340
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 329137342}
-  - component: {fileID: 329137341}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk0
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &329137341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329137340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1497299900}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 807706100}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 200699809}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 807706100}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1497299900}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &329137342
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329137340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5899963, y: -7.1084595, z: -20.220001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330329012
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,9 +417,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &446832557
+--- !u!1 &388947006
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -972,64 +427,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 446832559}
-  - component: {fileID: 446832558}
+  - component: {fileID: 388947007}
+  - component: {fileID: 388947008}
   m_Layer: 0
-  m_Name: SHR_WP_branchHighest_platformLanding
+  m_Name: SHR_WP_platformExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &446832558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446832557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1992037851}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1847427148}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1001617865}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1992037851}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1847427148}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1001617865}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &446832559
+--- !u!4 &388947007
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446832557}
+  m_GameObject: {fileID: 388947006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.960007, y: 34.72251, z: 1.1300049}
+  m_LocalPosition: {x: -32.719986, y: 37.03875, z: 0.9299927}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1935458422}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 15
+  m_Children: []
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &388947008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388947006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2062462165}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 2062462165}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
 --- !u!1 &469719538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,69 +515,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &481183986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 481183987}
-  - component: {fileID: 481183988}
-  m_Layer: 0
-  m_Name: jmp4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &481183987
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481183986}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.9299927, y: 1.7562752, z: 14.119995}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 828963080}
-  - {fileID: 1706924578}
-  m_Father: {fileID: 117593124}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &481183988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481183986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 117593123}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1286140702}
-    type: 2
-    jumpCurveHandle: {fileID: 828963080}
-  - wp: {fileID: 1115810027}
-    type: 2
-    jumpCurveHandle: {fileID: 1706924578}
-  prev:
-  - wp: {fileID: 1115810027}
-    type: 2
-    jumpCurveHandle: {fileID: 1399159748}
-  - wp: {fileID: 2070182593}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
 --- !u!1 &486948329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +561,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &507779430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507779431}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_branchHighest_SHR_WP_Walk8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &507779431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507779430}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.58000183, y: 4.9300003, z: -7.1099854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1419454684}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &549858797
 GameObject:
@@ -1272,9 +683,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &560754607
+--- !u!1 &632741859
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1282,27 +693,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 560754608}
+  - component: {fileID: 632741861}
+  - component: {fileID: 632741860}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_branchHighest_platformLanding
+  m_Name: SHR_WP_branchLowBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &560754608
+--- !u!114 &632741860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632741859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2125924506}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 885275730}
+    type: 1
+    jumpCurveHandle: {fileID: 125996529}
+  prev:
+  - wp: {fileID: 2125924506}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 885275730}
+    type: 1
+    jumpCurveHandle: {fileID: 25298918}
+  - wp: {fileID: 1999969853}
+    type: 1
+    jumpCurveHandle: {fileID: 1181759354}
+--- !u!4 &632741861
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560754607}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.039993, y: 23.700003, z: -7.3399963}
+  m_GameObject: {fileID: 632741859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.4299927, y: 11.867968, z: -4.7099915}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1992037852}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 125996529}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &669531107
 GameObject:
@@ -1388,7 +832,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669531107}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &673805283
+--- !u!1 &751796677
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1396,124 +840,57 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 673805284}
+  - component: {fileID: 751796678}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_branchLowBase
+  m_Name: HDL_jumpCurve_SHR_WP_branchHighBase_SHR_WP_branchLowTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &673805284
+--- !u!4 &751796678
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673805283}
+  m_GameObject: {fileID: 751796677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.475006, y: 24.954094, z: 4.595001}
+  m_LocalPosition: {x: 1.9799957, y: 5.66, z: -8.26001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 807706101}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &807706099
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 807706101}
-  - component: {fileID: 807706100}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &807706100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807706099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 260133051}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 329137341}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 328800}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1001617865}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 328800}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 329137341}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &807706101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807706099}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.520004, y: -6.7261715, z: -13.899994}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1673719828}
-  - {fileID: 673805284}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &828963079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 828963080}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp4_jmp3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &828963080
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828963079}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.529999, y: 6.09, z: -0.040008545}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 481183987}
+  m_Father: {fileID: 1485632015}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &780159963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780159964}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_Walk4_SHR_WP_Walk0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &780159964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780159963}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.025009, y: 6.1798286, z: -14.504996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1377309609}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &874870024
 GameObject:
@@ -1579,7 +956,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878624502
 GameObject:
@@ -1656,13 +1033,142 @@ RectTransform:
   - {fileID: 669531108}
   - {fileID: 1781294053}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &885275729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 885275731}
+  - component: {fileID: 885275730}
+  m_Layer: 0
+  m_Name: SHR_WP_Walk2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &885275730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885275729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 632741860}
+    type: 1
+    jumpCurveHandle: {fileID: 25298918}
+  - wp: {fileID: 1377309608}
+    type: 1
+    jumpCurveHandle: {fileID: 2029924892}
+  - wp: {fileID: 1527682310}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 975933401}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 632741860}
+    type: 1
+    jumpCurveHandle: {fileID: 125996529}
+  - wp: {fileID: 975933401}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1527682310}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &885275731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885275729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.259995, y: -7.04208, z: -4.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 25298918}
+  - {fileID: 2029924892}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &975933400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975933402}
+  - component: {fileID: 975933401}
+  m_Layer: 0
+  m_Name: SHR_WP_Walk1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &975933401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975933400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 885275730}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2090250876}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 2090250876}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 885275730}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &975933402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975933400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14, y: -7.2396984, z: -16.570007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &977189304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,7 +1203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -150}
+  m_AnchoredPosition: {x: 200, y: -150.00003}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 0, y: 1}
 --- !u!23 &977189306
@@ -1747,7 +1253,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977189304}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1001617864
+--- !u!1 &1005243715
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1755,222 +1261,93 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1001617866}
-  - component: {fileID: 1001617865}
+  - component: {fileID: 1005243716}
   m_Layer: 0
-  m_Name: SHR_WP_branchHighest
+  m_Name: HDL_jumpCurve_SHR_WP_branchHighest_platformLanding_SHR_WP_branchHighTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1001617865
+--- !u!4 &1005243716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005243715}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.189987, y: 5.3899765, z: 8.704987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2062462166}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1037429325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037429327}
+  - component: {fileID: 1037429326}
+  m_Layer: 0
+  m_Name: SHR_WP_Walk6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1037429326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001617864}
+  m_GameObject: {fileID: 1037429325}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 446832558}
+  - wp: {fileID: 1514819016}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 807706100}
+  - wp: {fileID: 51209004}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1377309608}
     type: 1
-    jumpCurveHandle: {fileID: 0}
+    jumpCurveHandle: {fileID: 1365383581}
   prev:
-  - wp: {fileID: 446832558}
+  - wp: {fileID: 1514819016}
     type: 0
     jumpCurveHandle: {fileID: 0}
---- !u!4 &1001617866
+  - wp: {fileID: 51209004}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1377309608}
+    type: 1
+    jumpCurveHandle: {fileID: 1645115718}
+--- !u!4 &1037429327
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001617864}
+  m_GameObject: {fileID: 1037429325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.680008, y: 32.508415, z: 0.32000732}
+  m_LocalPosition: {x: -8.960007, y: -6.2782936, z: 15.579987}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1521501813}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1035406195
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1035406196}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_branchLowTip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1035406196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035406195}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9799957, y: 5.2767563, z: -8.26001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1370636769}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1036145626
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1036145628}
-  - component: {fileID: 1036145627}
-  m_Layer: 0
-  m_Name: SHR_WP_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1036145627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036145626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
-  waitHere: 0
-  next:
-  - wp: {fileID: 20359325}
-    type: 2
-    jumpCurveHandle: {fileID: 1816949146}
-  prev:
-  - wp: {fileID: 1071936301}
-    type: 2
-    jumpCurveHandle: {fileID: 1825174579}
---- !u!4 &1036145628
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036145626}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.4299927, y: -7.7499485, z: 4.589966}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1816949146}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1047976015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1047976016}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_branchHighBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1047976016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047976015}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9800053, y: 16.739998, z: 8.25998}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 79844444}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1071936300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1071936302}
-  - component: {fileID: 1071936301}
-  m_Layer: 0
-  m_Name: SHR_WP_1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1071936301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071936300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1036145627}
-    type: 2
-    jumpCurveHandle: {fileID: 1825174579}
-  prev:
-  - wp: {fileID: 2002813454}
-    type: 2
-    jumpCurveHandle: {fileID: 1573004633}
---- !u!4 &1071936302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071936300}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.22000122, y: -8.131411, z: 1.9200134}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1825174579}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 0
+  - {fileID: 1365383581}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109753672
 GameObject:
@@ -2061,7 +1438,7 @@ RectTransform:
   m_Children:
   - {fileID: 206473931}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2152,67 +1529,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114724231}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1115810026
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1115810028}
-  - component: {fileID: 1115810027}
-  m_Layer: 0
-  m_Name: jmp2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1115810027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115810026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 117593123}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1286140702}
-    type: 2
-    jumpCurveHandle: {fileID: 1964819273}
-  - wp: {fileID: 481183988}
-    type: 2
-    jumpCurveHandle: {fileID: 1399159748}
-  prev:
-  - wp: {fileID: 2070182593}
-    type: 2
-    jumpCurveHandle: {fileID: 1189918920}
-  - wp: {fileID: 481183988}
-    type: 2
-    jumpCurveHandle: {fileID: 1706924578}
---- !u!4 &1115810028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115810026}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.399994, y: 0.37825394, z: 2.980011}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1964819273}
-  - {fileID: 1399159748}
-  m_Father: {fileID: 117593124}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162811862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +1563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -200, y: 150}
+  m_AnchoredPosition: {x: -200.00003, y: 150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 0}
 --- !u!23 &1162811864
@@ -2297,7 +1613,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162811862}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1189918919
+--- !u!1 &1181759353
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2305,29 +1621,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1189918920}
+  - component: {fileID: 1181759354}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp1_jmp2
+  m_Name: HDL_jumpCurve_SHR_WP_Walk8_SHR_WP_branchLowBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1189918920
+--- !u!4 &1181759354
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189918919}
+  m_GameObject: {fileID: 1181759353}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.139984, y: 12.450001, z: -1.8649902}
+  m_LocalPosition: {x: 6.475006, y: 23.510002, z: 4.595001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2070182594}
+  m_Father: {fileID: 1999969854}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1248739922
+--- !u!1 &1247102636
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2335,47 +1651,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1248739924}
-  - component: {fileID: 1248739923}
+  - component: {fileID: 1247102638}
+  - component: {fileID: 1247102637}
   m_Layer: 0
-  m_Name: SHR_WP_RedSleep
+  m_Name: SHR_WP_GRP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1248739923
+--- !u!114 &1247102637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248739922}
+  m_GameObject: {fileID: 1247102636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1385383180}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev: []
---- !u!4 &1248739924
+  outboundConnectionColour: {r: 0, g: 1, b: 1, a: 1}
+  inboundConnectionColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  persoNames:
+  - JCP_FRH_sbire_gnak_I1
+  - JCP_OLD_SBIRE_shoot_sol_I19
+--- !u!4 &1247102638
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248739922}
+  m_GameObject: {fileID: 1247102636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5099945, y: -4.6252384, z: 4.980011}
+  m_LocalPosition: {x: -195.39, y: 30.01, z: 378.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 1347107639}
+  - {fileID: 1965624584}
+  - {fileID: 2090250877}
+  - {fileID: 975933402}
+  - {fileID: 885275731}
+  - {fileID: 1527682311}
+  - {fileID: 1377309609}
+  - {fileID: 51209005}
+  - {fileID: 1037429327}
+  - {fileID: 1514819017}
+  - {fileID: 1999969854}
+  - {fileID: 632741861}
+  - {fileID: 2125924507}
+  - {fileID: 1485632015}
+  - {fileID: 2084687400}
+  - {fileID: 2062462166}
+  - {fileID: 1419454684}
+  - {fileID: 388947007}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1267960011
 PrefabInstance:
@@ -2432,7 +1764,7 @@ PrefabInstance:
     - target: {fileID: 4187644304884916959, guid: 86cd3730e8c5fa04e99f1476c0536921,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4187644304884916959, guid: 86cd3730e8c5fa04e99f1476c0536921,
         type: 3}
@@ -2501,62 +1833,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86cd3730e8c5fa04e99f1476c0536921, type: 3}
---- !u!1 &1286140701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1286140703}
-  - component: {fileID: 1286140702}
-  m_Layer: 0
-  m_Name: jmp3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1286140702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286140701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 117593123}
-  waitHere: 0
-  next:
-  - wp: {fileID: 2070182593}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1115810027}
-    type: 2
-    jumpCurveHandle: {fileID: 1964819273}
-  - wp: {fileID: 481183988}
-    type: 2
-    jumpCurveHandle: {fileID: 828963080}
---- !u!4 &1286140703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286140701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.130005, y: 1.6019039, z: 14.040009}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 117593124}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1340982556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2607,7 +1883,7 @@ PrefabInstance:
     - target: {fileID: 5229540804535009750, guid: a2767972ea6a35e4e921a997791ebdff,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5229540804535009750, guid: a2767972ea6a35e4e921a997791ebdff,
         type: 3}
@@ -2626,7 +1902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2767972ea6a35e4e921a997791ebdff, type: 3}
---- !u!1 &1370636767
+--- !u!1 &1347107637
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2634,57 +1910,77 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1370636769}
-  - component: {fileID: 1370636768}
+  - component: {fileID: 1347107639}
+  - component: {fileID: 1347107638}
   m_Layer: 0
-  m_Name: SHR_WP_branchHighBase
+  m_Name: SHR_WP_RedSleep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1370636768
+--- !u!114 &1347107638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370636767}
+  m_GameObject: {fileID: 1347107637}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 1992037851}
+  - wp: {fileID: 1377309608}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 79844443}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1992037851}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 79844443}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &1370636769
+  prev: []
+--- !u!4 &1347107639
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370636767}
+  m_GameObject: {fileID: 1347107637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7799988, y: 23.32995, z: 7.23999}
+  m_LocalPosition: {x: 7.5099945, y: -4.6252384, z: 4.980011}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1035406196}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 13
+  m_Children: []
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1365383580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1365383581}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_Walk6_SHR_WP_Walk4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1365383581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365383580}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.300018, y: 7.4050884, z: -3.394989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1037429327}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1372588407
 GameObject:
@@ -2720,7 +2016,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: -150}
+  m_AnchoredPosition: {x: -200.00003, y: -150.00003}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 1}
 --- !u!23 &1372588409
@@ -2770,7 +2066,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372588407}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1385383178
+--- !u!1 &1377309607
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2778,8 +2074,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1385383179}
-  - component: {fileID: 1385383180}
+  - component: {fileID: 1377309609}
+  - component: {fileID: 1377309608}
   m_Layer: 0
   m_Name: SHR_WP_Walk4
   m_TagString: Untagged
@@ -2787,62 +2083,69 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1385383179
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385383178}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.640015, y: -5.4681187, z: 8.79}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1711953095}
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1385383180
+--- !u!114 &1377309608
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385383178}
+  m_GameObject: {fileID: 1377309607}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 2073851785}
+  - wp: {fileID: 51209004}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 55238461}
+  - wp: {fileID: 1527682310}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 170689531}
+  - wp: {fileID: 1037429326}
     type: 1
-    jumpCurveHandle: {fileID: 0}
+    jumpCurveHandle: {fileID: 1645115718}
+  - wp: {fileID: 2090250876}
+    type: 1
+    jumpCurveHandle: {fileID: 780159964}
   prev:
-  - wp: {fileID: 1248739923}
+  - wp: {fileID: 1347107638}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1695459968}
+  - wp: {fileID: 885275730}
     type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 55238461}
+    jumpCurveHandle: {fileID: 2029924892}
+  - wp: {fileID: 1527682310}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 2073851785}
+  - wp: {fileID: 51209004}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 170689531}
+  - wp: {fileID: 1037429326}
     type: 1
+    jumpCurveHandle: {fileID: 1365383581}
+  - wp: {fileID: 2090250876}
+    type: 0
     jumpCurveHandle: {fileID: 0}
---- !u!1 &1399159747
+--- !u!4 &1377309609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377309607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.640015, y: -5.4681187, z: 8.79}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1645115718}
+  - {fileID: 780159964}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1419454682
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2850,27 +2153,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1399159748}
+  - component: {fileID: 1419454684}
+  - component: {fileID: 1419454683}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp2_jmp4
+  m_Name: SHR_WP_branchHighest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1399159748
+--- !u!114 &1419454683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419454682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1999969853}
+    type: 1
+    jumpCurveHandle: {fileID: 507779431}
+  - wp: {fileID: 2062462165}
+    type: 1
+    jumpCurveHandle: {fileID: 91853442}
+  prev:
+  - wp: {fileID: 2062462165}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &1419454684
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399159747}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.6649933, y: 7.5, z: 5.5700073}
+  m_GameObject: {fileID: 1419454682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.680008, y: 32.508415, z: 0.32000732}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1115810028}
-  m_RootOrder: 1
+  m_Children:
+  - {fileID: 507779431}
+  - {fileID: 91853442}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1444678341
 GameObject:
@@ -2949,6 +2280,66 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1485632013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1485632015}
+  - component: {fileID: 1485632014}
+  m_Layer: 0
+  m_Name: SHR_WP_branchHighBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1485632014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485632013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2084687399}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2125924506}
+    type: 1
+    jumpCurveHandle: {fileID: 751796678}
+  prev:
+  - wp: {fileID: 2084687399}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2125924506}
+    type: 1
+    jumpCurveHandle: {fileID: 1920419723}
+--- !u!4 &1485632015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485632013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.7799988, y: 23.32995, z: 7.23999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 751796678}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1488385693
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,65 +2529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b54b537353efab4b93b691e568d1bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1497299899
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1497299901}
-  - component: {fileID: 1497299900}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1497299900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497299899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1695459968}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 329137341}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 329137341}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1695459968}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &1497299901
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497299899}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14, y: -7.2396984, z: -16.570007}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503682887
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,9 +2583,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1521501812
+--- !u!1 &1514819015
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3261,29 +2593,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1521501813}
+  - component: {fileID: 1514819017}
+  - component: {fileID: 1514819016}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_Walk8
+  m_Name: SHR_WP_Walk7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1521501813
+--- !u!114 &1514819016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514819015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1999969853}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1037429326}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2090250876}
+    type: 1
+    jumpCurveHandle: {fileID: 1658324010}
+  prev:
+  - wp: {fileID: 1999969853}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1037429326}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2090250876}
+    type: 1
+    jumpCurveHandle: {fileID: 150536346}
+--- !u!4 &1514819017
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521501812}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.58000183, y: 7.25, z: -7.1099854}
+  m_GameObject: {fileID: 1514819015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.910004, y: -4.938736, z: -1.1400146}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1001617866}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 1658324010}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1573004632
+--- !u!1 &1527682309
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3291,29 +2659,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1573004633}
+  - component: {fileID: 1527682311}
+  - component: {fileID: 1527682310}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_6_SHR_WP_1
+  m_Name: SHR_WP_Walk3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1573004633
+--- !u!114 &1527682310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527682309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1377309608}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 885275730}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 885275730}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1377309608}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &1527682311
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573004632}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.189987, y: 1.6999989, z: 0.30499268}
+  m_GameObject: {fileID: 1527682309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.979996, y: -7.4994106, z: 5.76001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2002813453}
-  m_RootOrder: 0
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1673719827
+--- !u!1 &1645115717
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3321,7 +2718,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1673719828}
+  - component: {fileID: 1645115718}
   m_Layer: 0
   m_Name: HDL_jumpCurve_SHR_WP_Walk4_SHR_WP_Walk6
   m_TagString: Untagged
@@ -3329,21 +2726,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1673719828
+--- !u!4 &1645115718
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673719827}
+  m_GameObject: {fileID: 1645115717}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6100006, y: 7.83, z: 14.654999}
+  m_LocalPosition: {x: -11.300003, y: 6.5949135, z: 3.3949976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 807706101}
+  m_Father: {fileID: 1377309609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1695459967
+--- !u!1 &1658324009
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3351,65 +2748,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1695459969}
-  - component: {fileID: 1695459968}
+  - component: {fileID: 1658324010}
   m_Layer: 0
-  m_Name: SHR_WP_Walk2
+  m_Name: HDL_jumpCurve_SHR_WP_Walk7_SHR_WP_Walk0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1695459968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695459967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 260133051}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1385383180}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 55238461}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1497299900}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 260133051}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 1497299900}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 55238461}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &1695459969
+--- !u!4 &1658324010
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695459967}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.259995, y: -7.04208, z: -4.25}
+  m_GameObject: {fileID: 1658324009}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.25, y: 5.110277, z: -9.539978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 4
+  m_Father: {fileID: 1514819017}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1701416320
 GameObject:
@@ -3476,7 +2835,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1701416323
 MonoBehaviour:
@@ -3524,132 +2883,6 @@ MonoBehaviour:
   modifier: 0.75
   animationSpeed: 30
   materials: []
---- !u!1 &1706924577
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1706924578}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp4_jmp2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1706924578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706924577}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.6649933, y: 4.3109894, z: -5.569977}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 481183987}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1711953094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1711953095}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_Walk4_SHR_WP_Walk6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1711953095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711953094}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.300003, y: 6.41, z: 3.3949976}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1385383179}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1775811471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1775811473}
-  - component: {fileID: 1775811472}
-  m_Layer: 0
-  m_Name: SHR_WP_GRP
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1775811472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775811471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45dc0a8e52d18754c9e6fbe940dcc2f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outboundConnectionColour: {r: 0, g: 1, b: 1, a: 1}
-  inboundConnectionColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  persoNames:
-  - JCP_FRH_sbire_gnak_I1
-  - JCP_OLD_SBIRE_shoot_sol_I19
---- !u!4 &1775811473
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775811471}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -195.39, y: 30.01, z: 378.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1248739924}
-  - {fileID: 200699810}
-  - {fileID: 329137342}
-  - {fileID: 1497299901}
-  - {fileID: 1695459969}
-  - {fileID: 55238462}
-  - {fileID: 1385383179}
-  - {fileID: 2073851786}
-  - {fileID: 170689532}
-  - {fileID: 328801}
-  - {fileID: 807706101}
-  - {fileID: 260133052}
-  - {fileID: 79844444}
-  - {fileID: 1370636769}
-  - {fileID: 1992037852}
-  - {fileID: 446832559}
-  - {fileID: 1001617866}
-  - {fileID: 1847427149}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1781294052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,7 +2922,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1816949145
+--- !u!1 &1920419722
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3697,29 +2930,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1816949146}
+  - component: {fileID: 1920419723}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_2_SHR_WP_3
+  m_Name: HDL_jumpCurve_SHR_WP_branchLowTip_SHR_WP_branchHighBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1816949146
+--- !u!4 &1920419723
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816949145}
+  m_GameObject: {fileID: 1920419722}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9700012, y: 2.460001, z: 4.585022}
+  m_LocalPosition: {x: -1.9800053, y: 17.123241, z: 8.25998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1036145628}
+  m_Father: {fileID: 2125924507}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1825174578
+--- !u!1 &1965624582
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3727,112 +2960,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1825174579}
+  - component: {fileID: 1965624584}
+  - component: {fileID: 1965624583}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_1_SHR_WP_2
+  m_Name: SHR_WP_PurpleSleep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1825174579
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825174578}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1049957, y: 13.650002, z: 1.3349915}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1071936302}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1839680517
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1839680518}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_Walk2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1839680518
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839680517}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.914993, y: 6.300003, z: 0.23001099}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 260133052}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1847427147
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1847427149}
-  - component: {fileID: 1847427148}
-  m_Layer: 0
-  m_Name: SHR_WP_platformExit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1847427148
+--- !u!114 &1965624583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847427147}
+  m_GameObject: {fileID: 1965624582}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 446832558}
+  - wp: {fileID: 2090250876}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 446832558}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &1847427149
+  prev: []
+--- !u!4 &1965624584
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847427147}
+  m_GameObject: {fileID: 1965624582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.719986, y: 37.03875, z: 0.9299927}
+  m_LocalPosition: {x: 1.9799957, y: -5.894781, z: -9.179993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 17
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1867453956
+--- !u!1 &1999969852
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3840,143 +3010,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1867453957}
+  - component: {fileID: 1999969854}
+  - component: {fileID: 1999969853}
   m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_4_SHR_WP_5
+  m_Name: SHR_WP_Walk8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1867453957
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867453956}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.8250122, y: 2.4000015, z: -8.449982}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1970725102}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1935458421
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1935458422}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_SHR_WP_branchHighTip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1935458422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935458421}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.039993, y: 9.207001, z: 7.3399963}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 446832559}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1964819272
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1964819273}
-  m_Layer: 0
-  m_Name: HDL_jumpCurve_jmp2_jmp3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1964819273
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964819272}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1349945, y: 3.3600006, z: 5.529999}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1115810028}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1970725100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1970725102}
-  - component: {fileID: 1970725101}
-  m_Layer: 0
-  m_Name: SHR_WP_4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1970725101
+--- !u!114 &1999969853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970725100}
+  m_GameObject: {fileID: 1999969852}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 243708500}
-    type: 2
-    jumpCurveHandle: {fileID: 1867453957}
+  - wp: {fileID: 632741860}
+    type: 1
+    jumpCurveHandle: {fileID: 1181759354}
+  - wp: {fileID: 2090250876}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1514819016}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
   prev:
-  - wp: {fileID: 20359325}
-    type: 2
-    jumpCurveHandle: {fileID: 53206855}
---- !u!4 &1970725102
+  - wp: {fileID: 1419454683}
+    type: 1
+    jumpCurveHandle: {fileID: 507779431}
+  - wp: {fileID: 1514819016}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 2090250876}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &1999969854
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970725100}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.8399963, y: -8.4421215, z: 31.209991}
+  m_GameObject: {fileID: 1999969852}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.520004, y: -6.7261715, z: -13.899994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1867453957}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 3
+  - {fileID: 1181759354}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1992037850
+--- !u!1 &2029924891
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3984,8 +3076,104 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1992037852}
-  - component: {fileID: 1992037851}
+  - component: {fileID: 2029924892}
+  m_Layer: 0
+  m_Name: HDL_jumpCurve_SHR_WP_Walk2_SHR_WP_Walk4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2029924892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029924891}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.8099976, y: 5.5, z: 6.5200195}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 885275731}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2062462164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062462166}
+  - component: {fileID: 2062462165}
+  m_Layer: 0
+  m_Name: SHR_WP_branchHighest_platformLanding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2062462165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062462164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 2084687399}
+    type: 1
+    jumpCurveHandle: {fileID: 1005243716}
+  - wp: {fileID: 388947008}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1419454683}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 2084687399}
+    type: 1
+    jumpCurveHandle: {fileID: 2088189764}
+  - wp: {fileID: 388947008}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1419454683}
+    type: 1
+    jumpCurveHandle: {fileID: 91853442}
+--- !u!4 &2062462166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062462164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.259995, y: 34.83268, z: -1.6000061}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1005243716}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2084687398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2084687400}
+  - component: {fileID: 2084687399}
   m_Layer: 0
   m_Name: SHR_WP_branchHighTip
   m_TagString: Untagged
@@ -3993,50 +3181,50 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1992037851
+--- !u!114 &2084687399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992037850}
+  m_GameObject: {fileID: 2084687398}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
+  graph: {fileID: 1247102637}
   waitHere: 0
   next:
-  - wp: {fileID: 1370636768}
+  - wp: {fileID: 1485632014}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 446832558}
+  - wp: {fileID: 2062462165}
     type: 1
-    jumpCurveHandle: {fileID: 0}
+    jumpCurveHandle: {fileID: 2088189764}
   prev:
-  - wp: {fileID: 1370636768}
+  - wp: {fileID: 1485632014}
     type: 0
     jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 446832558}
+  - wp: {fileID: 2062462165}
     type: 1
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &1992037852
+    jumpCurveHandle: {fileID: 1005243716}
+--- !u!4 &2084687400
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992037850}
+  m_GameObject: {fileID: 2084687398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.11998, y: 20.259592, z: 15.809998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 560754608}
-  m_Father: {fileID: 1775811473}
+  - {fileID: 2088189764}
+  m_Father: {fileID: 1247102638}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2002813452
+--- !u!1 &2088189763
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4044,162 +3232,160 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2002813453}
-  - component: {fileID: 2002813454}
+  - component: {fileID: 2088189764}
   m_Layer: 0
-  m_Name: SHR_WP_6
+  m_Name: HDL_jumpCurve_SHR_WP_branchHighTip_SHR_WP_branchHighest_platformLanding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2002813453
+--- !u!4 &2088189764
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002813452}
+  m_GameObject: {fileID: 2088189763}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.599991, y: -8.423883, z: 1.3099976}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1573004633}
-  m_Father: {fileID: 211583146}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2002813454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002813452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 211583145}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1071936301}
-    type: 2
-    jumpCurveHandle: {fileID: 1573004633}
-  prev:
-  - wp: {fileID: 243708500}
-    type: 2
-    jumpCurveHandle: {fileID: 227060525}
---- !u!1 &2070182592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2070182594}
-  - component: {fileID: 2070182593}
-  m_Layer: 0
-  m_Name: jmp1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2070182593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2070182592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 117593123}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1115810027}
-    type: 2
-    jumpCurveHandle: {fileID: 1189918920}
-  - wp: {fileID: 481183988}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1286140702}
-    type: 1
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &2070182594
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2070182592}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.8799896, y: 0.27103424, z: 6.7099915}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1189918920}
-  m_Father: {fileID: 117593124}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2073851784
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2073851786}
-  - component: {fileID: 2073851785}
-  m_Layer: 0
-  m_Name: SHR_WP_Walk5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2073851785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2073851784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1775811472}
-  waitHere: 0
-  next:
-  - wp: {fileID: 1385383180}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  - wp: {fileID: 170689531}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
-  prev:
-  - wp: {fileID: 1385383180}
-    type: 0
-    jumpCurveHandle: {fileID: 0}
---- !u!4 &2073851786
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2073851784}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.690002, y: -6.9454174, z: 17.019958}
+  m_LocalPosition: {x: -13.189987, y: 19.852919, z: -8.705017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775811473}
-  m_RootOrder: 7
+  m_Father: {fileID: 2084687400}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2090250875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2090250877}
+  - component: {fileID: 2090250876}
+  m_Layer: 0
+  m_Name: SHR_WP_Walk0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2090250876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090250875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 975933401}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1999969853}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1514819016}
+    type: 1
+    jumpCurveHandle: {fileID: 150536346}
+  - wp: {fileID: 1377309608}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 1965624583}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1999969853}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 975933401}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  - wp: {fileID: 1514819016}
+    type: 1
+    jumpCurveHandle: {fileID: 1658324010}
+  - wp: {fileID: 1377309608}
+    type: 1
+    jumpCurveHandle: {fileID: 780159964}
+--- !u!4 &2090250877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090250875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5899963, y: -7.1084595, z: -20.220001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 150536346}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2125924505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125924507}
+  - component: {fileID: 2125924506}
+  m_Layer: 0
+  m_Name: SHR_WP_branchLowTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2125924506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125924505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef4da9198d48e544ab64f0c1e9467d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1247102637}
+  waitHere: 0
+  next:
+  - wp: {fileID: 1485632014}
+    type: 1
+    jumpCurveHandle: {fileID: 1920419723}
+  - wp: {fileID: 632741860}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+  prev:
+  - wp: {fileID: 1485632014}
+    type: 1
+    jumpCurveHandle: {fileID: 751796678}
+  - wp: {fileID: 632741860}
+    type: 0
+    jumpCurveHandle: {fileID: 0}
+--- !u!4 &2125924507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125924505}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.74, y: 11.866709, z: -9.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1920419723}
+  m_Father: {fileID: 1247102638}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

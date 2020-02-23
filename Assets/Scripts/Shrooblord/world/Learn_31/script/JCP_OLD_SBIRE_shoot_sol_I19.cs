@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace CustomGame.Rayman2.Persos {
-    public class JCP_FRH_sbire_gnak_I1 : PersoController {
+    public class JCP_OLD_SBIRE_shoot_sol_I19 : PersoController {
         #region Setup
         public bool jumping;
         public bool selfJump;
@@ -35,11 +35,11 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
 
         protected override void OnStart() {
-            pos = new Vector3(-193.61f, 23.84f, 369.45f);
-            rot = Quaternion.Euler(0, 0, 0);
+            pos = new Vector3(-187.8f, 25.51f, 383.39f);
+            rot = Quaternion.Euler(0, -106.54f, 0);
 
             //Colour the Henchman. 1 = Red; 2 = Purple
-            GetComponent<PersoBehaviour>().poListIndex = 2;
+            GetComponent<PersoBehaviour>().poListIndex = 1;
 
             SetRule("Sleeping");
 
@@ -129,11 +129,11 @@ namespace CustomGame.Rayman2.Persos {
         void DrawVisionCone(float angle, float radius) {
             Color col = FindDebugDrawColour(DebugType.VisionCone);
 
-            Vector3 left  = pos + radius *  angle / 2 * transform.forward;
+            Vector3 left = pos + radius * angle / 2 * transform.forward;
             Vector3 right = pos + radius * -angle / 2 * transform.forward;
 
-            Debug.DrawLine(pos,   left, col);
-            Debug.DrawLine(pos,  right, col);
+            Debug.DrawLine(pos, left, col);
+            Debug.DrawLine(pos, right, col);
             Debug.DrawLine(left, right, col);
         }
 
@@ -150,7 +150,7 @@ namespace CustomGame.Rayman2.Persos {
             //DrawMind();
         }
 
-        void Ground() {   
+        void Ground() {
             col.groundDepth = groundDepth;
             col.UpdateGroundCollision();
 
@@ -362,7 +362,7 @@ namespace CustomGame.Rayman2.Persos {
             SetVelXZ();
             anim.Set(2);
 
-            if (Vector3.Distance(pos, WPTarget.transform.position) <= 0.5f) {                
+            if (Vector3.Distance(pos, WPTarget.transform.position) <= 0.5f) {
                 WPCurrent = WPTarget;
                 WPTarget = WPCurrent.getRandomNextWaypoint();
 
@@ -393,17 +393,17 @@ namespace CustomGame.Rayman2.Persos {
             //Paraboloid with start C and end T and apex H
             Vector3 C = WPCurrent.transform.position;
             Vector3 H = conn.jumpCurveHandle.position;
-            Vector3 T = WPTarget.transform.position;            
+            Vector3 T = WPTarget.transform.position;
 
             float apex = Mathf.Sqrt(Mathf.Pow(H.y - C.y, 2));
             //Debug.LogError("apex: " + apex);
 
             //find t; we need to split the curve in half because of the differences in gravity up and down, and because the points might start / end on different heights
             //first half of the curve
-            float t1 = Mathf.Sqrt( 2 * apex / 13 );         //g = 13 while jumping
+            float t1 = Mathf.Sqrt(2 * apex / 13);         //g = 13 while jumping
             //Debug.LogError("t1: " + t1);
             //second half of the curve
-            float t2 = Mathf.Sqrt( 2 * Mathf.Sqrt(Mathf.Pow(T.y - H.y, 2)) / 25 );         //g = 25 while falling
+            float t2 = Mathf.Sqrt(2 * Mathf.Sqrt(Mathf.Pow(T.y - H.y, 2)) / 25);         //g = 25 while falling
             //Debug.LogError("t2: " + t2);
             float t = (t1 + t2);
             //Debug.LogError("t: " + t);

@@ -6,7 +6,7 @@ using UnityEngine;
 //All possible connection types between Waypoints.
 [System.Serializable]
 public class WPConnection {
-    public enum Type { NONE, WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo };
+    public enum Type { WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo, NONE };
     public SHR_Waypoint wp;
     public Type type;
 
@@ -62,7 +62,7 @@ public class SHR_Waypoint : MonoBehaviour {
                         //Add a new Jump Curve Handle transform
                         if (conn.jumpCurveHandle == null) {
                             conn.jumpCurveHandle = new GameObject("HDL_jumpCurve_" + name + "_" + conn.wp.name).transform;
-                            conn.jumpCurveHandle.position = midPos + Vector3.up * 5;
+                            conn.jumpCurveHandle.position = midPos + Vector3.up * 7;
                         }
                         //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides
                         foreach (var p in conn.wp.prev) {
@@ -74,9 +74,16 @@ public class SHR_Waypoint : MonoBehaviour {
                         }
 
                         var handle = conn.jumpCurveHandle;
-                        
-                        handle.position = new Vector3(midPos.x, handle.position.y, midPos.z);
 
+                        //handle may never be lower than the highest point out of the two waypoints
+                        float minHeight = Mathf.Max(transform.position.y, conn.wp.transform.position.y) + 1;
+                        if (handle.position.y < minHeight) {
+                            handle.position = new Vector3(midPos.x, minHeight, midPos.z);
+                        } else {
+                            handle.position = new Vector3(midPos.x, handle.position.y, midPos.z);
+                        }
+
+                        //parent ourselves to it
                         if (handle.parent != transform)
                             handle.parent = transform;
 
