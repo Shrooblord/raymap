@@ -184,7 +184,7 @@ namespace CustomGame.Rayman2.Persos {
             var cpos = pos;
             col.ApplyWallCollision(ref cpos);
             pos = Vector3.Lerp(pos, cpos, Time.deltaTime * 40);
-            rot = Quaternion.Euler(xr.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+            rot = Quaternion.Euler(xr.eulerAngles.x, rot.eulerAngles.y, 0);
 
             persoNewState = false;
         }

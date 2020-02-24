@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Shrooblord.lib;
 
 namespace CustomGame.Rayman2.Persos {
     public class old__JCP_FRH_sbire_gnak_I1 : PersoController {
@@ -290,7 +291,7 @@ namespace CustomGame.Rayman2.Persos {
             foreach (var conn in currentWP.next) {
                 if (conn.wp == targetWP) {
                     if (conn.type == WPConnection.Type.JumpTo) {
-                        var tr = conn.jumpCurveHandle;
+                        var tr = conn.pathHandle;
                         
                     //DELETE ME (TEMPORARY UNTIL CALCULUS BELOW IMPLEMENTED)
                         
@@ -402,11 +403,11 @@ namespace CustomGame.Rayman2.Persos {
                     waitHereTimer.Start(targetWP.waitHere, () => {
                         SetRule("RunAround");
                         currentWP = targetWP;
-                        targetWP = currentWP.getRandomNextWaypoint();
+                        targetWP = currentWP.GetRandomNextWaypoint();
                     }, false);
                 } else {
                     currentWP = targetWP;
-                    targetWP = currentWP.getRandomNextWaypoint();
+                    targetWP = currentWP.GetRandomNextWaypoint();
                 }
             }
         }

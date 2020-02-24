@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using CustomGame;
+using Shrooblord.lib;
 
 [CanEditMultipleObjects]
 [CustomEditor(typeof(SHR_Waypoint))]
@@ -59,28 +60,12 @@ public class SHR_WaypointEditor : Editor {
                     }
 
                     //destroy the children
-                    if (n.type == WPConnection.Type.JumpTo) {
-                        if (n.jumpCurveHandle != null) {
-                            if (wp.transform.childCount != 0) {
-                                //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
-
-                                //if (tr != null) {
-                                DestroyImmediate(n.jumpCurveHandle.gameObject);
-                                //}
-
-                                n.jumpCurveHandle = null;
-                            }
-                        }
-                    } else if (n.type == WPConnection.Type.DrillTo) {
-                        if (n.drillPathHandle != null) {
-                            if (wp.transform.childCount != 0) {
-                                DestroyImmediate(n.drillPathHandle.gameObject);
-                                n.drillPathHandle = null;
-                            }
+                    if (wp.transform.childCount != 0) {
+                        if (n.pathHandle != null) {
+                            DestroyImmediate(n.pathHandle.gameObject);
+                            n.pathHandle = null;
                         }
                     }
-
-
                     break;
                 }
 
@@ -91,14 +76,36 @@ public class SHR_WaypointEditor : Editor {
 
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("+", GUILayout.Width(30)) && (connectionToAddOutbound.wp != null)) {
-                //add him to our forwards array
-                wp.next.Add(connectionToAddOutbound);
+                //We can't connect to ourselves...
+                if (connectionToAddOutbound.wp == wp) {
+                    Debug.LogError("You can't create a Connection from this Waypoint to itself!");
+                } else {
+                    bool foundMe = false;
+                    bool addMe = true;
 
-                //add us to his backwards array
-                connectionToAddOutbound.wp.prev.Add(new WPConnection(wp, connectionToAddOutbound.type));
+                    //If this connection does not already exist...
+                    foreach (var p in connectionToAddOutbound.wp.prev) {
+                        if (p.wp == wp) {
+                            foundMe = true;
+                            if (p.type == connectionToAddOutbound.type) {
+                                addMe = false;
+                                Debug.LogError("There already exists an Outbound Connection of type " + connectionToAddOutbound.type + " to " + p.wp + "!");
+                            }
+                        }
+                    }
 
-                //reset connection for next UI interaction
-                connectionToAddOutbound = new WPConnection();
+                    //If a previous connection either didn't already exist, or that connection was not of the type we're trying to add right now, go ahead.
+                    if ((!foundMe) || (foundMe && addMe)) {
+                        //add him to our forwards array
+                        wp.next.Add(connectionToAddOutbound);
+
+                        //add us to his backwards array
+                        connectionToAddOutbound.wp.prev.Add(new WPConnection(wp, connectionToAddOutbound.type));
+
+                        //reset connection for next UI interaction
+                        connectionToAddOutbound = new WPConnection();
+                    }
+                }
             }
 
             connectionToAddOutbound.wp = (SHR_Waypoint)EditorGUILayout.ObjectField(connectionToAddOutbound.wp, typeof(SHR_Waypoint), true);
@@ -140,27 +147,12 @@ public class SHR_WaypointEditor : Editor {
                     }
 
                     //destroy the children
-                    if (p.type == WPConnection.Type.JumpTo) {
-                        if (p.jumpCurveHandle != null) {
-                            if (p.wp.transform.childCount != 0) {
-                                //var tr = transform.Find("HDL_jumpCurve_" + name + "_" + conn.wp.name);
-
-                                //if (tr != null) {
-                                DestroyImmediate(p.jumpCurveHandle.gameObject);
-                                //}
-
-                                p.jumpCurveHandle = null;
-                            }
-                        }
-                    } else if (p.type == WPConnection.Type.DrillTo) {
-                        if (p.drillPathHandle != null) {
-                            if (wp.transform.childCount != 0) {
-                                DestroyImmediate(p.drillPathHandle.gameObject);
-                                p.drillPathHandle = null;
-                            }
+                    if (p.wp.transform.childCount != 0) {
+                        if (p.pathHandle != null) {
+                            DestroyImmediate(p.pathHandle.gameObject);
+                            p.pathHandle = null;
                         }
                     }
-
                     break;
                 }
 
@@ -171,14 +163,35 @@ public class SHR_WaypointEditor : Editor {
 
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("+", GUILayout.Width(30)) && (connectionToAddInbound.wp != null)) {
-                //add him to our backwards array
-                wp.prev.Add(connectionToAddInbound);
+                //We can't connect to ourselves...
+                if (connectionToAddInbound.wp == wp) {
+                    Debug.LogError("You can't create a Connection from this Waypoint to itself!");
+                } else {
+                    bool foundMe = false;
+                    bool addMe = true;
+                    //If this connection does not already exist...
+                    foreach (var n in connectionToAddInbound.wp.next) {
+                        if (n.wp == wp) {
+                            foundMe = true;
+                            if (n.type == connectionToAddInbound.type) {
+                                addMe = false;
+                                Debug.LogError("There already exists an Inbound Connection of type " + connectionToAddInbound.type + " from " + n.wp + "!");
+                            }
+                        }
+                    }
 
-                //add us to his forwards arary
-                connectionToAddInbound.wp.next.Add(new WPConnection(wp, connectionToAddInbound.type));
+                    //If a previous connection either didn't already exist, or that connection was not of the type we're trying to add right now, go ahead.
+                    if ((!foundMe) || (foundMe && addMe)) {
+                        //add him to our backwards array
+                        wp.prev.Add(connectionToAddInbound);
 
-                //reset connection for next UI interaction
-                connectionToAddInbound = new WPConnection();
+                        //add us to his forwards arary
+                        connectionToAddInbound.wp.next.Add(new WPConnection(wp, connectionToAddInbound.type));
+
+                        //reset connection for next UI interaction
+                        connectionToAddInbound = new WPConnection();
+                    }
+                }
             }
 
             connectionToAddInbound.wp = (SHR_Waypoint)EditorGUILayout.ObjectField(connectionToAddInbound.wp, typeof(SHR_Waypoint), true);

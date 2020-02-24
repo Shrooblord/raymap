@@ -4,7 +4,7 @@ using UnityEngine;
 using Shrooblord.lib;
 
 namespace CustomGame.Rayman2.Persos {
-    public class JCP_FRH_sbire_gnak_I1 : PersoController {
+    public class JCP_OLD_SBIRE_shoot_sol_I19 : PersoController {
         #region Setup
         //jumping
         public bool jumping;
@@ -31,7 +31,7 @@ namespace CustomGame.Rayman2.Persos {
 
         //waypoint history
         int MaxRememberedConnections = 3;
-        List<WPConnection> ConnectionHistory = new List<WPConnection>();   //keeps track of the last MaxRememberedConnections paths visited and attempts to avoid going back to those soon
+        List<WPConnection> ConnectionHistory;   //keeps track of the last MaxRememberedConnections paths visited and attempts to avoid going back to those soon
 
         //SFX
         private SFXPlayer snoreSFXPlayer;
@@ -63,11 +63,11 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
 
         protected override void OnStart() {
-            pos = new Vector3(-193.61f, 23.84f, 369.45f);
-            rot = Quaternion.Euler(0, 0, 0);
+            pos = new Vector3(-187.8f, 25.51f, 383.39f);
+            rot = Quaternion.Euler(0, -106.54f, 0);
 
             //Colour the Henchman. 1 = Red; 2 = Purple
-            GetComponent<PersoBehaviour>().poListIndex = 2;
+            GetComponent<PersoBehaviour>().poListIndex = 1;
 
             SetRule("Sleeping");
 
@@ -116,7 +116,7 @@ namespace CustomGame.Rayman2.Persos {
             69: 22 dupe
             20: 18 --> 0
             63: 20 dupe
-            
+
 
 
             RUNNING
@@ -178,7 +178,7 @@ namespace CustomGame.Rayman2.Persos {
             40: lean back cocking barrel and transition into throw --> 37
 
             37: toss barrel
-            
+
             HIT
             9: oof!
 
@@ -252,51 +252,51 @@ namespace CustomGame.Rayman2.Persos {
 
         #region animSFX
         public override AnimSFX[] animSfx => new AnimSFX[] {
-            //running animation footstep plants
-            new AnimSFX(2, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Footstep/Walk",
-                space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
-                volume = 0.60f,
-            }, 1, 10),
+        //running animation footstep plants
+        new AnimSFX(2, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/Footstep/Walk",
+            space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
+            volume = 0.60f,
+        }, 1, 10),
 
-            //wake up in surprise
-            //surprise sound
-            new AnimSFX(49, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/General/pimoteur",
-                space = SFXPlayer.Space.Point,
-            }, 1),
-            //heavy foot plant sound
-            new AnimSFX(49, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Footstep/Land/",
-                space = SFXPlayer.Space.Point,
-            }, 16),
+        //wake up in surprise
+        //surprise sound
+        new AnimSFX(49, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/General/pimoteur",
+            space = SFXPlayer.Space.Point,
+        }, 1),
+        //heavy foot plant sound
+        new AnimSFX(49, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/Footstep/Land/",
+            space = SFXPlayer.Space.Point,
+        }, 16),
 
-            //swivel head in surprise
-            new AnimSFX(6, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/General/surpris",
-                space = SFXPlayer.Space.Point,
-            }, 1),
+        //swivel head in surprise
+        new AnimSFX(6, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/General/surpris",
+            space = SFXPlayer.Space.Point,
+        }, 1),
 
-            //Drilling
-            //Submerging
-            new AnimSFX(39, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Weapon/Drill/ELEC6",
-                space = SFXPlayer.Space.Point,
-            }, 17),
+        //Drilling
+        //Submerging
+        new AnimSFX(39, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/Weapon/Drill/ELEC6",
+            space = SFXPlayer.Space.Point,
+        }, 17),
 
-            //Emerging
-            //drill
-            new AnimSFX(23, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Weapon/Drill/ELEC5",
-                space = SFXPlayer.Space.Point,
-            }, 1),
+        //Emerging
+        //drill
+        new AnimSFX(23, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/Weapon/Drill/ELEC5",
+            space = SFXPlayer.Space.Point,
+        }, 1),
 
-            //heavy foot plant sound
-            new AnimSFX(23, new SFXPlayer.Info {
-                path = "Rayman2/Henchman/Footstep/Land/",
-                space = SFXPlayer.Space.Point,
-            }, 21),
-        };
+        //heavy foot plant sound
+        new AnimSFX(23, new SFXPlayer.Info {
+            path = "Rayman2/Henchman/Footstep/Land/",
+            space = SFXPlayer.Space.Point,
+        }, 21),
+    };
         #endregion
 
         #region Functions
@@ -365,6 +365,10 @@ namespace CustomGame.Rayman2.Persos {
         }
         #endregion
 
+        //every tick
+        protected override void OnUpdate() {
+        }
+
         private void OnDrawGizmos() {
             DrawMind();
         }
@@ -413,23 +417,20 @@ namespace CustomGame.Rayman2.Persos {
         }
 
         void TrackLastWaypoints() {
-            if (ConnectionHistory != null) {
-                if (ConnectionHistory.Count == MaxRememberedConnections) {
-                    ConnectionHistory.RemoveAt(1);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
-                }
+            if (ConnectionHistory.Count == MaxRememberedConnections) {
+                ConnectionHistory.RemoveAt(1);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
             }
-
             ConnectionHistory.Add(GetConnection()); //shove the current Waypoint onto the end of the list
         }
 
         void GetNextTargetWaypoint() {
             TrackLastWaypoints();
             WPCurrent = WPTarget;
-            
+
             if (WPCurrent != null) {
                 int attempt = 10;
                 bool success = false;
-                while ( (attempt > 0) && (success == false) ) {
+                while ((attempt > 0) && (success == false)) {
                     WPTarget = WPCurrent.GetRandomNextWaypoint();
 
                     success = !ConnectionHistory.Contains(GetConnection());     //did we successfully find a unique Connection to travel through?
@@ -621,7 +622,7 @@ namespace CustomGame.Rayman2.Persos {
             //...
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 600) {  //6
+                if (Vector3.Distance(pos, rayman.pos) < 6) {  //6
                     snoringTimer.Abort();
                     SetRule("WokeUp");
                 }
@@ -683,7 +684,7 @@ namespace CustomGame.Rayman2.Persos {
             //move and look at where we're headed
             if (!lookAtRay)
                 SetLookAt2D(WPTarget.transform.position, 180);
-            
+
             #region Paraboloid Movement Calculus
             //Paraboloid with start C and end T and apex H
             Vector3 C = WPCurrent.transform.position;
@@ -749,7 +750,7 @@ namespace CustomGame.Rayman2.Persos {
             LandTimeout.Start(2, () => {
                 SetRule("Decide");
             }, false);
-            
+
             switch (anim.currAnim) {
                 case 13:                //jump declination loop
                     if (velY <= 0f) {
@@ -808,3 +809,4 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
     }
 }
+
