@@ -86,7 +86,7 @@ namespace CustomGame.Rayman2.Persos {
 
             //**** DELET THIS ****
 
-            Main.SetMainActor(this);
+            //Main.SetMainActor(this);
             Main.showMainActorDebug = true;
 
             //**** END OF DELET ****
@@ -876,7 +876,7 @@ namespace CustomGame.Rayman2.Persos {
             //...
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 600) {  //6
+                if (Vector3.Distance(pos, rayman.pos) < 6) {  //6
                     snoringTimer.Abort();
                     SetRule("WokeUp");
                 }

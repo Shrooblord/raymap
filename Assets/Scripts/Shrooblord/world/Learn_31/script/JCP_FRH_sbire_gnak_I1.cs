@@ -961,7 +961,7 @@ namespace CustomGame.Rayman2.Persos {
             //...
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 600) {  //6
+                if (Vector3.Distance(pos, rayman.pos) < 6) {  //6
                     snoringTimer.Abort();
                     SetRule("WokeUp");
                 }
