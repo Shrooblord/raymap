@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using Shrooblord.lib;
 
-namespace CustomGame.Rayman2.Persos {
+namespace RaymapGame.Rayman2.Persos {
     #region Mind
     //Pirate decision-making flags
     public class Mind {
@@ -530,11 +530,11 @@ namespace CustomGame.Rayman2.Persos {
             if (col.ground.AnyGround && col.ground.hit.distance < 1.5f) {
                 col.StickToGround();
             } else if (col.ground.Slide) {
-                SetRule(StdRules.Sliding); return;
+                SetRule("Sliding"); return;
             } else if (col.water.Water && !col.waterIsShallow) {
-                SetRule(StdRules.Swimming); return;
+                SetRule("Swimming"); return;
             } else {
-                SetRule(StdRules.Air); return;
+                SetRule("Air"); return;
             }
 
             //SetFriction(30, 0);
@@ -675,7 +675,7 @@ namespace CustomGame.Rayman2.Persos {
             velY = vy_0;
             //jumpCutoff = vy_0 * 0.01f;
             jumping = true;
-            SetRule(StdRules.Air);
+            SetRule("Air");
         }
 
         void animateJump() {
@@ -870,10 +870,10 @@ namespace CustomGame.Rayman2.Persos {
                 SetRule("Land");
                 return;
             } else if (col.ground.Slide) {
-                SetRule(StdRules.Sliding);
+                SetRule("Sliding");
                 return;
             } else if (col.ground.Water && velY < 0 && !col.waterIsShallow) {
-                SetRule(StdRules.Swimming);
+                SetRule("Swimming");
                 return;
             }
 
@@ -889,7 +889,7 @@ namespace CustomGame.Rayman2.Persos {
             ApplyGravity();
 
             if (lookAtRay)
-                SetLookAt2D(rayman.pos, 180);
+                LookAt2D(rayman.pos, 180);
 
             #region helic
             /*
@@ -919,7 +919,7 @@ namespace CustomGame.Rayman2.Persos {
 
 
             if (pos.y < startPos.y - 1100)
-                SetRule(StdRules.Falling);
+                SetRule("Falling");
             #endregion
             #region Animation
             /*
@@ -996,7 +996,7 @@ namespace CustomGame.Rayman2.Persos {
 
             //move and look at where we're headed
             if (!lookAtRay)
-                SetLookAt2D(WPTarget.transform.position, 180);
+                LookAt2D(WPTarget.transform.position, 180);
             SetVelXZ();
             anim.Set(2);
 
@@ -1022,7 +1022,7 @@ namespace CustomGame.Rayman2.Persos {
 
             //move and look at where we're headed
             if (!lookAtRay)
-                SetLookAt2D(WPTarget.transform.position, 180);
+                LookAt2D(WPTarget.transform.position, 180);
             
             #region Paraboloid Movement Calculus
             //Paraboloid with start C and end T and apex H
@@ -1070,7 +1070,7 @@ namespace CustomGame.Rayman2.Persos {
                 velXZ = velXZStored;
 
                 if (lookAtRay)
-                    SetLookAt2D(rayman.pos, 180);
+                    LookAt2D(rayman.pos, 180);
 
                 Jump();
             } else {
@@ -1120,7 +1120,7 @@ namespace CustomGame.Rayman2.Persos {
         Timer DrillSubmergeTimer = new Timer();
         void Rule_PrepareDrill() {
             if (newRule) {
-                SetLookAt2D(rayman.pos, 180);
+                LookAt2D(rayman.pos, 180);
                 anim.Set(39); //submerging --> 27
                 DrillSubmergeTimer.Start(1.82f, () => SetRule("DrillTravelling"), false);
             }
@@ -1138,7 +1138,7 @@ namespace CustomGame.Rayman2.Persos {
         void Rule_DrillEmerge() {
             if (newRule) {
                 pos = conn.wp.transform.position;
-                SetLookAt2D(rayman.pos, 180);
+                LookAt2D(rayman.pos, 180);
                 anim.Set(23); //--> 0 (idle)
                 DrillWindDownTimer.Start(0.934f, () => SetRule("Decide"), false);
             }

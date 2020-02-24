@@ -85,10 +85,14 @@ namespace OpenSpace.Input {
 					return KeyWord.Read(reader, off_element);
 				});
             }
-			if (ea.keywords != null && ea.keywords.Count > 0) {
-				ea.keywords[0].FillInSubKeywords(ref reader, ea.keywords, 0);
-			}
-			Pointer.DoAt(ref reader, ea.off_name, () => {
+            if (ea.keywords != null && ea.keywords.Count > 0) {
+                int keywordsRead = ea.keywords[0].FillInSubKeywords(ref reader, ea.keywords, 0);
+                if (keywordsRead != ea.keywords.Count) {
+                    Debug.LogError(offset + " - Keywords read was: " + keywordsRead + " vs " + ea.keywords.Count);
+                    Debug.LogError(ea.ToString());
+                }
+            }
+            Pointer.DoAt(ref reader, ea.off_name, () => {
                 ea.name = reader.ReadNullDelimitedString();
             });
             Pointer.DoAt(ref reader, ea.off_name2, () => {

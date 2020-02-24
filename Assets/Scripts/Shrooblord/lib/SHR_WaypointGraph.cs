@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CustomGame;
-using CustomGame.Rayman2.Persos;
+using RaymapGame;
+using RaymapGame.Rayman2.Persos;
 
 //extend PersoController so that it contains a graph variable.
-namespace CustomGame {
+namespace RaymapGame {
     public partial class PersoController {
         public Shrooblord.lib.SHR_WaypointGraph graph;
     }
