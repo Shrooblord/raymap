@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using CustomGame;
+using RaymapGame;
 using Shrooblord.lib;
 
 [CanEditMultipleObjects]

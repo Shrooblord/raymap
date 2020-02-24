@@ -215,7 +215,9 @@ public class Controller : MonoBehaviour {
 
 			Application.Quit();
 		}
+		loaded = true;
 	}
+	public bool loaded;
 
 	// Update is called once per frame
 	void Update() {
