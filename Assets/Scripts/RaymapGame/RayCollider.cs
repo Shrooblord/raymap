@@ -40,6 +40,12 @@ namespace RaymapGame
         //  Continuous Raycasting
         //========================================
         public static int raycastDepth = 5;
+
+        public static CollideInfo RaycastMouse() {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            return Raycast(ray.origin, ray.direction, 200);
+        }
+
         public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterial.Type types = CollideMaterial.Type.Any) {
             bool hit = Physics.Raycast(origin, direction, out var newhit, distance, 1 << 9, QueryTriggerInteraction.Ignore);
             /*
@@ -94,8 +100,8 @@ namespace RaymapGame
         public PersoController platformPerso;
 
         public void StickToGround() => StickToGround(ref perso.pos);
-        public void StickToGround(ref Vector3 pos)
-        {
+        public void StickToGround(ref Vector3 pos) {
+            if (!ground.AnyGround) return;
             if (platformPerso != null)
                 perso.pos += platformPerso.deltaPos;
             pos.y = ground.hit.point.y;

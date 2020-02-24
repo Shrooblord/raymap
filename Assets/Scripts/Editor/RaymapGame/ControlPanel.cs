@@ -57,21 +57,20 @@ namespace RaymapGame {
 
 
         static Timer t_error = new Timer();
-        static float nameWidth = 160;
 
         public static PersoBehaviour GetSelectedPersoBehaviour() {
             return Selection.activeGameObject.GetComponentInParent<PersoBehaviour>();
         }
 
 
-        void Header(string text) {
+        public static void Header(string text) {
             GUILayout.BeginHorizontal();
             GUILayout.Label(text, EditorStyles.toolbarButton);
             GUILayout.EndHorizontal();
             GUILayout.Space(3);
         }
 
-        Timer t_scan = new Timer();
+
         static PersoController[] persos = new PersoController[0];
         public void RescanLevel() {
             persos = FindObjectsOfType<PersoController>();
@@ -81,6 +80,7 @@ namespace RaymapGame {
         static string author = System.Environment.UserName;
         static string description = "";
 
+        static float nameWidth = 160;
         public void OnGUI() {
             Header("Create Perso Script");
 
@@ -124,7 +124,7 @@ namespace RaymapGame {
 
 
 
-
+            /*
             Header("Perso Scripts");
 
 
@@ -161,7 +161,7 @@ namespace RaymapGame {
                         i = 0;
                     }
                 }
-            }
+            }*/
         }
     }
 }

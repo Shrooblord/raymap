@@ -336,8 +336,7 @@ namespace RaymapGame.Rayman2.Persos {
                 return;
             }
 
-            rot = Quaternion.Slerp(rot,
-                Matrix4x4.LookAt(pos, pos - apprVel, Vector3.up).rotation, dt * 5);
+            FaceVel3D();
         }
 
 

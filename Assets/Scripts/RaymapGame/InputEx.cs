@@ -5,10 +5,8 @@
 using UnityEngine;
 using static UnityEngine.Input;
 
-namespace RaymapGame
-{
-    public class InputEx : MonoBehaviour
-    {
+namespace RaymapGame {
+    public class InputEx : MonoBehaviour {
         public static float deadZone = 0.15f;
         public static float smoothing = 20;
 
@@ -39,8 +37,7 @@ namespace RaymapGame
             iJumpDown, iJumpHold, iJumpUp,
             iShootDown, iShootHold, iShootUp;
 
-        void Update()
-        {
+        void Update() {
             _lStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_lStick_s, lStick, Time.deltaTime * smoothing), 1);
             _rStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_rStick_s, rStick, Time.deltaTime * smoothing / 2), 1);
             mouseDelta = (Vector2)mousePosition - mousePosPrev;

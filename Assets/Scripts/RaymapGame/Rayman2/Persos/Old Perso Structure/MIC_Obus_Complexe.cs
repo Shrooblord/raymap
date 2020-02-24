@@ -15,13 +15,13 @@ namespace RaymapGame.Rayman2.Persos {
             SetRule("");
             t_fallAsleep.Abort();
             anim.Set(Anim.Shell.WakeUp);
-            t_wakeUp.Start(1.75f, () => SetRule("Chasing", 135), false);
+            t_wakeUp.Start(1.75f, () => SetRule("Chasing"), false);
         }
 
 
         protected override void OnStart() {
             SetShadow(true);
-            SetWallCollision(true);
+            col.wallEnabled = true;
             SetRule("Idle");
         }
 
@@ -40,7 +40,7 @@ namespace RaymapGame.Rayman2.Persos {
         Timer t_wakeUp = new Timer();
         Timer t_runStart = new Timer();
 
-        void Rule_Chasing(float t_rot) {
+        void Rule_Chasing() {
             if (newRule) {
                 anim.Set(Anim.Shell.RunStart, 0);
                 t_runStart.Start(0.3f);
@@ -49,9 +49,15 @@ namespace RaymapGame.Rayman2.Persos {
             if (t_runStart.finished) {
                 anim.SetSpeed(moveSpeed * 8);
                 moveSpeed = 8;
-                //SetLookAt2D(rayman.pos, 13500);
+                navRotYSpeed = 3;
                 NavTowards(rayman.pos);
                 col.StickToGround();
+                if (col.ground.AnyGround) {
+                    velY = 0;
+                }
+                else {
+                    ApplyGravity();
+                }
             }
 
             if (CheckCollisionZone(rayman, OpenSpace.Collide.CollideType.ZDM)) {

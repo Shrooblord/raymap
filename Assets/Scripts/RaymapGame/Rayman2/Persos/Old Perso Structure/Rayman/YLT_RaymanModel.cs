@@ -36,6 +36,7 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnDebug() {
             DebugLabel("Helic Active", helic);
             DebugLabel("Has Super Helic", hasSuperHelic);
+            DebugLabel("Cam rule", cam.rule);
         }
 
         public override float activeRadius => 100000;
@@ -74,7 +75,7 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         protected override void OnStart() {
-            cam = Camera.main.GetComponent<StdCam>();
+            cam = GetPersoModel<StdCam>("StdCam");
 
             switch (Main.lvlName)
             {
@@ -110,11 +111,15 @@ namespace RaymapGame.Rayman2.Persos {
                 SetRule(StdRules.Climbing);
         }
 
-
-
-        protected override void OnInput() {
-            if (iShootDown)
+        PersoController shot;
+        protected override void OnInputMainActor() {
+            if (GetKeyDown(KeyCode.R))
                 Despawn();
+
+            if (iShootDown) {
+                shot = GetPersoName("Alw_Projectile_Rayman");
+                shot.SetRule("Shoot");
+            }
 
             switch (rule)
             {
@@ -153,6 +158,15 @@ namespace RaymapGame.Rayman2.Persos {
                     break;
             }
 
+
+            // Debug/Cheat stuff
+            if (GetKeyDown(KeyCode.H))
+                hasSuperHelic = !hasSuperHelic;
+
+            if (GetKeyDown(KeyCode.T)) {
+                var c = RayCollider.RaycastMouse();
+                if (c.Any) pos = c.hit.point;
+            }
         }
 
 

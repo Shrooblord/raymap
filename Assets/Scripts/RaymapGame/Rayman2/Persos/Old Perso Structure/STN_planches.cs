@@ -13,10 +13,6 @@ namespace RaymapGame.Rayman2.Persos {
         int type;
         // 0, 950, 3500, 3501, 5000
 
-        void OnGUI() {
-            if (StoodOnByPerso(rayman))
-                GUILayout.Label(type.ToString());
-        }
 
         protected override void OnStart() {
             type = GetDsgVar<int>("Int_4");

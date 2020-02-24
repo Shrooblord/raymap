@@ -60,6 +60,7 @@ namespace RaymapGame {
 
         protected virtual void OnStart() { }
         protected virtual void OnInput() { }
+        protected virtual void OnInputMainActor() { }
         protected virtual void OnUpdate() { }
 
 

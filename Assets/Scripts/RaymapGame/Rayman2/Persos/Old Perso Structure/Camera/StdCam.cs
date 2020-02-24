@@ -18,9 +18,8 @@ namespace RaymapGame.Rayman2.Persos {
         public override float activeRadius => 100000;
 
         protected override void OnStart() {
-            col.controller = this;
+            col.wallEnabled = true;
             lStickAngle_s = lStickAngle;
-            SetWallCollision(true);
             SetRule("Default");
         }
 
@@ -63,6 +62,14 @@ namespace RaymapGame.Rayman2.Persos {
 
         Timer t_resetting = new Timer();
 
+
+        protected override void OnInput() {
+            if (Input.GetKeyDown(KeyCode.Y)) {
+                if (rule == "Default") {
+                    SetRule("Free");
+                }
+            }
+        }
 
         protected override void OnUpdate() {
             LevelRules();
@@ -158,7 +165,7 @@ namespace RaymapGame.Rayman2.Persos {
 
 
                 if (rStick_s.magnitude > deadZone)
-                    RotateY(-rStick_s.x * 90, 1);
+                    RotateY(-rStick_s.x * 110, 1);
             }
             else
             {

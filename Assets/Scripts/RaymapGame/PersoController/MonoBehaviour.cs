@@ -38,8 +38,10 @@ namespace RaymapGame {
         protected void Update() {
             if (isMainActor || (Main.main.alwaysControlRayman && this is YLT_RaymanModel)) {
                 perso.sector = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
-                OnInput();
+                OnInputMainActor();
             }
+            if (!ActiveChecks())
+                OnInput();
             if (!interpolate) LogicLoop();
         }
 

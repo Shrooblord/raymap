@@ -15,9 +15,11 @@ namespace RaymapGame
         public static bool useFixedTimeWithInterpolation = true;
         public static Main main;
         public bool alwaysControlRayman;
+        public bool showLiveScripts;
         public static PersoController mainActor;
         public static YLT_RaymanModel rayman;
         public static Type[] persoScripts = new Type[0];
+        public static List<PersoController> persos = new List<PersoController>();
         public static StdCam cam;
         public static EnvHandler env;
         public static Controller controller;
@@ -26,6 +28,7 @@ namespace RaymapGame
         public static bool loaded;
         public static event EventHandler onLoad;
         void Main_onLoad(object sender, EventArgs e) { }
+
 
         public static string lvlName => controller.loader.lvlName;
         bool canLoad => controller.loader.loadingState == "Filling in comport names";
@@ -55,12 +58,9 @@ namespace RaymapGame
             if (!loaded && controller.loaded)
                 Load();
 
-            // Debug/cheat stuff
+            // Debug
             if (Input.GetKeyDown(KeyCode.D))
                 showMainActorDebug = !showMainActorDebug;
-
-            if (Input.GetKeyDown(KeyCode.H) && mainActor is Rayman2.Persos.YLT_RaymanModel ray)
-                ray.hasSuperHelic = !ray.hasSuperHelic;
         }
 
 
@@ -92,9 +92,9 @@ namespace RaymapGame
                     if (name == pb.perso.nameModel.ToLowerInvariant()) matchModel = s;
                     if (name == pb.perso.nameFamily.ToLowerInvariant()) matchFamily = s;
                 }
-                if (matchName != null) pb.gameObject.AddComponent(matchName);
-                else if (matchModel != null) pb.gameObject.AddComponent(matchModel);
-                else if (matchFamily != null) pb.gameObject.AddComponent(matchFamily);
+                if (matchName != null) persos.Add((PersoController)pb.gameObject.AddComponent(matchName));
+                else if (matchModel != null) persos.Add((PersoController)pb.gameObject.AddComponent(matchModel));
+                else if (matchFamily != null) persos.Add((PersoController)pb.gameObject.AddComponent(matchFamily));
             }
 
             // Find the player Rayman perso and set as Main Actor
