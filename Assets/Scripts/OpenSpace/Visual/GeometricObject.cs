@@ -2,6 +2,7 @@
 using OpenSpace.Loader;
 using OpenSpace.Object;
 using OpenSpace.Visual.Deform;
+using OpenSpace.Visual.PS2Optimized;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace OpenSpace.Visual {
 		public int[][] mapping = null;
         public IGeometricObjectElement[] elements = null;
         public DeformSet bones = null;
+
+		public Pointer<PS2OptimizedSDCStructure> optimizedObject;
+		public uint ps2IsSinus;
         
         private GameObject gao = null;
         public GameObject Gao {
@@ -86,6 +90,7 @@ namespace OpenSpace.Visual {
 
         public static GeometricObject Read(Reader reader, Pointer offset) {
             MapLoader l = MapLoader.Loader;
+			//l.print("Geometric Object: " + offset);
             GeometricObject m = new GeometricObject(offset);
 			if (Settings.s.game == Settings.Game.LargoWinch) {
 				uint flags = reader.ReadUInt32();
@@ -126,7 +131,8 @@ namespace OpenSpace.Visual {
 				if (Settings.s.mode != Settings.Mode.RaymanArenaGC 
 					&& Settings.s.mode != Settings.Mode.RaymanArenaGCDemo
 					&& Settings.s.game != Settings.Game.RM
-					&& Settings.s.mode != Settings.Mode.DonaldDuckPKGC) {
+					&& Settings.s.mode != Settings.Mode.DonaldDuckPKGC
+					&& Settings.s.mode != Settings.Mode.Rayman3PS2) {
 					reader.ReadInt32();
 				}
 				if (Settings.s.engineVersion <= Settings.EngineVersion.Montreal) m.num_elements = (ushort)reader.ReadUInt32();
@@ -157,6 +163,16 @@ namespace OpenSpace.Visual {
 					if (Settings.s.engineVersion == Settings.EngineVersion.R3) {
 						reader.ReadInt32();
 						reader.ReadInt16();
+						if (Settings.s.platform == Settings.Platform.PS2) {
+							reader.ReadInt16();
+							reader.ReadUInt32();
+							reader.ReadUInt32();
+							reader.ReadUInt32();
+							m.optimizedObject = new Pointer<PS2OptimizedSDCStructure>(reader, resolve: false);
+							reader.ReadUInt32();
+							reader.ReadUInt32();
+							m.ps2IsSinus = reader.ReadUInt32();
+						}
 					}
 				} else {
 					reader.ReadInt32();
@@ -272,9 +288,126 @@ namespace OpenSpace.Visual {
                 }
 			}
 			ReadMeshFromATO(reader, m);
+			if (Settings.s.platform == Settings.Platform.PS2 && Settings.s.engineVersion == Settings.EngineVersion.R3) {
+				m.optimizedObject?.Resolve(reader, onPreRead: opt => opt.isSinus = m.ps2IsSinus);
+				m.ReadMeshFromSDC();
+			}
 			m.InitGameObject();
             return m;
         }
+
+		private void ReadMeshFromSDC() {
+			if (optimizedObject?.Value == null) return;
+			PS2OptimizedSDCStructure sdc = optimizedObject.Value;
+			int sdcIndex = 0;
+			for (int i = 0; i < num_elements; i++) {
+				if (element_types[i] != 1) continue;
+				PS2OptimizedSDCStructureElement sdcEl = sdc.elements[sdcIndex];
+				GeometricObjectElementTriangles mainEl = elements[i] as GeometricObjectElementTriangles;
+				if (sdc.visualMaterials[sdcIndex] != mainEl.visualMaterial) {
+					Debug.LogWarning("SDC and Main materials did not match!");
+				}
+				if (sdc.Type == 4 || sdc.Type == 5 || sdc.Type == 6) {
+					GameObject g = new GameObject("BAD SDC" + sdc.Type + "- " + sdcEl.offset);
+					MeshFilter mf = g.AddComponent<MeshFilter>();
+					MeshRenderer mr = g.AddComponent<MeshRenderer>();
+					mr.material = mainEl.visualMaterial.GetMaterial(VisualMaterial.Hint.None);
+					Mesh m = new Mesh();
+					m.vertices = sdcEl.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
+					List<int> tris = new List<int>();
+					List<Vector3> uvs = new List<Vector3>();
+					int currentTriInStrip = 0;
+					for (int v = 2; v < sdcEl.vertices.Length; v++) {
+						if (sdcEl.vertices[v].Equals(sdcEl.vertices[v - 1])) continue;
+						if (sdcEl.vertices[v].w == 1f) {
+							if (currentTriInStrip % 2 == 0) {
+								/*tris.Add(v - 2);
+								tris.Add(v - 1);
+								tris.Add(v - 0);*/
+								tris.Add(v - 0); // 0
+								tris.Add(v - 1); // 1
+								tris.Add(v - 2); // 2
+								/*uvs.Add(sdcEl.GetUV0(v - 2));
+								uvs.Add(sdcEl.GetUV0(v - 1));
+								uvs.Add(sdcEl.GetUV0(v - 0));*/
+
+							} else {
+								/*tris.Add(v - 2);
+								tris.Add(v - 0);
+								tris.Add(v - 1);*/
+								tris.Add(v - 2); // 0
+								tris.Add(v - 1); // 1
+								tris.Add(v - 0); // 2
+								/*tris.Add(v - 2); // 2
+								tris.Add(v - 0); // 3
+								tris.Add(v - 1); // 0*/
+								/*uvs.Add(sdcEl.GetUV0(v - 2));
+								uvs.Add(sdcEl.GetUV0(v - 0));
+								uvs.Add(sdcEl.GetUV0(v - 1));*/
+							}
+							currentTriInStrip++;
+						} else {
+							currentTriInStrip++;
+							//currentTriInStrip = 0;
+						}
+					}
+					if (sdcEl.vertices[0].w != 1f) {
+						Debug.LogWarning("0 - " + sdcEl.offset);
+					}
+					if (sdcEl.vertices[sdcEl.vertices.Length-1].w != 1f) {
+						Debug.LogWarning("LAST");
+					}
+					/*Debug.LogWarning(sdcEl.offset
+						+ " - " + sdc.Type
+						+ " - " + (tris.Count / 3)
+						+ " - " + sdc.num_triangles[sdcIndex]
+						+ " - " + sdc.uint1[sdcIndex]
+						+ " - " + sdcEl.num_uvs
+						+ " - " + ((sdcEl.num_vertices + 3) >> 2)
+						+ " - " + ((tris.Count + 3) >> 2));*/
+					if (bones != null) {
+						Debug.LogWarning(sdcEl.offset
+						+ " - " + mainEl.off_triangles
+						+ " - " + sdcEl.num_vertices
+						+ " - " + sdc.num_triangles[sdcIndex]);
+					}
+
+					m.vertices = sdcEl.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
+					uvs = Enumerable.Range(0, sdcEl.vertices.Length).Select(v => sdcEl.GetUV0(v)).ToList();
+					m.SetUVs(0, uvs.ToArray());
+					/*m.triangles = Enumerable.Range(0, sdcEl.vertices.Length).ToArray();
+					Debug.LogWarning(sdcEl.offset + " - " + sdc.Type + " - " + (m.triangles.Length / 3) + " - " + (m.triangles.Length % 3) + " - " + sdc.num_triangles[sdcIndex]);
+					*/
+					m.triangles = tris.ToArray();
+					//m.uv = sdcEl.uvUnoptimized.Select(uv => new Vector2(uv.u, uv.v)).ToArray();
+					//m.uv = 
+					m.RecalculateNormals();
+					mf.mesh = m;
+				} else {
+					GameObject g = new GameObject("SDC " + sdcEl.offset);
+					MeshFilter mf = g.AddComponent<MeshFilter>();
+					MeshRenderer mr = g.AddComponent<MeshRenderer>();
+					mr.material = mainEl.visualMaterial.GetMaterial(VisualMaterial.Hint.None);
+					Mesh m = new Mesh();
+					m.vertices = sdcEl.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
+					m.triangles = Enumerable.Range(0, sdcEl.vertices.Length).ToArray();
+					m.SetUVs(0, sdcEl.uvUnoptimized.Select(uv => new Vector3(uv.u, uv.v, 1f)).ToArray());
+					//m.uv = 
+					m.RecalculateNormals();
+					mf.mesh = m;
+				}
+				if (bones != null) {
+					if (sdc.num_triangles[sdcIndex] != mainEl.num_triangles) {
+						Debug.LogWarning(mainEl.offset + " - " + sdcEl.offset + " - " + num_vertices);
+					}
+				}
+				/*if (sdcEl.vertices.Length != mainEl.OPT_num_mapping_entries) {
+					Debug.LogWarning("SDC vertices was longer than main!");
+				}*/
+				//mainEl.sdc = sdcEl;
+				sdcIndex++;
+			}
+		}
 
 		private static void ReadMeshFromATO(Reader reader, GeometricObject m) {
 			// Revolution only: Before creating the gameobject, read the actual model data from the ATO
