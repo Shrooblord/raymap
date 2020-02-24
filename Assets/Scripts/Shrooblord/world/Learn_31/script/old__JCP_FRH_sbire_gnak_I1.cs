@@ -290,7 +290,7 @@ namespace CustomGame.Rayman2.Persos {
             //find out if target is a jump-to waypoint
             foreach (var conn in currentWP.next) {
                 if (conn.wp == targetWP) {
-                    if (conn.type == WPConnection.Type.JumpTo) {
+                    if (conn.type == WPConnection.Type.Jump) {
                         var tr = conn.pathHandle;
                         
                     //DELETE ME (TEMPORARY UNTIL CALCULUS BELOW IMPLEMENTED)

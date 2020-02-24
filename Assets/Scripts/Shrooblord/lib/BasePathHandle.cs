@@ -12,8 +12,11 @@ namespace Shrooblord.lib {
 
         private Color gizmoHandleColour;
 
+        [HideInInspector] public bool isSelected;
+
         private void OnDrawGizmosSelected() {
             gizmoHandleColour = handleColourSelected;
+            isSelected = true;
         }
 
         protected void OnDrawGizmos() {
@@ -22,6 +25,8 @@ namespace Shrooblord.lib {
             Gizmos.DrawSphere(transform.position, 0.4f);
             Gizmos.color = colourGizmo;
             gizmoHandleColour = handleColour;
+
+            isSelected = false;
         }
     }
 }

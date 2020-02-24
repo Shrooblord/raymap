@@ -495,11 +495,11 @@ namespace CustomGame.Rayman2.Persos {
             //Keep moving
             //if (I want to keep moving) {
             switch (conn.type) {
-                case WPConnection.Type.JumpTo:
+                case WPConnection.Type.Jump:
                     SetRule("JumpAround");
                     break;
 
-                case WPConnection.Type.DrillTo:
+                case WPConnection.Type.Drill:
                     SetRule("PrepareDrill");
                     break;
 

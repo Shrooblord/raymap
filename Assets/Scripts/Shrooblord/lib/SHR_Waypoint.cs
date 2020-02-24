@@ -5,7 +5,7 @@ namespace Shrooblord.lib {
     //All possible connection types between Waypoints.
     [System.Serializable]
     public class WPConnection {
-        public enum Type { WalkTo, JumpTo, DrillTo, ParachuteTo, TeleportTo, NONE };
+        public enum Type { Walk, Jump, Drill, Parachute, MoonJump, Teleport, NONE };
         public SHR_Waypoint wp;
         public Type type;
         public float drillTime; //how long it takes for the Henchman to Drill from this location to the target Waypoint pair
@@ -33,8 +33,14 @@ namespace Shrooblord.lib {
         public List<WPConnection> prev = new List<WPConnection>();
 
         private Vector3 lineOffset = new Vector3(0, 1.0f, 0);
+
         private Color outboundConnectionColour;
+        private Color outboundConnectionColourSelected;
+        private Color outboundConnectionLineColour;
+
         private Color inboundConnectionColour;
+        private Color inboundConnectionColourSelected;
+        private Color inboundConnectionLineColour;
 
         private Color colourWaypoint;
         private Color colourWaypointSelected;
@@ -52,17 +58,21 @@ namespace Shrooblord.lib {
             inboundConnectionColour = graph.inboundConnectionColour;
 
             colourWaypoint = Color.Lerp(outboundConnectionColour, inboundConnectionColour, 0.5f);
-            
-            //finding selection colour (invert colourWaypoint)
-            float hue, sat, val;
-            Color.RGBToHSV(colourWaypoint, out hue, out sat, out val);
-            hue = (hue + 0.5f) % 1f; //find colour on opposite of colour wheel
 
-            colourWaypointSelected = Color.HSVToRGB(hue, sat, val);
+            //finding selection colour
+            colourWaypointSelected = SHR_Colours.Invert(colourWaypoint);
+            outboundConnectionColourSelected = SHR_Colours.Invert(outboundConnectionColour);
+            inboundConnectionColourSelected = SHR_Colours.Invert(inboundConnectionColour);
+        }
+
+        private void colourSelection() {
+            colourGizmo = colourWaypointSelected;
+            outboundConnectionLineColour = outboundConnectionColourSelected;
+            inboundConnectionLineColour = inboundConnectionColourSelected;
         }
 
         private void OnDrawGizmosSelected() {
-            colourGizmo = colourWaypointSelected;
+            colourSelection();
         }
 
         private void OnDrawGizmos() {
@@ -88,244 +98,223 @@ namespace Shrooblord.lib {
                         }
                     }
 
+                    #region Shared Functions
+                    //functions shared by all Waypoint Connections
+                    void createNewPathHandle() {
+                        midPos = (conn.wp.transform.position + transform.position) / 2;
+
+                        //Add a new Path Handle transform
+                        if (conn.pathHandle == null) {
+                            var GO = new GameObject("HDL_" + conn.type + "Path_" + name + "_" + conn.wp.name);
+
+                            //check which type of Path Handle we have
+                            switch (conn.type) {
+                                case WPConnection.Type.Jump:
+                                    conn.pathHandle = GO.AddComponent<JumpPathHandle>();
+                                    conn.pathHandle.transform.position = midPos + Vector3.up * 7;
+                                    break;
+
+                                case WPConnection.Type.Drill:
+                                    conn.pathHandle = GO.AddComponent<DrillPathHandle>();
+                                    conn.pathHandle.transform.position = midPos + Vector3.down * 4;
+                                    break;
+
+                                default:
+                                    conn.pathHandle = GO.AddComponent<WalkPathHandle>();
+                                    break;
+                            }
+                        }
+                        //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides
+                        foreach (var p in conn.wp.prev) {
+                            if (p.pathHandle == null) {
+                                if (p.wp == this) {
+                                    p.pathHandle = conn.pathHandle;
+                                }
+                            }
+                        }
+                    }
+
+                    void initPathHandle() {
+                        createNewPathHandle();
+
+                        conn.pathHandle.parentWaypoint = this;
+                        conn.pathHandle.colourGizmo = colourGizmo;
+
+                        if (conn.pathHandle is JumpPathHandle HDLJump) {
+                            JumpPathHandle HDL = HDLJump;
+
+                            //handle may never be lower than the highest point out of the two waypoints
+                            float minHeight = Mathf.Max(transform.position.y, conn.wp.transform.position.y) + 1;
+                            if (HDL.transform.position.y < minHeight) {
+                                HDL.transform.position = new Vector3(midPos.x, minHeight, midPos.z);
+                            } else {
+                                HDL.transform.position = new Vector3(midPos.x, HDL.transform.position.y, midPos.z);
+                            }
+
+                        } else if (conn.pathHandle is DrillPathHandle HDLDrill) {
+                            DrillPathHandle HDL = HDLDrill;
+
+                            //handle is never allowed to be higher than the lowest point out of the two waypoints
+                            float maxHeight = Mathf.Min(transform.position.y, conn.wp.transform.position.y) + 1;
+                            if (HDL.transform.position.y > maxHeight) {
+                                HDL.transform.position = new Vector3(midPos.x, maxHeight, midPos.z);
+                            } else {
+                                HDL.transform.position = new Vector3(midPos.x, HDL.transform.position.y, midPos.z);
+                            }
+
+                            conn.drillTime = HDL.drillTravelTime;
+
+                        } else if (conn.pathHandle is WalkPathHandle HDLWalk) {
+                            HDLWalk.transform.position = midPos + lineOffset;
+                        }
+
+
+                        //parent ourselves to it
+                        if (conn.pathHandle.transform.parent != transform)
+                            conn.pathHandle.transform.parent = transform;
+
+
+                        //If the Path Handle is currently selected, draw the parent waypoint, our lines and connector nubs as if they're also selected
+                        if (conn.pathHandle.isSelected)
+                            colourSelection();
+
+                    }
+                    #endregion
+
                     switch (conn.type) {
-                        #region JumpTo
-                        case WPConnection.Type.JumpTo:
-                            midPos = (conn.wp.transform.position + transform.position) / 2;
+                        #region Jump
+                        case WPConnection.Type.Jump:
+                            initPathHandle();
+                            JumpPathHandle HDL_Jump = (JumpPathHandle)conn.pathHandle;
 
-                            JumpPathHandle HDL_Jump;
+                            //Draw connection ports and lines
+                            for (int i = 0; i <= 1; i++) {
+                                Vector3 wpPos = ((i == 0) ? this : conn.wp).transform.position + lineOffset;
 
-                            //Add a new Path Handle transform
-                            if (conn.pathHandle == null) {
-                                var GO = new GameObject("HDL_jumpPath_" + name + "_" + conn.wp.name);
-                                conn.pathHandle = GO.AddComponent<JumpPathHandle>();
-                                conn.pathHandle.transform.position = midPos + Vector3.up * 7;
-                            }
-                            //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides
-                            foreach (var p in conn.wp.prev) {
-                                if (p.pathHandle == null) {
-                                    if (p.wp == this) {
-                                        p.pathHandle = conn.pathHandle;
-                                    }
-                                }
-                            }
+                                float diffY_selfToHandle = HDL_Jump.transform.position.y - wpPos.y;
+                                horizontalDiff = wpPos - HDL_Jump.transform.position;
+                                horizontalDiff.y = 0;
 
-                            if (conn.pathHandle is JumpPathHandle JumpHDL) {
-                                HDL_Jump = JumpHDL;
-
-                                HDL_Jump.parentWaypoint = this;
-                                HDL_Jump.colourGizmo = colourGizmo;
-
-                                //handle may never be lower than the highest point out of the two waypoints
-                                float minHeight = Mathf.Max(transform.position.y, conn.wp.transform.position.y) + 1;
-                                if (HDL_Jump.transform.position.y < minHeight) {
-                                    HDL_Jump.transform.position = new Vector3(midPos.x, minHeight, midPos.z);
-                                } else {
-                                    HDL_Jump.transform.position = new Vector3(midPos.x, HDL_Jump.transform.position.y, midPos.z);
-                                }
-
-                                //parent ourselves to it
-                                if (HDL_Jump.transform.parent != transform)
-                                    HDL_Jump.transform.parent = transform;
-
-                                //HDL_Jump.transform.position += sideOffset;
-
-                                //Draw connection ports and lines
-                                for (int i = 0; i <= 1; i++) {
-                                    Vector3 wpPos = ((i == 0) ? this : conn.wp).transform.position + lineOffset;
-
-                                    float diffY_selfToHandle = HDL_Jump.transform.position.y - wpPos.y;
-                                    horizontalDiff = wpPos - HDL_Jump.transform.position;
-                                    horizontalDiff.y = 0;
-
-                                    dir = horizontalDiff.normalized;
-                                    lastPos = HDL_Jump.transform.position;
-
-                                    //add sideways offset to the connectors if they are bi-directional
-                                    foreach (var c in conn.wp.next) {
-                                        if (c.wp == this) {
-                                            sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir * ((i == 1) ? 1 : -1));
-                                            HDL_Jump.sideOffset = sideOffset;
-                                        }
-                                    }
-
-                                    Color portColour = (i == 0) ? outboundConnectionColour : inboundConnectionColour;
-
-                                    steps = Mathf.Ceil(horizontalDiff.magnitude);
-                                    for (float x = 1; x <= steps; x += horizontalDiff.magnitude / steps) {
-                                        var newPos = HDL_Jump.transform.position + dir * x + Vector3.down * Mathf.Pow(x / horizontalDiff.magnitude, 2) * diffY_selfToHandle;
-
-                                        //blend between in and output colours based on x
-                                        if (i == 0) {
-                                            Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionColour, outboundConnectionColour, 0.5f), outboundConnectionColour, x / horizontalDiff.magnitude);
-                                        } else {
-                                            Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionColour, outboundConnectionColour, 0.5f), inboundConnectionColour, x / horizontalDiff.magnitude);
-                                        }
-
-                                        Gizmos.DrawLine(lastPos + sideOffset, newPos + sideOffset);
-                                        lastPos = newPos;
-                                    }
-
-                                    Gizmos.color = portColour;
-                                    Gizmos.DrawSphere(wpPos - (lastPos - wpPos).normalized + sideOffset, .4f);
-                                }
-                            }
-                            break;
-                        #endregion
-                        #region DrillTo
-                        case WPConnection.Type.DrillTo:
-                            midPos = (conn.wp.transform.position + transform.position) / 2;
-                            Vector3 handlePos = midPos + Vector3.down * 4;
-
-                            DrillPathHandle HDL_Drill;
-
-                            //Add a new Path Handle transform
-                            if (conn.pathHandle == null) {
-                                var GO = new GameObject("HDL_drillPath_" + name + "_" + conn.wp.name);
-                                conn.pathHandle = GO.AddComponent<DrillPathHandle>();
-                                conn.pathHandle.transform.position = handlePos;
-                            }
-                            //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides
-                            foreach (var p in conn.wp.prev) {
-                                if (p.pathHandle == null) {
-                                    if (p.wp == this) {
-                                        p.pathHandle = conn.pathHandle;
-                                    }
-                                }
-                            }
-
-                            if (conn.pathHandle is DrillPathHandle drillHDL) {
-                                HDL_Drill = drillHDL;
-
-                                //handle is never allowed to be higher than the lowest point out of the two waypoints
-                                float maxHeight = Mathf.Min(transform.position.y, conn.wp.transform.position.y) + 1;
-                                if (HDL_Drill.transform.position.y > maxHeight) {
-                                    HDL_Drill.transform.position = new Vector3(midPos.x, maxHeight, midPos.z);
-                                } else {
-                                    HDL_Drill.transform.position = new Vector3(midPos.x, HDL_Drill.transform.position.y, midPos.z);
-                                }
-
-                                HDL_Drill.parentWaypoint = this;
-                                conn.drillTime = HDL_Drill.drillTravelTime;
-                                HDL_Drill.colourGizmo = colourGizmo;
-
-                                //parent ourselves to it
-                                if (HDL_Drill.transform.parent != transform)
-                                    HDL_Drill.transform.parent = transform;
-
-
-                                //Draw connection ports and lines
-                                for (int i = 0; i <= 1; i++) {
-                                    Vector3 wpPos = ((i == 0) ? this : conn.wp).transform.position + lineOffset;
-
-                                    float diffY_selfToHandle = HDL_Drill.transform.position.y - wpPos.y;
-                                    horizontalDiff = wpPos - HDL_Drill.transform.position;
-                                    horizontalDiff.y = 0;
-
-                                    dir = horizontalDiff.normalized;
-                                    lastPos = HDL_Drill.transform.position;
-
-                                    //add sideways offset to the connectors if they are bi-directional
-                                    foreach (var c in conn.wp.next) {
-                                        if (c.wp == this) {
-                                            sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir * ((i == 1) ? 1 : -1));
-                                            HDL_Drill.sideOffset = sideOffset;
-                                        }
-                                    }
-
-                                    Color portColour = (i == 0) ? outboundConnectionColour : inboundConnectionColour;
-
-                                    steps = Mathf.Ceil(horizontalDiff.magnitude);
-                                    bool odd = false;
-                                    for (float x = 1; x <= steps; x += horizontalDiff.magnitude / steps) {
-                                        var newPos = HDL_Drill.transform.position + dir * x + Vector3.down * Mathf.Pow(x / horizontalDiff.magnitude, 2) * diffY_selfToHandle;
-
-                                        //draw a dashed line; skip every other segment of the line
-                                        if (odd = !odd) {
-                                            //blend between in and output colours based on x
-                                            if (i == 0) {
-                                                Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionColour, outboundConnectionColour, 0.5f), outboundConnectionColour, x / horizontalDiff.magnitude) * 1.5f;
-                                            } else {
-                                                Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionColour, outboundConnectionColour, 0.5f), inboundConnectionColour, x / horizontalDiff.magnitude) * 1.5f;
-                                            }
-
-                                            Gizmos.DrawLine(lastPos + sideOffset, newPos + sideOffset);
-                                        }
-
-                                        lastPos = newPos;
-                                    }
-
-
-                                    Gizmos.color = portColour;
-                                    Gizmos.DrawSphere(wpPos - (lastPos - wpPos).normalized + sideOffset, .4f);
-                                }
-                            }
-                            break;
-                        #endregion
-                        #region default (WalkTo)
-                        default:
-                            midPos = (conn.wp.transform.position + transform.position) / 2 + lineOffset;
-                            WalkPathHandle HDL_Walk;
-
-                            //Add a new Path Handle transform
-                            if (conn.pathHandle == null) {
-                                var GO = new GameObject("HDL_walkPath_" + name + "_" + conn.wp.name);
-                                conn.pathHandle = GO.AddComponent<WalkPathHandle>();
-                            }
-                            //Add a reference to the same transform to the paired previous connection of our Waypoint pair, so the handle is accessible from both sides                        
-                            foreach (var p in conn.wp.prev) {
-                                if (p.pathHandle == null) {
-                                    if (p.wp == this) {
-                                        p.pathHandle = conn.pathHandle;
-                                    }
-                                }
-                            }
-
-                            if (conn.pathHandle is WalkPathHandle WalkHDL) {
-                                HDL_Walk = WalkHDL;
-
-                                HDL_Walk.parentWaypoint = this;
-                                HDL_Walk.colourGizmo = colourGizmo;
-
-                                HDL_Walk.transform.position = midPos;
-
-                                //parent ourselves to it
-                                if (HDL_Walk.transform.parent != transform)
-                                    HDL_Walk.transform.parent = transform;
-
-
-                                //path drawing and connectors
-                                horizontalDiff = conn.wp.transform.position - transform.position;
                                 dir = horizontalDiff.normalized;
-                                lastPos = transform.position;
+                                lastPos = HDL_Jump.transform.position;
 
                                 //add sideways offset to the connectors if they are bi-directional
                                 foreach (var c in conn.wp.next) {
                                     if (c.wp == this) {
-                                        sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir);
-                                        HDL_Walk.sideOffset = sideOffset;
+                                        sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir * ((i == 1) ? 1 : -1));
+                                        HDL_Jump.sideOffset = sideOffset;
                                     }
                                 }
 
+                                Color portColour = (i == 0) ? outboundConnectionLineColour : inboundConnectionLineColour;
+
                                 steps = Mathf.Ceil(horizontalDiff.magnitude);
                                 for (float x = 1; x <= steps; x += horizontalDiff.magnitude / steps) {
-                                    var newPos = transform.position + x * dir;
+                                    var newPos = HDL_Jump.transform.position + dir * x + Vector3.down * Mathf.Pow(x / horizontalDiff.magnitude, 2) * diffY_selfToHandle;
 
                                     //blend between in and output colours based on x
-                                    Gizmos.color = Color.Lerp(outboundConnectionColour, inboundConnectionColour, x / horizontalDiff.magnitude);
+                                    if (i == 0) {
+                                        Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionLineColour, outboundConnectionLineColour, 0.5f), outboundConnectionLineColour, x / horizontalDiff.magnitude);
+                                    } else {
+                                        Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionLineColour, outboundConnectionLineColour, 0.5f), inboundConnectionLineColour, x / horizontalDiff.magnitude);
+                                    }
 
-                                    //also add a tiny bit of sideways offset relative to the direction; connect from "my right" to "your left"
-                                    Gizmos.DrawLine(lastPos + lineOffset + sideOffset, newPos + lineOffset + sideOffset);
+                                    Gizmos.DrawLine(lastPos + sideOffset, newPos + sideOffset);
+                                    lastPos = newPos;
+                                }
+
+                                Gizmos.color = portColour;
+                                Gizmos.DrawSphere(wpPos - (lastPos - wpPos).normalized + sideOffset, .4f);
+                            }
+                            break;
+                        #endregion
+                        #region Drill
+                        case WPConnection.Type.Drill:
+                            initPathHandle();
+                            DrillPathHandle HDL_Drill = (DrillPathHandle)conn.pathHandle;
+
+                            //Draw connection ports and lines
+                            for (int i = 0; i <= 1; i++) {
+                                Vector3 wpPos = ((i == 0) ? this : conn.wp).transform.position + lineOffset;
+
+                                float diffY_selfToHandle = HDL_Drill.transform.position.y - wpPos.y;
+                                horizontalDiff = wpPos - HDL_Drill.transform.position;
+                                horizontalDiff.y = 0;
+
+                                dir = horizontalDiff.normalized;
+                                lastPos = HDL_Drill.transform.position;
+
+                                //add sideways offset to the connectors if they are bi-directional
+                                foreach (var c in conn.wp.next) {
+                                    if (c.wp == this) {
+                                        sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir * ((i == 1) ? 1 : -1));
+                                        HDL_Drill.sideOffset = sideOffset;
+                                    }
+                                }
+
+                                Color portColour = (i == 0) ? outboundConnectionLineColour : inboundConnectionLineColour;
+
+                                steps = Mathf.Ceil(horizontalDiff.magnitude);
+                                bool odd = false;
+                                for (float x = 1; x <= steps; x += horizontalDiff.magnitude / steps) {
+                                    var newPos = HDL_Drill.transform.position + dir * x + Vector3.down * Mathf.Pow(x / horizontalDiff.magnitude, 2) * diffY_selfToHandle;
+
+                                    //draw a dashed line; skip every other segment of the line
+                                    if (odd = !odd) {
+                                        //blend between in and output colours based on x
+                                        if (i == 0) {
+                                            Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionLineColour, outboundConnectionLineColour, 0.5f), outboundConnectionLineColour, x / horizontalDiff.magnitude) * 1.5f;
+                                        } else {
+                                            Gizmos.color = Color.Lerp(Color.Lerp(inboundConnectionLineColour, outboundConnectionLineColour, 0.5f), inboundConnectionLineColour, x / horizontalDiff.magnitude) * 1.5f;
+                                        }
+
+                                        Gizmos.DrawLine(lastPos + sideOffset, newPos + sideOffset);
+                                    }
+
                                     lastPos = newPos;
                                 }
 
 
-                                Gizmos.color = inboundConnectionColour;
-                                Gizmos.DrawSphere(conn.wp.transform.position + (transform.position - conn.wp.transform.position).normalized + lineOffset + sideOffset, .4f);
-
-                                Gizmos.color = outboundConnectionColour;
-                                Gizmos.DrawSphere(transform.position + (conn.wp.transform.position - transform.position).normalized + lineOffset + sideOffset, .4f);
+                                Gizmos.color = portColour;
+                                Gizmos.DrawSphere(wpPos - (lastPos - wpPos).normalized + sideOffset, .4f);
                             }
+                            break;
+                        #endregion
+                        #region default (Walk)
+                        default:
+                            initPathHandle();
+                            WalkPathHandle HDL_Walk = (WalkPathHandle)conn.pathHandle;
+
+                            //path drawing and connectors
+                            horizontalDiff = conn.wp.transform.position - transform.position;
+                            dir = horizontalDiff.normalized;
+                            lastPos = transform.position;
+
+                            //add sideways offset to the connectors if they are bi-directional
+                            foreach (var c in conn.wp.next) {
+                                if (c.wp == this) {
+                                    sideOffset = Vector3.Cross(Vector3.up * 0.45f, dir);
+                                    HDL_Walk.sideOffset = sideOffset;
+                                }
+                            }
+
+                            steps = Mathf.Ceil(horizontalDiff.magnitude);
+                            for (float x = 1; x <= steps; x += horizontalDiff.magnitude / steps) {
+                                var newPos = transform.position + x * dir;
+
+                                //blend between in and output colours based on x
+                                Gizmos.color = Color.Lerp(outboundConnectionLineColour, inboundConnectionLineColour, x / horizontalDiff.magnitude);
+
+                                //also add a tiny bit of sideways offset relative to the direction; connect from "my right" to "your left"
+                                Gizmos.DrawLine(lastPos + lineOffset + sideOffset, newPos + lineOffset + sideOffset);
+                                lastPos = newPos;
+                            }
+
+                            Gizmos.color = inboundConnectionLineColour;
+                            Gizmos.DrawSphere(conn.wp.transform.position + (transform.position - conn.wp.transform.position).normalized + lineOffset + sideOffset, .4f);
+
+                            Gizmos.color = outboundConnectionLineColour;
+                            Gizmos.DrawSphere(transform.position + (conn.wp.transform.position - transform.position).normalized + lineOffset + sideOffset, .4f);
                             break;
                             #endregion
                     }
@@ -337,7 +326,10 @@ namespace Shrooblord.lib {
             Gizmos.color = colourGizmo;
             Gizmos.DrawSphere(transform.position + lineOffset, 1f);
 
+            //reset "selection colour" to normal
             colourGizmo = colourWaypoint;
+            outboundConnectionLineColour = outboundConnectionColour;
+            inboundConnectionLineColour = inboundConnectionColour;
         }
     }
 }

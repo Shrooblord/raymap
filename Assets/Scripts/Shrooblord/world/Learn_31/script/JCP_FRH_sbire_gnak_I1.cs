@@ -4,8 +4,101 @@ using UnityEngine;
 using Shrooblord.lib;
 
 namespace CustomGame.Rayman2.Persos {
+    #region Mind
+    //Pirate decision-making flags
+    public class Mind {
+        public enum WaypointState { 
+            Walking, Jumping, Drilling, Parachuting, MoonJumping, Teleporting,  //generic movement along Waypoint Path
+
+            StandingStill,                                                      //We are still in the process of pathing along the Waypoints, but right now we're not in motion
+
+            OffGrid,                                                            //We are currently not on the Waypoint Path, and don't care about it
+            SeekingGrid,                                                        //We are currently not on the Waypoint Path, but looking to get back onto it
+
+            NONE                                                                //Error: Waypoint Path null
+        };
+        public WaypointState wpState;
+        public bool newWPState; //true for the first tick that our WPS has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
+
+        public enum AttackState {
+            SeekingTarget, Aiming,                                              //acquiring target                      
+            
+            Shooting, TossingKeg,                                               //attacking at range
+            
+            Hooking, HookSlamming,                                              //melee attacks
+
+            Idle,                                                               //not currently interested in attacking
+
+            NONE                                                                //Error: I think I should have an enemy, but I don't / I've lost track of how I was supposed to interact with him
+        };
+        public AttackState atkState;
+        public bool newAtkState; //true for the first tick that our AS has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
+
+        //Abstract direction to push the incoming decision-making processes towards. When this value changes,
+        //  my behaviour should be noticeably different.
+        public enum Goal {
+            OnGuard,                                                            //Hey, did I just see something?
+            Patrol,                                                             //On-duty and looking for trouble
+            Follow,                                                             //da leada, leada, leada...
+            FindThePath,                                                        //The true way to enlightenment...
+
+            Exterminate,                                                        //Enemy sighted. Time to make some mashed potato.
+            Capture,                                                            //Freedom is an illusion. Here, I'll show you.
+            Terrify,                                                            //Break their wills!! RESISTANCE IS FUTILE
+            
+            Heal,                                                               //I'm hurt kinda bad
+            CallForBackup,                                                      //Come on, lads; the party's outside!
+
+            Flee,                                                               //I don't wanna live on this planet anymore
+            Surrender,                                                          //Please, I can't take any more...
+
+            Sleep,                                                              //I'd like to find a nice, chill place where I can rest in peace
+            Haul,                                                               //This big-ass thing needs going places.
+            Rodeo,                                                              //Giddy-up!
+        };
+        public Goal goal;
+        public bool newGoal; //true for the first tick that our Goal has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
+
+        //In combination with Goal and the current circumstances, Mood will help push certain decision-making more towards one or the other way
+        //  For example, an Angry Henchman will be more likely to just go for the kill, while a Desperate one might surrender or flee.
+        //  A Satisfied one with high health might be more reckless and willing to gloat,
+        //    while a Focussed one is driven, calculating, determined, and iron-willed.
+        public enum Mood { Chill, Satisfied, Focussed, Annoyed, Angry, Afraid, Desperate }
+        public Mood mood;
+        public bool newMood; //true for the first tick that our Mood has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
+
+        public List<string> DecisionQueue = new List<string>();                 //List of current decision and follow-up plans
+        public int DecisionQueueMaximum = 5;                                    //Maximum amount of steps I can think ahead in time to approach my goal
+
+        public Mind(WaypointState wpState, AttackState atkState, Goal goal, Mood mood) {
+            this.wpState = wpState;
+            this.atkState = atkState;
+            this.goal = goal;
+            this.mood = mood;
+        }
+
+        public Mind(Goal goal, Mood mood) {
+            this.wpState = WaypointState.NONE;
+            this.atkState = AttackState.NONE;
+
+            this.goal = goal;
+            this.mood = mood;
+        }
+
+        public Mind() { }
+    }
+    #endregion
+
     public class JCP_FRH_sbire_gnak_I1 : PersoController {
         #region Setup
+        //Set up our Mind with the general feeling of what we're doing here and what we're feeling like at the moment.
+        public Mind mind = new Mind(
+            Mind.WaypointState.SeekingGrid,
+            Mind.AttackState.Idle,
+            Mind.Goal.Sleep,
+            Mind.Mood.Chill
+        );
+
         //jumping
         public bool jumping;
         public bool selfJump;
@@ -63,6 +156,18 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
 
         protected override void OnStart() {
+
+            //**** DELET THIS ****
+
+            Main.SetMainActor(this);
+            Main.showMainActorDebug = true;
+
+            //**** END OF DELET ****
+
+            for (int i = 0; i < MaxRememberedConnections; i++) {
+                ConnectionHistory.Add(null);
+            }
+
             pos = new Vector3(-193.61f, 23.84f, 369.45f);
             rot = Quaternion.Euler(0, 0, 0);
 
@@ -249,7 +354,6 @@ namespace CustomGame.Rayman2.Persos {
             59: 54 dupe
         */
         #endregion
-
         #region animSFX
         public override AnimSFX[] animSfx => new AnimSFX[] {
             //running animation footstep plants
@@ -330,6 +434,38 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
 
+        protected override void OnDebug() {
+            DebugLabel("GOAL: " + mind.goal);
+            DebugLabel("MOOD: " + mind.mood);
+            DebugLabel("ATK: " + mind.atkState);
+            DebugLabel("");
+
+            DebugLabel("Decision Queue");
+            for (int i = 0; i < mind.DecisionQueueMaximum; i++) {
+                DebugLabel("[" + i.ToString() + "]",
+                    (mind.DecisionQueue != null) ?
+                        (mind.DecisionQueue.Count > i ? mind.DecisionQueue[i] : "NULL")
+                    : "NULL");
+            }            
+
+            DebugNewColumn();
+            DebugNewColumn();
+            DebugNewColumn();
+            DebugNewColumn();
+
+            DebugLabel(""); //align with the decision queue on the left
+            DebugLabel("");
+            DebugLabel("WP State: " + mind.wpState);
+            DebugLabel("");
+            DebugLabel("Waypoint History");
+            for (int i = 0; i < MaxRememberedConnections; i++) {
+                DebugLabel("[" + i.ToString() + "]",
+                    (ConnectionHistory[i] != null) ?
+                        (ConnectionHistory[i].pathHandle != null ? ConnectionHistory[i].pathHandle.name : "NULL")
+                    : "NULL");
+            }
+        }
+
         void DrawVisionCone(float angle, float radius) {
             Color col = FindDebugDrawColour(DebugType.VisionCone);
 
@@ -369,7 +505,7 @@ namespace CustomGame.Rayman2.Persos {
             DrawMind();
         }
 
-        //Core
+        #region Core
         void Ground() {
             col.groundDepth = groundDepth;
             col.UpdateGroundCollision();
@@ -392,8 +528,27 @@ namespace CustomGame.Rayman2.Persos {
             if (strafing) moveSpeed = 7;
             else moveSpeed = 10;
         }
+        #endregion
+        #region Mind
+        public void EnqueueDecision(string rule) {
+            if (mind.DecisionQueue != null) {
+                if (mind.DecisionQueue.Count == mind.DecisionQueueMaximum) {
+                    mind.DecisionQueue.RemoveAt(0);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" decision
+                }
+            }
 
-        //Waypoints
+            mind.DecisionQueue.Add(rule); //shove the made decision onto the end of the list
+        }
+
+        //defaults to the oldest decision (top of the list)
+        public void DeleteDecision(int index = 0) {
+            if ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count >= index + 1)) mind.DecisionQueue.RemoveAt(index);
+        } 
+
+        public string GetNextDecision() => ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count > 0)) ? mind.DecisionQueue[0] : null;
+        
+        #endregion
+        #region Waypoints
         void GetNearestWaypoint() {
             WPCurrent = WPTarget;
             if (graph != null)
@@ -415,7 +570,7 @@ namespace CustomGame.Rayman2.Persos {
         void TrackLastWaypoints() {
             if (ConnectionHistory != null) {
                 if (ConnectionHistory.Count == MaxRememberedConnections) {
-                    ConnectionHistory.RemoveAt(1);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
+                    ConnectionHistory.RemoveAt(0);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
                 }
             }
 
@@ -429,7 +584,7 @@ namespace CustomGame.Rayman2.Persos {
             if (WPCurrent != null) {
                 int attempt = 10;
                 bool success = false;
-                while ( (attempt > 0) && (success == false) ) {
+                while ( (attempt > 0) && (!success) ) {
                     WPTarget = WPCurrent.GetRandomNextWaypoint();
 
                     success = !ConnectionHistory.Contains(GetConnection());     //did we successfully find a unique Connection to travel through?
@@ -437,13 +592,13 @@ namespace CustomGame.Rayman2.Persos {
                     attempt--;
                 }
 
-                if ((attempt == 10) && (!success)) {
+                if ((attempt == 0) && (!success)) {
                     Debug.LogError(perso.name + ": Couldn't find new unique Connection to visit considering recent History. Ignoring request for unique Connection at position " + transform.position.ToString() + ".");
                 }
             }
         }
-
-        //Movement
+        #endregion
+        #region Movement
         void SetVelXZ() {
             Vector3 dir = (WPTarget.transform.position - pos).normalized;
             velXZ = dir * moveSpeed;
@@ -467,55 +622,172 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
         #endregion
+        #endregion
 
         #region Rules
         //***  Rulzez  ***//
         #region Core
 
-        //Main logic loop. Most of these functions are determined by flags listed on the Waypoints themselves
+        //Main logic loop interfaces with the Mind, which uses flags set by Waypoints, the current situation, and our current goals to make complex decision queues
+        Timer DecisionTimeoutTimer = new Timer();
         protected void Rule_Decide() {
             if (newRule) {
-                anim.Set(0);    //always default to idle animation as the base state. other Rules will change this immediately in the same frame, so no need to worry about flickering
-                GetNextTargetWaypoint(); //also updates the Waypoint history
-            }
+                anim.Set(0); //always default to idle animation as the base state. other Rules will change this immediately in the same frame, so no need to worry about flickering
 
+                //Do we still have an active Decision Queue?
+                if (mind.DecisionQueue != null && mind.DecisionQueue.Count > 0) {
+                    SetRule("DecisionMade");
+                    return;
+                }
+
+                //in lieu of reaching any sort of meaningful conclusion to our pondering (see below), we just go with whatever's on our mind at the time
+                DecisionTimeoutTimer.Start(3.14f, () => SetRule("WeighDecisions"), false);
+
+
+                //Let's think about what we want to do...
+                SetRule("Ponder");
+            }
+        }
+
+        //Hmm... I wonder what to do next...
+        //Decision-making process that takes time over multiple frames to compute and/or wait to see what Rayman does in order to react to him
+        //  set flags accordingly, and then, in Rule_WeighDecision, we will check those flags and reach a conclusion from there
+        //  ---> SetRule("WeighDecisions");
+        protected void Rule_Ponder() {
             WPConnection conn = GetConnection();
 
-            //We are currently off-grid; relocate to the nearest Waypoint.
+            //We are currently off-grid but would like to get back to it; relocate to the nearest Waypoint.
             if (conn == null) {
-                if (WPTarget == null) {
-                    GetNearestWaypoint();   //find a target to run to
-                } else {
-                    SetRule("RunAround");   //run to the target (and, once there, we'll have a new connection to examine)
+                if (mind.wpState == Mind.WaypointState.SeekingGrid) {
+                    GetNextTargetWaypoint(); //also updates the Waypoint history
+
+                    if (WPTarget == null) {
+                        GetNearestWaypoint();   //find a target to run to
+                    } else if (mind.goal != Mind.Goal.FindThePath) {
+                        mind.goal = Mind.Goal.FindThePath;
+                        mind.newGoal = true;
+
+                        //no need to calculate any further or ponder other things; let's just go
+                        //SetRule("WeighDecisions"); <-- commented out for now specifically to test the Timeout function -- put this back in soon
+                    }
                 }
                 return;
             }
 
+            //We have a connection; are we on the grid, or still looking to join it?
+            if (mind.wpState == Mind.WaypointState.SeekingGrid) {
+                if (mind.goal != Mind.Goal.Patrol) {
+                    mind.goal = Mind.Goal.Patrol;
+                    mind.newGoal = true;
+
+                    //no need to calculate any further or ponder other things; let's just go
+                    //SetRule("WeighDecisions"); <-- commented out for now specifically to test the Timeout function -- put this back in soon
+                    return;
+                }
+            }
+
+            //Just chillin' on the beaten path
+            if ((mind.goal == Mind.Goal.Patrol) && (mind.wpState != Mind.WaypointState.NONE) && 
+                (mind.wpState != Mind.WaypointState.OffGrid) && (mind.wpState != Mind.WaypointState.SeekingGrid)) {
+                SetRule("WeighDecisions");
+                return;
+            }
+        }
+
+        //Given previous Ponder, we now have a bunch of flags to check in order to set up our next course of action. When this logic is completed,
+        //  we will have arrived at our plan for the next couple of seconds and/or next couple of "steps" in our behaviour tree.
+        //So call Rule_DecisionMade.
+        //Naturally, these next steps can always be aborted at any time given a change in circumstances
+        //  (Rayman moved, Rayman attacked us, we're low health, we walked somewhere specific, etc.).
+        //This would trigger a new cascade of decision-making, essentially starting the whole process anew.
+        protected void Rule_WeighDecisions() {
+            DecisionTimeoutTimer.Abort();       //We're already here; no need to force us here again
+
+            //We have a new plan! Let's see...
+            if (mind.newGoal) {
+                switch (mind.goal) {
+                    case Mind.Goal.FindThePath:
+                        //If we are here, that means we are currently off-grid and looking for a way back in
+                        EnqueueDecision("RunAround"); //run to the target (and, once there, we'll have a new connection to examine)
+                        break;
+
+                    case Mind.Goal.Patrol:
+                        EnqueueDecision("UseWaypointPath"); //start walking on the given path
+                        EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
+                        EnqueueDecision("UseWaypointPath");
+                        break;
+
+                    default:
+                        //do nothing for now if we don't have explicit instructions
+                        return;
+                }
+
+                //---------//
+
+                //Go off-grid and approach Ray
+                //...
+
+                //Attack Ray (Shoot, Hook, Barrel)
+                //...
+
+                //Idle
+                //...
+
+                //--------//
+
+                mind.newGoal = false;
+            } else {
+                //Stay the course and steady as she goes...
+                switch (mind.goal) {
+                    case Mind.Goal.Patrol:
+                        EnqueueDecision("UseWaypointPath"); //start walking on the given path
+                        EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
+                        EnqueueDecision("UseWaypointPath");
+                        break;
+                    default:
+                        //do nothing for now if we don't have explicit instructions
+                        return;
+                }
+            }
+
+            SetRule("DecisionMade");
+        }
+
+        protected void Rule_DecisionMade() {
+            string decision = GetNextDecision();
+
+            if (decision != null) {
+                DeleteDecision(); //remove this decision from the queue
+                SetRule(decision);
+            } else {
+                Debug.LogError(perso.name + ": Couldn't resolve Decisions; decision NULL" + " at position " + transform.position.ToString() + "!");
+                SetRule("Decide");
+            }
+        }
+
+        //Actively pathing on the Waypoint Graph
+        protected void Rule_UseWaypointPath() {
+            WPConnection conn = GetConnection();
+
+            if (newRule) GetNextTargetWaypoint();
+
             //Keep moving
-            //if (I want to keep moving) {
             switch (conn.type) {
-                case WPConnection.Type.JumpTo:
+                case WPConnection.Type.Jump:
+                    mind.wpState = Mind.WaypointState.Jumping;
                     SetRule("JumpAround");
                     break;
 
-                case WPConnection.Type.DrillTo:
+                case WPConnection.Type.Drill:
+                    mind.wpState = Mind.WaypointState.Drilling;
                     SetRule("PrepareDrill");
                     break;
 
                 default:
+                    mind.wpState = Mind.WaypointState.Walking;
                     SetRule("RunAround");
                     break;
             }
-            //}
-
-
-            //Go off-grid and approach Ray
-
-
-            //Attack Ray (Shoot, Hook, Barrel)
-
-
-            //Idle
         }
 
         protected void Rule_Air() {

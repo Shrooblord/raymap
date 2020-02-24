@@ -17,6 +17,7 @@ namespace CustomGame {
             // Shadow
             var c = debugStyle.normal.textColor;
             debugStyle.normal.textColor = Color.black;
+            //debugStyle.fontSize = 14;
             GUI.Label(new Rect(debugRect.x + 1, debugRect.y + 1, debugRect.width, debugRect.height), str, debugStyle);
             // Label
             debugStyle.normal.textColor = c;
@@ -27,7 +28,7 @@ namespace CustomGame {
         protected void OnGUI() {
             if (!(Main.showMainActorDebug && Main.mainActor == this)) return;
             offY = 0;
-            debugRect = new Rect(8, 8, 225, 25);
+            debugRect = new Rect(8, 8, 225, 25); //set last value to 14
             debugStyle.fontSize = 18;
             debugStyle.normal.textColor = Color.red;
             var p = Main.mainActor;

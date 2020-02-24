@@ -224,9 +224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1755455436}
   sideOffset: {x: -0.1954961, y: 0, z: 0.404781}
+  isSelected: 0
 --- !u!4 &107158543
 Transform:
   m_ObjectHideFlags: 0
@@ -344,9 +345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1534033972}
   sideOffset: {x: 0.18376826, y: 0, z: -0.41075727}
+  isSelected: 0
 --- !u!4 &208852794
 Transform:
   m_ObjectHideFlags: 0
@@ -390,9 +392,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1738337030}
   sideOffset: {x: -0.36088902, y: 0, z: -0.26179788}
+  isSelected: 0
 --- !u!4 &313442836
 Transform:
   m_ObjectHideFlags: 0
@@ -436,9 +439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513fafc8d19f5c54185b9c87b8c962bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1409366416}
   sideOffset: {x: 0, y: 0, z: 0}
+  isSelected: 0
 --- !u!4 &328545213
 Transform:
   m_ObjectHideFlags: 0
@@ -447,7 +451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328545211}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.325012, y: 7.424322, z: -2.649994}
+  m_LocalPosition: {x: -14.325012, y: 7.630001, z: -2.649994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1409366415}
@@ -501,52 +505,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &376939682
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 376939683}
-  - component: {fileID: 376939684}
-  m_Layer: 0
-  m_Name: HDL_walkPath_Sleep_Purple_Walk1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &376939683
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376939682}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.83999634, y: 0.4611168, z: -4.1049805}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1915935352}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &376939684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376939682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
-  parentWaypoint: {fileID: 1915935353}
-  sideOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &469719538
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,9 +579,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1962146511}
   sideOffset: {x: -0.21894024, y: 0, z: 0.39314777}
+  isSelected: 0
   drillTravelTime: 1.2
 --- !u!4 &474628948
 Transform:
@@ -633,7 +592,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474628946}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.103943, y: -2, z: -9.5668335}
+  m_LocalPosition: {x: -18.103943, y: -2.3899994, z: -9.5668335}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1962146510}
@@ -714,9 +673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 824687019}
   sideOffset: {x: 0.21894024, y: 0, z: -0.39314777}
+  isSelected: 0
   drillTravelTime: 1.2
 --- !u!4 &537286924
 Transform:
@@ -726,7 +686,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537286922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.103943, y: -2.1885567, z: 9.5668335}
+  m_LocalPosition: {x: 18.103943, y: -2.578556, z: 9.5668335}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 824687018}
@@ -937,9 +897,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1738337030}
   sideOffset: {x: 0, y: 0, z: 0}
+  isSelected: 0
   drillTravelTime: 1.2
 --- !u!4 &743874380
 Transform:
@@ -949,7 +910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743874378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.574997, y: -9.76, z: -4.559967}
+  m_LocalPosition: {x: 18.574997, y: -7.99, z: -4.559967}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1738337029}
@@ -984,9 +945,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 58968101}
   sideOffset: {x: 0.41540688, y: 0, z: -0.17300616}
+  isSelected: 0
 --- !u!4 &762326601
 Transform:
   m_ObjectHideFlags: 0
@@ -1030,9 +992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513fafc8d19f5c54185b9c87b8c962bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1738337030}
   sideOffset: {x: -0.23927139, y: 0, z: -0.38111573}
+  isSelected: 0
 --- !u!4 &774293317
 Transform:
   m_ObjectHideFlags: 0
@@ -1041,7 +1004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774293315}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.730728, y: 3.5299988, z: -7.8960876}
+  m_LocalPosition: {x: 11.730728, y: 1.4099998, z: -7.8960876}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1738337029}
@@ -1208,9 +1171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 824687019}
   sideOffset: {x: 0.36088902, y: -0, z: 0.26179788}
+  isSelected: 0
 --- !u!4 &822470225
 Transform:
   m_ObjectHideFlags: 0
@@ -1482,9 +1446,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513fafc8d19f5c54185b9c87b8c962bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1534033972}
   sideOffset: {x: 0.23927139, y: -0, z: 0.38111573}
+  isSelected: 0
 --- !u!4 &912783442
 Transform:
   m_ObjectHideFlags: 0
@@ -1612,9 +1577,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1278900192}
   sideOffset: {x: 0, y: 0, z: 0}
+  isSelected: 0
 --- !u!4 &1053916517
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,9 +1624,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513fafc8d19f5c54185b9c87b8c962bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1409366416}
   sideOffset: {x: -0.32326305, y: 0, z: -0.31305113}
+  isSelected: 0
 --- !u!4 &1077277498
 Transform:
   m_ObjectHideFlags: 0
@@ -1800,9 +1767,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeba576133f5be2489fbe9d5bbfbf814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1738337030}
   sideOffset: {x: 0, y: 0, z: 0}
+  isSelected: 0
   drillTravelTime: 1.2
 --- !u!4 &1113085926
 Transform:
@@ -1812,7 +1780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113085924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.539993, y: -3.1800003, z: 9.665009}
+  m_LocalPosition: {x: 9.539993, y: -6.09, z: 9.665009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1738337029}
@@ -1931,9 +1899,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1962146511}
   sideOffset: {x: -0.41540688, y: 0, z: 0.17300616}
+  isSelected: 0
 --- !u!4 &1129492566
 Transform:
   m_ObjectHideFlags: 0
@@ -2471,9 +2440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 798763706}
   sideOffset: {x: 0.1954961, y: 0, z: -0.404781}
+  isSelected: 0
 --- !u!4 &1427617951
 Transform:
   m_ObjectHideFlags: 0
@@ -2488,6 +2458,53 @@ Transform:
   m_Father: {fileID: 798763705}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1430175740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430175741}
+  - component: {fileID: 1430175742}
+  m_Layer: 0
+  m_Name: HDL_WalkPath_Sleep_Purple_Walk1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1430175741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430175740}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.83999634, y: 0.4611168, z: -4.1049805}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1915935352}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1430175742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430175740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
+  parentWaypoint: {fileID: 1915935353}
+  sideOffset: {x: 0, y: 0, z: 0}
+  isSelected: 0
 --- !u!1 &1442219532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,9 +2534,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1534033972}
   sideOffset: {x: 0.092482634, y: -0, z: 0.4403653}
+  isSelected: 0
 --- !u!4 &1442219534
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,9 +2658,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1962146511}
   sideOffset: {x: 0.3232272, y: -0, z: 0.3130155}
+  isSelected: 0
 --- !u!4 &1476390404
 Transform:
   m_ObjectHideFlags: 0
@@ -2967,11 +2986,6 @@ MonoBehaviour:
     pathHandle: {fileID: 912783441}
     previousConnectionType: 1
   prev:
-  - wp: {fileID: 1915935353}
-    type: 0
-    drillTime: 0
-    pathHandle: {fileID: 376939684}
-    previousConnectionType: 0
   - wp: {fileID: 824687019}
     type: 0
     drillTime: 0
@@ -2986,6 +3000,11 @@ MonoBehaviour:
     type: 1
     drillTime: 0
     pathHandle: {fileID: 774293316}
+    previousConnectionType: 0
+  - wp: {fileID: 1915935353}
+    type: 0
+    drillTime: 0
+    pathHandle: {fileID: 1430175742}
     previousConnectionType: 0
 --- !u!1 &1586750231
 GameObject:
@@ -3016,9 +3035,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1738337030}
   sideOffset: {x: 0.40858752, y: 0, z: -0.18520406}
+  isSelected: 0
 --- !u!4 &1586750233
 Transform:
   m_ObjectHideFlags: 0
@@ -3341,9 +3361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 798763706}
   sideOffset: {x: -0.40858752, y: 0, z: 0.18520406}
+  isSelected: 0
 --- !u!4 &1770522233
 Transform:
   m_ObjectHideFlags: 0
@@ -3426,9 +3447,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1409366416}
   sideOffset: {x: 0.031397663, y: -0, z: 0.44887638}
+  isSelected: 0
 --- !u!4 &1824327542
 Transform:
   m_ObjectHideFlags: 0
@@ -3471,7 +3493,7 @@ Transform:
   m_LocalPosition: {x: 5.699997, y: -11.105156, z: 4.4599915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 376939683}
+  - {fileID: 1430175741}
   m_Father: {fileID: 776427892}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3493,7 +3515,7 @@ MonoBehaviour:
   - wp: {fileID: 1534033972}
     type: 0
     drillTime: 0
-    pathHandle: {fileID: 376939684}
+    pathHandle: {fileID: 1430175742}
     previousConnectionType: 0
   prev: []
 --- !u!1 &1962146509
@@ -3605,9 +3627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 824687019}
   sideOffset: {x: -0.092482634, y: 0, z: -0.4403653}
+  isSelected: 0
 --- !u!4 &1967181678
 Transform:
   m_ObjectHideFlags: 0
@@ -3651,9 +3674,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 58968101}
   sideOffset: {x: -0.18376826, y: 0, z: 0.41075727}
+  isSelected: 0
 --- !u!4 &2003935730
 Transform:
   m_ObjectHideFlags: 0
@@ -3697,9 +3721,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e13656de13f9f24194c953fdb33d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colourGizmo: {r: 0.3033618, g: 0.78235006, b: 0.57786876, a: 1}
+  colourGizmo: {r: 0.78235006, g: 0.3033618, b: 0.50784314, a: 1}
   parentWaypoint: {fileID: 1755455436}
   sideOffset: {x: -0.031397663, y: 0, z: -0.44887638}
+  isSelected: 0
 --- !u!4 &2071375417
 Transform:
   m_ObjectHideFlags: 0
