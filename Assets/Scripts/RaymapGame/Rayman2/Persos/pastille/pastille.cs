@@ -9,14 +9,14 @@ namespace RaymapGame.Rayman2.Persos {
     /// Spiral Door
     /// </summary>
     public partial class pastille : PersoController {
-        public override AnimSFX[] animSfx => new AnimSFX[] {
-			
-		};
+        protected override void OnStart() {
+            SetRule("Default");
+        }
 
-		public static class State {
-			public const int
-				StateName1 = 0,
-				StateName2 = 1; //...etc
-		}
+        protected void Rule_Default() {
+            float dist = DistToPerso(rayman);
+            if (dist < 15)
+                RotateY(1300f / Mathf.Clamp(dist, 3, 15), 1);
+        }
     }
 }
