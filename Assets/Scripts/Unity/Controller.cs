@@ -29,7 +29,7 @@ public class Controller : MonoBehaviour {
 	public LoadingScreen loadingScreen;
 	public WebCommunicator communicator;
 
-	MapLoader loader = null;
+	public MapLoader loader = null;
 	bool viewCollision_ = false; public bool viewCollision = false;
 	bool viewInvisible_ = false; public bool viewInvisible = false;
 	bool viewGraphs_ = false; public bool viewGraphs = false;
@@ -97,10 +97,11 @@ public class Controller : MonoBehaviour {
 				lvlName = UnitySettings.ProcessName + ".exe";
 			}
 		}
-#endif
+		//#endif
 
-#if UNITY_STANDALONE
-        var file = new System.IO.StreamReader("settings.ini");
+		//#if UNITY_STANDALONE
+#else
+		var file = new System.IO.StreamReader("settings.ini");
         while (!file.EndOfStream) {
             var line = file.ReadLine().Split('=');
             switch (line[0]) {
