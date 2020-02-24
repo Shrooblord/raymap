@@ -14,8 +14,8 @@ namespace Shrooblord.lib {
         public BasePathHandle pathHandle;
         public WPConnection.Type previousConnectionType;
 
-        public WPConnection(SHR_Waypoint wpTo, Type type) {
-            this.wp = wpTo;
+        public WPConnection(SHR_Waypoint wp, Type type) {
+            this.wp = wp;
             this.type = type;
         }
 
@@ -46,9 +46,31 @@ namespace Shrooblord.lib {
         private Color colourWaypointSelected;
         private Color colourGizmo;
 
-        public SHR_Waypoint GetRandomNextWaypoint() {
-            return next[Random.Range(0, next.Count)].wp;
+        public WPConnection GetRandomConnectionInList(List<WPConnection> connections, bool allowNext = true, bool allowPrevious = true) {
+            List<WPConnection> valid = new List<WPConnection>();
+
+            //only check the subset of connections that is within our own connections
+            foreach (var c in connections) {
+                if (allowNext) {
+                    foreach (var n in next) {
+                        if (c == n) valid.Add(c);
+                    }
+                }
+
+                if (allowPrevious) {
+                    foreach (var p in prev) {
+                        if (c == p) valid.Add(c);
+                    }
+                }
+            }
+
+            return valid[Random.Range(0, valid.Count)];
         }
+        public WPConnection GetRandomNextConnection() => GetRandomConnectionInList(next, true, false);
+        public WPConnection GetRandomPreviousConnection() => GetRandomConnectionInList(prev, false, true);
+
+        public bool ConnectionInNext(WPConnection conn) => next.Contains(conn);
+        public bool ConnectionInPrev(WPConnection conn) => prev.Contains(conn);
 
         private void Update() {
             if ((graph = GetComponentInParent<SHR_WaypointGraph>()) == null) return;

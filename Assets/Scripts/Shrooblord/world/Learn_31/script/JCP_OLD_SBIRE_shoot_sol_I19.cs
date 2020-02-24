@@ -6,6 +6,14 @@ using Shrooblord.lib;
 namespace CustomGame.Rayman2.Persos {
     public class JCP_OLD_SBIRE_shoot_sol_I19 : PersoController {
         #region Setup
+        //Set up our Mind with the general feeling of what we're doing here and what we're feeling like at the moment.
+        public Mind mind = new Mind(
+            Mind.WaypointState.SeekingGrid,
+            Mind.AttackState.Idle,
+            Mind.Goal.Sleep,
+            Mind.Mood.Chill
+        );
+
         //jumping
         public bool jumping;
         public bool selfJump;
@@ -28,10 +36,22 @@ namespace CustomGame.Rayman2.Persos {
         public SHR_WaypointGraph wpGraph;
         SHR_Waypoint WPCurrent;
         SHR_Waypoint WPTarget;
+        WPConnection conn;
+
+        //waypoint targeting logic
+        private struct PotentialConnection {
+            public WPConnection connection;
+            public int score;
+
+            public PotentialConnection(WPConnection connection_in, int score_in) {
+                connection = connection_in;
+                score = score_in;
+            }
+        }
 
         //waypoint history
-        int MaxRememberedConnections = 3;
-        List<WPConnection> ConnectionHistory;   //keeps track of the last MaxRememberedConnections paths visited and attempts to avoid going back to those soon
+        int MaxRememberedConnections = 8;
+        List<WPConnection> ConnectionHistory = new List<WPConnection>();   //keeps track of the last MaxRememberedConnections paths visited and attempts to avoid going back to those soon
 
         //SFX
         private SFXPlayer snoreSFXPlayer;
@@ -63,6 +83,18 @@ namespace CustomGame.Rayman2.Persos {
         #endregion
 
         protected override void OnStart() {
+
+            //**** DELET THIS ****
+
+            Main.SetMainActor(this);
+            Main.showMainActorDebug = true;
+
+            //**** END OF DELET ****
+
+            for (int i = 0; i < MaxRememberedConnections; i++) {
+                ConnectionHistory.Add(null);
+            }
+
             pos = new Vector3(-187.8f, 25.51f, 383.39f);
             rot = Quaternion.Euler(0, -106.54f, 0);
 
@@ -116,7 +148,7 @@ namespace CustomGame.Rayman2.Persos {
             69: 22 dupe
             20: 18 --> 0
             63: 20 dupe
-
+            
 
 
             RUNNING
@@ -178,7 +210,7 @@ namespace CustomGame.Rayman2.Persos {
             40: lean back cocking barrel and transition into throw --> 37
 
             37: toss barrel
-
+            
             HIT
             9: oof!
 
@@ -249,54 +281,53 @@ namespace CustomGame.Rayman2.Persos {
             59: 54 dupe
         */
         #endregion
-
         #region animSFX
         public override AnimSFX[] animSfx => new AnimSFX[] {
-        //running animation footstep plants
-        new AnimSFX(2, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Footstep/Walk",
-            space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
-            volume = 0.60f,
-        }, 1, 10),
+            //running animation footstep plants
+            new AnimSFX(2, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep/Walk",
+                space = SFXPlayer.Space.Point,          //make the sound originate from specifically the Henchman
+                volume = 0.60f,
+            }, 1, 10),
 
-        //wake up in surprise
-        //surprise sound
-        new AnimSFX(49, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/General/pimoteur",
-            space = SFXPlayer.Space.Point,
-        }, 1),
-        //heavy foot plant sound
-        new AnimSFX(49, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Footstep/Land/",
-            space = SFXPlayer.Space.Point,
-        }, 16),
+            //wake up in surprise
+            //surprise sound
+            new AnimSFX(49, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/General/pimoteur",
+                space = SFXPlayer.Space.Point,
+            }, 1),
+            //heavy foot plant sound
+            new AnimSFX(49, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep/Land/",
+                space = SFXPlayer.Space.Point,
+            }, 16),
 
-        //swivel head in surprise
-        new AnimSFX(6, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/General/surpris",
-            space = SFXPlayer.Space.Point,
-        }, 1),
+            //swivel head in surprise
+            new AnimSFX(6, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/General/surpris",
+                space = SFXPlayer.Space.Point,
+            }, 1),
 
-        //Drilling
-        //Submerging
-        new AnimSFX(39, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Weapon/Drill/ELEC6",
-            space = SFXPlayer.Space.Point,
-        }, 17),
+            //Drilling
+            //Submerging
+            new AnimSFX(39, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Weapon/Drill/ELEC6",
+                space = SFXPlayer.Space.Point,
+            }, 17),
 
-        //Emerging
-        //drill
-        new AnimSFX(23, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Weapon/Drill/ELEC5",
-            space = SFXPlayer.Space.Point,
-        }, 1),
+            //Emerging
+            //drill
+            new AnimSFX(23, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Weapon/Drill/ELEC5",
+                space = SFXPlayer.Space.Point,
+            }, 1),
 
-        //heavy foot plant sound
-        new AnimSFX(23, new SFXPlayer.Info {
-            path = "Rayman2/Henchman/Footstep/Land/",
-            space = SFXPlayer.Space.Point,
-        }, 21),
-    };
+            //heavy foot plant sound
+            new AnimSFX(23, new SFXPlayer.Info {
+                path = "Rayman2/Henchman/Footstep/Land/",
+                space = SFXPlayer.Space.Point,
+            }, 21),
+        };
         #endregion
 
         #region Functions
@@ -330,6 +361,41 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
 
+        protected override void OnDebug() {
+            DebugLabel("GOAL: " + mind.goal);
+            DebugLabel("MOOD: " + mind.mood);
+            DebugLabel("ATK: " + mind.atkState);
+            DebugLabel("");
+
+            DebugLabel("");
+            DebugLabel("Decision Queue");
+            for (int i = 0; i < mind.DecisionQueueMaximum; i++) {
+                DebugLabel("[" + i.ToString() + "]",
+                    (mind.DecisionQueue != null) ?
+                        (mind.DecisionQueue.Count > i ? mind.DecisionQueue[i] : "NULL")
+                    : "NULL");
+            }
+
+            DebugNewColumn();
+            DebugNewColumn();
+            DebugNewColumn();
+            //DebugNewColumn();
+
+            DebugLabel("WP State: " + mind.wpState);
+            DebugLabel("WP Current: " + ((WPCurrent != null) ? WPCurrent.name : "NULL"));
+            DebugLabel("WP Target: " + ((WPTarget != null) ? WPTarget.name : "NULL"));
+            DebugLabel("HDL: " + ((conn != null) ? ((conn.pathHandle != null) ? conn.pathHandle.name : "NULL") : "NULL"));
+
+            DebugLabel("");
+            DebugLabel("Waypoint History");
+            for (int i = 0; i < MaxRememberedConnections; i++) {
+                DebugLabel("[" + i.ToString() + "]",
+                    (ConnectionHistory[i] != null) ?
+                        (ConnectionHistory[i].pathHandle != null ? ConnectionHistory[i].pathHandle.name : "NULL")
+                    : "NULL");
+            }
+        }
+
         void DrawVisionCone(float angle, float radius) {
             Color col = FindDebugDrawColour(DebugType.VisionCone);
 
@@ -354,26 +420,21 @@ namespace CustomGame.Rayman2.Persos {
             //draw the LastWaypoints as numbers floating above those Waypoints
             if (ConnectionHistory != null) {
                 for (var i = 0; i < ConnectionHistory.Count; i++) {
-                    WPConnection conn = ConnectionHistory[i];
+                    WPConnection connHist = ConnectionHistory[i];
 
-                    if (conn != null && conn.wp != null && conn.wp != null) {
-                        Color col = Color.Lerp(Color.magenta, Color.cyan / 1.8f, ConnectionHistory.Count / (i + 1)); //fade from bright magenta to faded cyan based on which index in the history the node is
-                        ObjDrawText.Draw(conn.pathHandle.transform, "[" + i.ToString() + "]", 500f, col);
+                    if (connHist != null && connHist.wp != null) {
+                        ObjDrawText.Draw(connHist.pathHandle.transform, "[" + i.ToString() + "]", 500f, (GetComponent<PersoBehaviour>().poListIndex == 2) ? Color.red * 0.5f : SHR_Colours.purple);
                     }
                 }
             }
         }
         #endregion
 
-        //every tick
-        protected override void OnUpdate() {
-        }
-
         private void OnDrawGizmos() {
             DrawMind();
         }
 
-        //Core
+        #region Core
         void Ground() {
             col.groundDepth = groundDepth;
             col.UpdateGroundCollision();
@@ -396,8 +457,27 @@ namespace CustomGame.Rayman2.Persos {
             if (strafing) moveSpeed = 7;
             else moveSpeed = 10;
         }
+        #endregion
+        #region Mind
+        public void EnqueueDecision(string rule) {
+            if (mind.DecisionQueue != null) {
+                if (mind.DecisionQueue.Count == mind.DecisionQueueMaximum) {
+                    mind.DecisionQueue.RemoveAt(0);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" decision
+                }
+            }
 
-        //Waypoints
+            mind.DecisionQueue.Add(rule); //shove the made decision onto the end of the list
+        }
+
+        //defaults to the oldest decision (top of the list)
+        public void DeleteDecision(int index = 0) {
+            if ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count >= index + 1)) mind.DecisionQueue.RemoveAt(index);
+        }
+
+        public string GetNextDecision() => ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count > 0)) ? mind.DecisionQueue[0] : null;
+
+        #endregion
+        #region Waypoints
         void GetNearestWaypoint() {
             WPCurrent = WPTarget;
             if (graph != null)
@@ -406,9 +486,9 @@ namespace CustomGame.Rayman2.Persos {
 
         WPConnection GetConnection() {
             if (WPCurrent != null) {
-                foreach (var conn in WPCurrent.next) {
-                    if (conn.wp == WPTarget) {
-                        return conn;
+                foreach (var c in WPCurrent.next) {
+                    if (c.wp == WPTarget) {
+                        return c;
                     }
                 }
             }
@@ -417,10 +497,13 @@ namespace CustomGame.Rayman2.Persos {
         }
 
         void TrackLastWaypoints() {
-            if (ConnectionHistory.Count == MaxRememberedConnections) {
-                ConnectionHistory.RemoveAt(1);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
+            if (ConnectionHistory != null) {
+                if (ConnectionHistory.Count == MaxRememberedConnections) {
+                    ConnectionHistory.RemoveAt(0);    //delete first item in the list and shove the rest up, or in other words, delete the "oldest" Waypoint
+                }
             }
-            ConnectionHistory.Add(GetConnection()); //shove the current Waypoint onto the end of the list
+
+            ConnectionHistory.Add(conn); //shove the current Waypoint onto the end of the list
         }
 
         void GetNextTargetWaypoint() {
@@ -428,23 +511,76 @@ namespace CustomGame.Rayman2.Persos {
             WPCurrent = WPTarget;
 
             if (WPCurrent != null) {
+                //let's build a small collection of potential connections we could form, assign them scores based on how attractive they are, and choose one from
+                //  the most attractive ones at random
                 int attempt = 10;
-                bool success = false;
-                while ((attempt > 0) && (success == false)) {
-                    WPTarget = WPCurrent.GetRandomNextWaypoint();
+                List<PotentialConnection> PCs = new List<PotentialConnection>();
+                List<PotentialConnection> valid = new List<PotentialConnection>();
 
-                    success = !ConnectionHistory.Contains(GetConnection());     //did we successfully find a unique Connection to travel through?
+                while (attempt > 0) {
+                    bool useful = true;
+                    //Create new connection with max score
+                    PotentialConnection PC = new PotentialConnection(WPCurrent.GetRandomNextConnection(), 1000);
+                    foreach (var pc in PCs) {
+                        if (pc.connection == PC.connection) {
+                            useful = false;  //don't add the same connection to our list twice
+                            break;
+                        }
+                    }
+
+                    if (useful) {
+                        foreach (var c in ConnectionHistory) {
+                            if (c != null) {
+
+                                if (c == PC.connection)
+                                    PC.score -= 400;                             //heavy score penalty for exactly the same path we just came from
+
+                                //look through our own prev list
+                                foreach (var p in WPCurrent.prev) {
+
+                                    //ask whether one of the Waypoints here owns the Waypoint described by the Connection History
+                                    if (p.wp.ConnectionInNext(c)) {
+
+                                        //Are you the one we're trying to path towards?
+                                        if (p.wp == PC.connection.wp) {
+                                            //then subtract score
+                                            PC.score -= 200; //we don't super like going back to a Waypoint we've visited in general,
+                                        }                    //   but it's not as bad as using the exact same path
+
+                                        break;  //If no, that's gucci; and also we can stop asking around, because there's no way someone else owns the same connection.
+                                    }           //  Either way, we're breaking out of here
+                                }
+                            }
+                        }
+
+                        PCs.Add(PC);
+                    }
 
                     attempt--;
                 }
 
-                if ((attempt == 10) && (!success)) {
-                    Debug.LogError(perso.name + ": Couldn't find new unique Connection to visit considering recent History. Ignoring request for unique Connection at position " + transform.position.ToString() + ".");
+                //sort the list by highest scorers (highest at the end)
+                PCs.Sort((PC1, PC2) => PC1.score.CompareTo(PC2.score));
+
+                int threshold = 100;
+                int highScore = PCs[PCs.Count - 1].score;
+
+                valid.Add(PCs[PCs.Count - 1]);
+
+                //starting at one before the end (which has already been added to valid), search through each PC and only add entries to valid that
+                //  are within threshold of the highest scores
+                for (var i = PCs.Count - 2; i >= 0; i--) {
+                    if (PCs[i].score + threshold >= highScore)
+                        valid.Add(PCs[i]);
                 }
+
+                //finally, go through all these valid candidates, and select one at random!
+                conn = valid[Random.Range(0, valid.Count)].connection;
+                WPTarget = conn.wp;
             }
         }
-
-        //Movement
+        #endregion
+        #region Movement
         void SetVelXZ() {
             Vector3 dir = (WPTarget.transform.position - pos).normalized;
             velXZ = dir * moveSpeed;
@@ -468,55 +604,173 @@ namespace CustomGame.Rayman2.Persos {
             }
         }
         #endregion
+        #endregion
 
         #region Rules
         //***  Rulzez  ***//
         #region Core
 
-        //Main logic loop. Most of these functions are determined by flags listed on the Waypoints themselves
+        //Main logic loop interfaces with the Mind, which uses flags set by Waypoints, the current situation, and our current goals to make complex decision queues
+        Timer DecisionTimeoutTimer = new Timer();
         protected void Rule_Decide() {
             if (newRule) {
-                anim.Set(0);    //always default to idle animation as the base state. other Rules will change this immediately in the same frame, so no need to worry about flickering
-                GetNextTargetWaypoint(); //also updates the Waypoint history
+                anim.Set(0); //always default to idle animation as the base state. other Rules will change this immediately in the same frame, so no need to worry about flickering
+
+                //Do we still have an active Decision Queue?
+                if (mind.DecisionQueue != null && mind.DecisionQueue.Count > 0) {
+                    SetRule("DecisionMade");
+                    return;
+                }
+
+                //in lieu of reaching any sort of meaningful conclusion to our pondering (see below), we just go with whatever's on our mind at the time
+                DecisionTimeoutTimer.Start(3.14f, () => SetRule("WeighDecisions"), false);
+
+
+                //Let's think about what we want to do...
+                SetRule("Ponder");
             }
+        }
 
-            WPConnection conn = GetConnection();
+        //Hmm... I wonder what to do next...
+        //Decision-making process that takes time over multiple frames to compute and/or wait to see what Rayman does in order to react to him
+        //  set flags accordingly, and then, in Rule_WeighDecision, we will check those flags and reach a conclusion from there
+        //  ---> SetRule("WeighDecisions");
+        protected void Rule_Ponder() {
+            if (newRule)
+                conn = GetConnection();
 
-            //We are currently off-grid; relocate to the nearest Waypoint.
+            //We are currently off-grid but would like to get back to it; relocate to the nearest Waypoint.
             if (conn == null) {
-                if (WPTarget == null) {
-                    GetNearestWaypoint();   //find a target to run to
-                } else {
-                    SetRule("RunAround");   //run to the target (and, once there, we'll have a new connection to examine)
+                if (mind.wpState == Mind.WaypointState.SeekingGrid) {
+                    GetNextTargetWaypoint(); //also updates the Waypoint history
+
+                    if (WPTarget == null) {
+                        GetNearestWaypoint();   //find a target to run to
+                    } else if (mind.goal != Mind.Goal.FindThePath) {
+                        mind.goal = Mind.Goal.FindThePath;
+                        mind.newGoal = true;
+
+                        //no need to calculate any further or ponder other things; let's just go
+                        SetRule("WeighDecisions");
+                    }
                 }
                 return;
             }
 
+            //We have a connection; are we on the grid, or still looking to join it?
+            if (mind.wpState == Mind.WaypointState.SeekingGrid) {
+                if (mind.goal != Mind.Goal.Patrol) {
+                    mind.goal = Mind.Goal.Patrol;
+                    mind.newGoal = true;
+
+                    //no need to calculate any further or ponder other things; let's just go
+                    SetRule("WeighDecisions");
+                    return;
+                }
+            }
+
+            //Just chillin' on the beaten path
+            if ((mind.goal == Mind.Goal.Patrol) && (mind.wpState != Mind.WaypointState.NONE) &&
+                (mind.wpState != Mind.WaypointState.OffGrid) && (mind.wpState != Mind.WaypointState.SeekingGrid)) {
+                SetRule("WeighDecisions");
+                return;
+            }
+        }
+
+        //Given previous Ponder, we now have a bunch of flags to check in order to set up our next course of action. When this logic is completed,
+        //  we will have arrived at our plan for the next couple of seconds and/or next couple of "steps" in our behaviour tree.
+        //So call Rule_DecisionMade.
+        //Naturally, these next steps can always be aborted at any time given a change in circumstances
+        //  (Rayman moved, Rayman attacked us, we're low health, we walked somewhere specific, etc.).
+        //This would trigger a new cascade of decision-making, essentially starting the whole process anew.
+        protected void Rule_WeighDecisions() {
+            DecisionTimeoutTimer.Abort();       //We're already here; no need to force us here again
+
+            //We have a new plan! Let's see...
+            if (mind.newGoal) {
+                switch (mind.goal) {
+                    case Mind.Goal.FindThePath:
+                        //If we are here, that means we are currently off-grid and looking for a way back in
+                        EnqueueDecision("RunAround"); //run to the target (and, once there, we'll have a new connection to examine)
+                        break;
+
+                    case Mind.Goal.Patrol:
+                        EnqueueDecision("UseWaypointPath"); //start walking on the given path
+                        EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
+                        EnqueueDecision("UseWaypointPath");
+                        break;
+
+                    default:
+                        //do nothing for now if we don't have explicit instructions
+                        return;
+                }
+
+                //---------//
+
+                //Go off-grid and approach Ray
+                //...
+
+                //Attack Ray (Shoot, Hook, Barrel)
+                //...
+
+                //Idle
+                //...
+
+                //--------//
+
+                mind.newGoal = false;
+            } else {
+                //Stay the course and steady as she goes...
+                switch (mind.goal) {
+                    case Mind.Goal.Patrol:
+                        EnqueueDecision("UseWaypointPath"); //start walking on the given path
+                        EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
+                        EnqueueDecision("UseWaypointPath");
+                        break;
+                    default:
+                        //do nothing for now if we don't have explicit instructions
+                        return;
+                }
+            }
+
+            SetRule("DecisionMade");
+        }
+
+        protected void Rule_DecisionMade() {
+            string decision = GetNextDecision();
+
+            if (decision != null) {
+                DeleteDecision(); //remove this decision from the queue
+                SetRule(decision);
+            } else {
+                Debug.LogError(perso.name + ": Couldn't resolve Decisions; decision NULL" + " at position " + transform.position.ToString() + "!");
+                SetRule("Decide");
+            }
+        }
+
+        //Actively pathing on the Waypoint Graph
+        protected void Rule_UseWaypointPath() {
+            //WPConnection conn = GetConnection();
+
+            if (newRule) GetNextTargetWaypoint();
+
             //Keep moving
-            //if (I want to keep moving) {
             switch (conn.type) {
                 case WPConnection.Type.Jump:
+                    mind.wpState = Mind.WaypointState.Jumping;
                     SetRule("JumpAround");
                     break;
 
                 case WPConnection.Type.Drill:
+                    mind.wpState = Mind.WaypointState.Drilling;
                     SetRule("PrepareDrill");
                     break;
 
                 default:
+                    mind.wpState = Mind.WaypointState.Walking;
                     SetRule("RunAround");
                     break;
             }
-            //}
-
-
-            //Go off-grid and approach Ray
-
-
-            //Attack Ray (Shoot, Hook, Barrel)
-
-
-            //Idle
         }
 
         protected void Rule_Air() {
@@ -622,7 +876,7 @@ namespace CustomGame.Rayman2.Persos {
             //...
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 6) {  //6
+                if (Vector3.Distance(pos, rayman.pos) < 600) {  //6
                     snoringTimer.Abort();
                     SetRule("WokeUp");
                 }
@@ -679,7 +933,7 @@ namespace CustomGame.Rayman2.Persos {
         #region Jumping
         //Jumping between Waypoints
         void Rule_JumpAround() {
-            WPConnection conn = GetConnection();
+            //WPConnection conn = GetConnection();
 
             //move and look at where we're headed
             if (!lookAtRay)
@@ -791,14 +1045,14 @@ namespace CustomGame.Rayman2.Persos {
         void Rule_DrillTravelling() {
             if (newRule) {
                 anim.Set(27);   //go invisible while "drilling in the ground" --> 23
-                DrillEmergeTimer.Start(GetConnection().drillTime, () => SetRule("DrillEmerge"), false);  //drill down for the amount of s specified in the Waypoint connection
+                DrillEmergeTimer.Start(conn.drillTime, () => SetRule("DrillEmerge"), false);  //drill down for the amount of s specified in the Waypoint connection
             }
         }
 
         Timer DrillWindDownTimer = new Timer();
         void Rule_DrillEmerge() {
             if (newRule) {
-                pos = GetConnection().wp.transform.position;
+                pos = conn.wp.transform.position;
                 SetLookAt2D(rayman.pos, 180);
                 anim.Set(23); //--> 0 (idle)
                 DrillWindDownTimer.Start(0.934f, () => SetRule("Decide"), false);

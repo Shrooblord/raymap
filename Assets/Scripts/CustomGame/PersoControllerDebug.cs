@@ -28,7 +28,7 @@ namespace CustomGame {
         protected void OnGUI() {
             if (!(Main.showMainActorDebug && Main.mainActor == this)) return;
             offY = 0;
-            debugRect = new Rect(8, 8, 225, 25); //set last value to 14
+            debugRect = new Rect(8, 8, 225, 25); //set last value to 14; orig 25
             debugStyle.fontSize = 18;
             debugStyle.normal.textColor = Color.red;
             var p = Main.mainActor;
