@@ -82,7 +82,7 @@ namespace RaymapGame {
         public bool isMainActor => this == mainActor;
         public bool outOfSector => perso.sector != mainActor.perso.sector;
         public bool outOfActiveRadius => Main.mainActor == null || DistToPerso(mainActor) > activeRadius;
-        public Vector3 apprVelXZCam => Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyPoint3x4(-apprVel);
+        //public Vector3 apprVelXZCam => Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyPoint3x4(-apprVel);
 
         public string persoName => perso.perso.namePerso;
         public string persoModel => perso.perso.nameModel;
