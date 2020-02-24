@@ -18,7 +18,7 @@ namespace RaymapGame
         public float top = 1;
         public float groundDepth = 0.25f;
         public float ceilingHeight = 0.75f;
-        public float wallAngle = 45;
+        public float wallAngle = 0.707f;
 
         public static float waterShallowDepth = 1.5f;
         public bool waterAutoSurface = true;
@@ -87,7 +87,11 @@ namespace RaymapGame
         {
             var p = pos;
             if (groundEnabled) {
-                ground = RaycastGround();
+                var groundHold = RaycastGround();
+                if (groundHold.hit.normal.y > wallAngle)
+                    ground = groundHold;
+                else ground = new CollideInfo();
+
                 platformPerso = ground.hit.collider?.GetComponentInParent<PersoController>();
                 groundFar = Raycast(p + Vector3.up * 1, Vector3.down, 1 + 10);
             }

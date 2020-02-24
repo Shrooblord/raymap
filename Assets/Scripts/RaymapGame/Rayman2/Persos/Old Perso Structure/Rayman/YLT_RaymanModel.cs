@@ -189,8 +189,8 @@ namespace RaymapGame.Rayman2.Persos {
             SetRule(StdRules.Air);
             DisableForSeconds(1.8f);
             anim.Set(Anim.Rayman.Respawn, 1);
-            if (cam != null)
-                cam.ResetInstant();
+            //if (cam != null)
+                //cam.ResetInstant();
         }
         public void Despawn(bool respawn = true) {
             DisableForSeconds(100000);

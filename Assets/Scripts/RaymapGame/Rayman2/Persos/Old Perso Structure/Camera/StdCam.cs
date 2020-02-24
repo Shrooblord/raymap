@@ -1,40 +1,24 @@
 ﻿//================================
 //  By: Adsolution
 //================================
-
 using UnityEngine;
 using static RaymapGame.InputEx;
-using static RaymapGame.Rayman2.Persos.YLT_RaymanModel;
 
 namespace RaymapGame.Rayman2.Persos {
-    public partial class StdCam : PersoController {
-        public PersoController targ => Main.mainActor;
-        public Camera cam;
-        public bool isRay => targ is YLT_RaymanModel;
-        public Vector3 posOffset = new Vector3(0, 4, -7.5f);
-
-        public override bool resetOnRayDeath => false;
-        public override bool interpolate => false;
-        public override float activeRadius => 100000;
-
-        protected override void OnStart() {
-            col.wallEnabled = true;
-            lStickAngle_s = lStickAngle;
-            SetRule("Default");
-        }
+    public partial class StdCam_old : PersoController {
+        
 
 
-        float a;
+
+        /*
         float lStickAngle_s;
+        public Vector3 posOffset = new Vector3(0, 4, -7.5f);
         Quaternion xr = Quaternion.identity;
-
-        public void SetOffset(Vector3 offset) => this.offset = offset;
-        Vector3 offset;
 
         public bool resetting;
         public void ResetInstant()
         {
-            t_resetting.Start(0.05f);
+            //t_resetting.Start(0.05f);
         }
 
         float mvrotspd = 0.135f;
@@ -53,11 +37,13 @@ namespace RaymapGame.Rayman2.Persos {
         public float t_y { get => _t_ty; set { _t_ty = Mathf.Lerp(_t_ty, value, Time.deltaTime * 5); } }
         float _t_ty;
 
-        public void SetPosOffset(Vector3 dest, float t_xz)
-        {
-            posOffset.x = Mathf.Lerp(posOffset.x, dest.x, t_xz * dt);
-            posOffset.y = Mathf.Lerp(posOffset.y, dest.y, t_y * dt);
-            posOffset.z = Mathf.Lerp(posOffset.z, dest.z, t_xz * dt);
+        public void SetPosOffset(Vector3 dest, float t_xz = 0) {
+            if (t_xz == 0) posOffset = dest;
+            else {
+                posOffset.x = Mathf.Lerp(posOffset.x, dest.x, t_xz * dt);
+                posOffset.y = Mathf.Lerp(posOffset.y, dest.y, t_y * dt);
+                posOffset.z = Mathf.Lerp(posOffset.z, dest.z, t_xz * dt);
+            }
         }
 
         Timer t_resetting = new Timer();
@@ -74,15 +60,17 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnUpdate() {
             LevelRules();
 
-            Camera.main.transform.position = transform.position;
-            Camera.main.transform.rotation = transform.rotation;
+            Camera.main.transform.position = pos;
+            Camera.main.transform.LookAt(pos + forward, Vector3.up);
+        }
+
+        protected void Rule_SnapToBack() {
+
         }
 
 
-
-
-
-        void Rule_Default()
+        /*
+        void Rule_DefaultOld()
         {
             if (targ == null) return;
 
@@ -111,7 +99,7 @@ namespace RaymapGame.Rayman2.Persos {
                 if (targ.rule == StdRules.Air)
                 {
                     mvrotspd = 0.08f;
-                    if (isRay && rayman.jumping && targ.velY > 0)
+                    if (targIsRay && rayman.jumping && targ.velY > 0)
                         t_y = 1.5f;
                     else if (targ.col.groundFar.hit.distance > 4)
                         t_t_y.Start(0.3f, () => t_y = 4);
@@ -128,7 +116,7 @@ namespace RaymapGame.Rayman2.Persos {
                     t_y = 0.35f;
                 else
                     t_y = 3;
-                if (isRay && !rayman.helic)
+                if (targIsRay && !rayman.helic)
                 {
                     float grndNrmOff = 0;
                     if (persoRule == StdRules.Ground)
@@ -155,7 +143,7 @@ namespace RaymapGame.Rayman2.Persos {
                     SetPosOffset(new Vector3(0, 6f, -13), 5);
                 }
 
-                if (isRay && rayman.helic)
+                if (targIsRay && rayman.helic)
                 {
                     t_y = 3;
                     if (!rayman.hasSuperHelic)
@@ -189,25 +177,27 @@ namespace RaymapGame.Rayman2.Persos {
 
                 cen = targ.transform.position + lookOff;
             }
+
+
+
             var off = cen + Matrix4x4.Rotate(Quaternion.Euler(0, rot.eulerAngles.y, 0)).
                 MultiplyPoint3x4(posOffset);
 
-
+            //var posXZ = new Vector3(pos.x, 0, pos.z);
+            //posXZ = Vector3.Lerp(posXZ, off, dt * 5);
+            pos.x = off.x;
+            pos.z = off.z;
             pos.y = Mathf.Lerp(pos.y, off.y, dt * t_y);
 
 
 
-            var posXZ = new Vector3(pos.x, 0, pos.z);
-            posXZ = Vector3.Lerp(posXZ, off, dt * 5);
-            pos.x = posXZ.x;
-            pos.z = posXZ.z;
 
             var cpos = pos;
             col.ApplyWallCollision(ref cpos);
             pos = Vector3.Lerp(pos, cpos, dt * 30);
-            rot = Quaternion.Euler(xr.eulerAngles.x, rot.eulerAngles.y, 0);
+            rot = Quaternion.Euler(xr.eulerAngles.x, rot.y, 0);
 
             persoNewState = false;
-        }
+        }*/
     }
 }

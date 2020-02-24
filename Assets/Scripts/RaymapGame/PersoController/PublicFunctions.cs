@@ -66,16 +66,19 @@ namespace RaymapGame {
         }
 
 
-
         // Transform
         public void SetRotY(float angle, float t = -1)
-            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), t == -1 ? 1 : t * dt);
+            => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), tCheck(t));
         public void RotateY(float angle, float t = -1)
-            => rot.eulerAngles += new Vector3(0, angle, 0) * (t == -1 ? 1 : t * dt);
+            => rot.eulerAngles += new Vector3(0, angle, 0) * tCheck(t);
         public void LookAt3D(Vector3 target, float t = -1)
-            => rot = Quaternion.Slerp(rot, Matrix4x4.LookAt(pos, target, Vector3.up).rotation * Quaternion.Euler(0, 180, 0), t == -1 ? 1 : t * dt);
+            => rot = lookAt(target, 0, 0, t);
         public void LookAt2D(Vector3 target, float t = -1)
             => LookAt3D(new Vector3(target.x, pos.y, target.z), t);
+        public void LookAtX(Vector3 target, float addDegrees, float t = -1)
+            => rot.eulerAngles = new Vector3(lookAt(target, addDegrees, 0, t).eulerAngles.x, rot.eulerAngles.y, 0);
+        public void LookAtY(Vector3 target, float addDegrees, float t = -1)
+            => rot.eulerAngles = new Vector3(rot.eulerAngles.x + addDegrees, lookAt(target, 0, addDegrees, t).eulerAngles.y, 0);
         public void FaceDir3D(Vector3 dir, float t = -1)
             => LookAt3D(pos + dir, t);
         public void FaceDir2D(Vector3 dir, float t = -1)
@@ -84,6 +87,20 @@ namespace RaymapGame {
             => LookAt3D(pos + apprVel, t);
         public void FaceVel2D(float t = -1)
             => LookAt2D(pos + apprVel, t);
+        public void Orbit(Vector3 target, float angle, Vector3 offset, float t_v = -1, float t_h = -1) {
+            var targ = target +
+                Matrix4x4.Rotate(Quaternion.Euler(0, angle - 180, 0))
+                .MultiplyPoint3x4(offset);
+            pos.x = Mathf.Lerp(pos.x, targ.x, tCheck(t_h));
+            pos.z = Mathf.Lerp(pos.z, targ.z, tCheck(t_h));
+            pos.y = Mathf.Lerp(pos.y, targ.y, tCheck(t_v));
+        }
+
+        // transform helpers
+        protected float tCheck(float t) => t == -1 ? 1 : t * dt;
+        Quaternion lookAt(Vector3 target, float addDegreesX, float addDegreesY, float t)
+            => Quaternion.Slerp(rot, Matrix4x4.LookAt(pos, target, Vector3.up).rotation * Quaternion.Euler(addDegreesX, addDegreesY - 180, 0), tCheck(t));
+
 
 
 
@@ -109,9 +126,12 @@ namespace RaymapGame {
 
 
         // Physics & Collision
-        public void ApplyGravity() {
-            velY = Mathf.Clamp(velY + gravity * dt, -80, 80);
-        }
+        public void SetVelH(float x, float z, float t = -1)
+            => velXZ = Vector3.Lerp(velXZ, new Vector3(x, 0, z), tCheck(t));
+        public void SetVelV(float y, float t = -1)
+            => velY = Mathf.Lerp(velY, y, tCheck(t));
+        public void ApplyGravity()
+            => velY = Mathf.Clamp(velY + gravity * dt, -80, 80);
         public void SetFriction(float horizontal, float vertical) {
             fricXZ = horizontal; fricY = vertical;
         }
@@ -140,7 +160,7 @@ namespace RaymapGame {
         // Navigation
         public void NavDirection3D(Vector3 dir, bool tank = false) {
             if (navRotYSpeed > 0) FaceDir2D(dir, navRotYSpeed);
-            var vec = tank ? dir.normalized : forward;
+            var vec = tank ? forward : dir.normalized;
             velXZ += vec * fricXZ * moveSpeed * dt;
             velY += vec.y * fricY * moveSpeed * dt;
         }

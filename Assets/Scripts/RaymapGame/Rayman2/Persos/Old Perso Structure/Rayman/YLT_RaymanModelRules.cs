@@ -24,13 +24,13 @@ namespace RaymapGame.Rayman2.Persos {
                 col.StickToGround();
             }
             else if (col.ground.Slide) {
-                SetRule(StdRules.Sliding); return;
+                SetRule("Sliding"); return;
             }
             else if (col.water.Water && !col.waterIsShallow) {
-                SetRule(StdRules.Swimming); return;
+                SetRule("Swimming"); return;
             }
             else {
-                SetRule(StdRules.Air); return;
+                SetRule("Air"); return;
             }
 
 

@@ -72,7 +72,7 @@ namespace RaymapGame {
         public Vector3 deltaPos { get; private set; }
         public Vector3 apprVel { get; private set; }
         protected string prevRule { get; private set; }
-        protected bool newRule { get; private set; }
+        public bool newRule { get; private set; }
         public bool hasShadow { get; private set; }
         public Waypoint waypoint { get; private set; }
         public bool visible { get; private set; }
@@ -82,7 +82,7 @@ namespace RaymapGame {
         public bool isMainActor => this == mainActor;
         public bool outOfSector => perso.sector != mainActor.perso.sector;
         public bool outOfActiveRadius => Main.mainActor == null || DistToPerso(mainActor) > activeRadius;
-        public Vector3 apprVelXZCam => Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyVector(lStick3D_s);
+        public Vector3 apprVelXZCam => Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyPoint3x4(-apprVel);
 
         public string persoName => perso.perso.namePerso;
         public string persoModel => perso.perso.nameModel;

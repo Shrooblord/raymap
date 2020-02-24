@@ -8,14 +8,16 @@ namespace RaymapGame.Rayman2.Persos {
     /// </summary>
     public class MIC_Obus_Complexe : PersoController {
 
-        bool inAlertRadius => DistToPerso(rayman) < 15;
+        bool inAlertRadius => DistToPerso(rayman) < 25;
         Timer t_fallAsleep = new Timer();
 
-        public void WakeUp() {
+        public void WakeUp() { 
+            if (!newRule) return;
+
             SetRule("");
             t_fallAsleep.Abort();
             anim.Set(Anim.Shell.WakeUp);
-            t_wakeUp.Start(1.75f, () => SetRule("Chasing"), false);
+            t_wakeUp.Start(1.75f, () => SetRule("Chasing"));
         }
 
 
@@ -26,9 +28,11 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         void Rule_Idle() {
+            if (newRule) {
+                t_fallAsleep.Start(8, () => SetRule("Sleep"));
+            }
             anim.Set(Anim.Shell.Idle);
             if (inAlertRadius) WakeUp();
-            t_fallAsleep.Start(8, () => SetRule("Sleep"), false);
         }
 
         
@@ -51,13 +55,12 @@ namespace RaymapGame.Rayman2.Persos {
                 moveSpeed = 8;
                 navRotYSpeed = 3;
                 NavTowards(rayman.pos);
+
                 col.StickToGround();
-                if (col.ground.AnyGround) {
+                if (col.ground.AnyGround)
                     velY = 0;
-                }
-                else {
+                else
                     ApplyGravity();
-                }
             }
 
             if (CheckCollisionZone(rayman, OpenSpace.Collide.CollideType.ZDM)) {

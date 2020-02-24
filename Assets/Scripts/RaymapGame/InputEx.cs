@@ -6,12 +6,20 @@ using UnityEngine;
 using static UnityEngine.Input;
 
 namespace RaymapGame {
+    [ExecuteAlways]
     public class InputEx : MonoBehaviour {
+        public string
+            jump = "A",
+            shoot = "Space";
+
+        static InputEx inst;
         public static float deadZone = 0.15f;
-        public static float smoothing = 20;
+        public static float smoothing = 0.05f;
 
         public static Vector2 lStick => new Vector2(GetAxisRaw("Horizontal"), GetAxisRaw("Vertical"));
         public static Vector2 rStick => new Vector2(GetAxisRaw("RHorizontal"), GetAxisRaw("RVertical"));
+        public static bool lStickPress => lStick.magnitude > deadZone;
+        public static bool rStickPress => rStick.magnitude > deadZone;
         public static float rStickAngle => Mathf.Atan2(rStick.x, rStick.y) * Mathf.Rad2Deg;
         public static Vector2 lStick_s => _lStick_s;
         static Vector2 _lStick_s;
@@ -37,20 +45,27 @@ namespace RaymapGame {
             iJumpDown, iJumpHold, iJumpUp,
             iShootDown, iShootHold, iShootUp;
 
+
         void Update() {
-            _lStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_lStick_s, lStick, Time.deltaTime * smoothing), 1);
-            _rStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_rStick_s, rStick, Time.deltaTime * smoothing / 2), 1);
+            if (transform.hideFlags != HideFlags.HideInInspector)
+                transform.hideFlags = HideFlags.HideInInspector;
+            if (inst != this)
+                inst = this;
+
+            float sm = smoothing == 0 ? 1 : (1f / smoothing) * Time.deltaTime;
+            _lStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_lStick_s, lStick, sm), 1);
+            _rStick_s = Vector3.ClampMagnitude(Vector2.Lerp(_rStick_s, rStick, sm), 1);
             mouseDelta = (Vector2)mousePosition - mousePosPrev;
             mousePosPrev = mousePosition;
 
+            // Input mapping
+            iJumpDown = GetKeyDown(inst.jump.ToLower()) || GetKeyDown(KeyCode.JoystickButton0);
+            iJumpHold = GetKey(inst.jump.ToLower()) || GetKey(KeyCode.JoystickButton0);
+            iJumpUp = GetKeyUp(inst.jump.ToLower()) || GetKeyUp(KeyCode.JoystickButton0);
 
-            iJumpDown = GetKeyDown(KeyCode.A) || GetKeyDown(KeyCode.JoystickButton0);
-            iJumpHold = GetKey(KeyCode.A) || GetKey(KeyCode.JoystickButton0);
-            iJumpUp = GetKeyUp(KeyCode.A) || GetKeyUp(KeyCode.JoystickButton0);
-
-            iShootDown = GetKeyDown(KeyCode.Space) || GetKeyDown(KeyCode.JoystickButton1);
-            iShootHold = GetKey(KeyCode.Space) || GetKey(KeyCode.JoystickButton1);
-            iShootUp = GetKeyUp(KeyCode.Space) || GetKeyUp(KeyCode.JoystickButton1);
+            iShootDown = GetKeyDown(inst.shoot.ToLower()) || GetKeyDown(KeyCode.JoystickButton1);
+            iShootHold = GetKey(inst.shoot.ToLower()) || GetKey(KeyCode.JoystickButton1);
+            iShootUp = GetKeyUp(inst.shoot.ToLower()) || GetKeyUp(KeyCode.JoystickButton1);
         }
     }
 }
