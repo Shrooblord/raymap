@@ -115,7 +115,6 @@ namespace RaymapGame {
         public void SetFriction(float horizontal, float vertical) {
             fricXZ = horizontal; fricY = vertical;
         }
-
         public float GetCollisionRadius(CollideType collideType) {
             if (perso == null || t_disable.active) return 0;
             foreach (Transform child in transform)
@@ -123,12 +122,10 @@ namespace RaymapGame {
                     return child.localScale.magnitude;
             return 0;
         }
-
         public bool CheckCollisionZone(PersoController perso, CollideType collideType) {
             return !(perso == null || t_disable.active)
                 && DistToPerso(perso) < GetCollisionRadius(collideType) + perso.GetCollisionRadius(collideType);
         }
-
         public bool StoodOnByPerso(PersoController perso) {
             foreach (var c in GetComponentsInChildren<Collider>()) {
                 if (perso.col.ground.hit.collider == c)
@@ -153,28 +150,17 @@ namespace RaymapGame {
                 velY += dir.y * fricY * moveSpeed * dt;
             }
         }
-
-        public void NavDirection(Vector3 dir, bool tank = true) {
-            dir.y = 0;
-            NavDirection3D(dir, tank);
-        }
-
-        public void NavDirectionCam(Vector3 dir, bool tank = true) {
-            NavDirection3D(Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyPoint3x4(dir));
-        }
-
-        public void NavTowards3D(Vector3 target, bool tank = true) {
-            NavDirection3D(target - pos, tank);
-        }
-
-        public void NavTowards(Vector3 target, bool tank = true) {
-            target.y = pos.y;
-            NavTowards3D(target, tank);
-        }
-
-        public void NavForwards() {
-            NavTowards3D(pos - forward);
-        }
+        public void NavDirection(Vector3 dir, bool tank = true)
+            => NavDirection3D(new Vector3(dir.x, 0, dir.z), tank);
+        public void NavDirectionCam(Vector3 dir, bool tank = true)
+            => NavDirection3D(Matrix4x4.Rotate(Camera.main.transform.rotation).MultiplyPoint3x4(dir));
+        public void NavTowards3D(Vector3 target, bool tank = true)
+            => NavDirection3D(target - pos, tank);
+        public void NavTowards(Vector3 target, bool tank = true)
+            => NavTowards3D(new Vector3(target.x, pos.y, target.z), tank);
+        public void NavForwards()
+            => NavTowards3D(pos - forward);
+       
 
 
 
