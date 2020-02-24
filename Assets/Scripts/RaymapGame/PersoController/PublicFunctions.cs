@@ -71,6 +71,10 @@ namespace RaymapGame {
             => rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), tCheck(t));
         public void RotateY(float angle, float t = -1)
             => rot.eulerAngles += new Vector3(0, angle, 0) * tCheck(t);
+        //public void SetLocalRotY(float angle, float t = -1)
+            //=> rot = Quaternion.Slerp(rot, Quaternion.Euler(rot.eulerAngles.x, angle, rot.eulerAngles.z), tCheck(t));
+        //public void RotateLocalY(float angle, float t = -1)
+            //=> rot = Quaternion.AxisAngle( * tCheck(t);
         public void LookAt3D(Vector3 target, float t = -1)
             => rot = lookAt(target, 0, 0, t);
         public void LookAt2D(Vector3 target, float t = -1)

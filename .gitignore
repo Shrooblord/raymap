@@ -20,4 +20,4 @@
 /ProjectSettings/*
 !/ProjectSettings/InputManager.asset
 
-*.meta
+#*.meta

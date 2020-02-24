@@ -9,12 +9,5 @@ namespace RaymapGame.Rayman2.Persos {
     /// Spiral Door
     /// </summary>
     public partial class DS1_PastilleAPeage : pastille {
-        protected override void OnStart() {
-            SetRule("Default");
-        }
-
-        protected void Rule_Default() {
-			
-        }
     }
 }
