@@ -163,7 +163,7 @@ namespace RaymapGame {
 
         // Navigation
         public void NavDirection3D(Vector3 dir, bool tank = false) {
-            if (navRotYSpeed > 0) FaceDir2D(dir, navRotYSpeed);
+            if (navRotSpeed > 0) FaceDir2D(dir, navRotSpeed);
             var vec = tank ? forward : dir.normalized;
             velXZ += vec * fricXZ * moveSpeed * dt;
             velY += vec.y * fricY * moveSpeed * dt;

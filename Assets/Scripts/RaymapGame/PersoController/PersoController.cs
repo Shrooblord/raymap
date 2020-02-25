@@ -34,7 +34,7 @@ namespace RaymapGame {
 
         public float fricXZ = 50, fricY = 0;
         public float moveSpeed = 10;
-        public float navRotYSpeed = 1;
+        public float navRotSpeed = 1;
         public float gravity = -25;
 
         public int hitPoints, maxHitPoints = 1;

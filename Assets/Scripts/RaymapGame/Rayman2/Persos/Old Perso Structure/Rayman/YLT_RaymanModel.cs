@@ -75,7 +75,7 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         protected override void OnStart() {
-            cam = GetPersoModel<StdCam>("StdCam");
+            cam = (StdCam)GetPerso("StdCam");
 
             switch (Main.lvlName)
             {
@@ -119,7 +119,7 @@ namespace RaymapGame.Rayman2.Persos {
                 Despawn();
 
             if (iShootDown) {
-                shot = GetPersoName("Alw_Projectile_Rayman");
+                shot = GetPerso("Alw_Projectile_Rayman");
                 shot.SetRule("Shoot");
             }
 

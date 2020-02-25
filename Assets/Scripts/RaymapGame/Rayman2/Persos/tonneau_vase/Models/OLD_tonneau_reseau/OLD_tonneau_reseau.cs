@@ -12,7 +12,7 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnStart() {
             moveSpeed = 4;
             gravity = -3;
-            navRotYSpeed = 0;
+            navRotSpeed = 0;
             SetFriction(1, 5);
             SetRule("Wait");
         }
