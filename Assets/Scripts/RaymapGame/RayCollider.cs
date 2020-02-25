@@ -41,13 +41,13 @@ namespace RaymapGame
         //========================================
         public static int raycastDepth = 5;
 
-        public static CollideInfo RaycastMouse() {
+        public static CollideInfo RaycastMouse(bool collideVisual = false) {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            return Raycast(ray.origin, ray.direction, 200);
+            return Raycast(ray.origin, ray.direction, 10000, collideVisual);
         }
 
-        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterial.CollisionFlags_R2 types = CollideMaterial.CollisionFlags_R2.All) {
-            bool hit = Physics.Raycast(origin, direction, out var newhit, distance, /*Main.anyCollision ? ~0 :*/ 1 << 9, QueryTriggerInteraction.Ignore);
+        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, bool collideVisual = false) {
+            bool hit = Physics.Raycast(origin, direction, out var newhit, distance, 1 << (collideVisual ? 8 : 9), QueryTriggerInteraction.Ignore);
             /*
             RaycastHit newhit = new RaycastHit();
             int casts = 0;
@@ -65,9 +65,9 @@ namespace RaymapGame
         }
 
         public CollideInfo RaycastGround(CollideMaterial.CollisionFlags_R2 types = CollideMaterial.CollisionFlags_R2.All)
-            => Raycast(pos + Vector3.up * 1, Vector3.down, 1 + groundDepth, types);
+            => Raycast(pos + Vector3.up * 1, Vector3.down, 1 + groundDepth);
         public CollideInfo RaycastCeiling(CollideMaterial.CollisionFlags_R2 types = CollideMaterial.CollisionFlags_R2.All)
-            => Raycast(pos + Vector3.up * top, Vector3.up, ceilingHeight, types);
+            => Raycast(pos + Vector3.up * top, Vector3.up, ceilingHeight);
 
 
 

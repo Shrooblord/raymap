@@ -46,7 +46,7 @@ namespace RaymapGame {
         public virtual float activeRadius => 75;
         public virtual bool resetOnRayDeath => true;
 
-        public bool HD = true;
+        public bool HD = false;
 
         public string rule = "";
         public Dictionary<string, MethodBase> rules = new Dictionary<string, MethodBase>();
