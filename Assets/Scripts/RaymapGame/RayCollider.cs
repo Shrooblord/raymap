@@ -46,8 +46,8 @@ namespace RaymapGame
             return Raycast(ray.origin, ray.direction, 200);
         }
 
-        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterial.CollisionFlags_R2 types = CollideMaterial.CollisionFlags_R2.All) {
-            bool hit = Physics.Raycast(origin, direction, out var newhit, distance, 1 << 9, QueryTriggerInteraction.Ignore);
+        public static CollideInfo Raycast(Vector3 origin, Vector3 direction, float distance, CollideMaterial.Type types = CollideMaterial.Type.Any) {
+            bool hit = Physics.Raycast(origin, direction, out var newhit, distance, /*Main.anyCollision ? ~0 :*/ 1 << 9, QueryTriggerInteraction.Ignore);
             /*
             RaycastHit newhit = new RaycastHit();
             int casts = 0;

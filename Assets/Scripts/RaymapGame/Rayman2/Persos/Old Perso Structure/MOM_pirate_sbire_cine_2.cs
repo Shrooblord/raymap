@@ -35,7 +35,7 @@ namespace RaymapGame.Rayman2.Persos {
             anim.Set(5, 0);
 
             t_delay2.Start(2.85f, () => {
-                GetPersoName("OLP_Sbire_Gnak").SetRule("TossKegs");
+                GetPerso("OLP_Sbire_Gnak").SetRule("TossKegs");
                 SetVisibility(false);
             });
         }

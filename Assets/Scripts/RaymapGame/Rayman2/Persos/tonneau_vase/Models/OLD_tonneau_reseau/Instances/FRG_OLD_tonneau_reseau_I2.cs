@@ -12,10 +12,10 @@ namespace RaymapGame.Rayman2.Persos {
         OLD_tonneau_reseau nextTonneau;
         protected override void OnStart() {
             base.OnStart();
-            nextTonneau = (OLD_tonneau_reseau)GetPersoName("FRG_OLD_tonneau_reseau_I3");
+            nextTonneau = (OLD_tonneau_reseau)GetPerso("FRG_OLD_tonneau_reseau_I3");
         }
         public override void OnSink() {
-            //GetPersoName("FRG_OLD_tonneau_reseau_I3").SetRule("Rise");
+            //nextTonneau.SetRule("Rise");
         }
     }
 }

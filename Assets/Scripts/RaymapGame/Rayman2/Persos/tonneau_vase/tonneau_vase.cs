@@ -9,10 +9,6 @@ namespace RaymapGame.Rayman2.Persos {
     /// Floating Barrel
     /// </summary>
     public partial class tonneau_vase : PersoController {
-        public override AnimSFX[] animSfx => new AnimSFX[] {
-			
-		};
-
 		public static class State {
 			public const int
 				BarrelBayou = 0,

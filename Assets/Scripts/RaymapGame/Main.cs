@@ -16,6 +16,7 @@ namespace RaymapGame
         public static Main main;
         public bool alwaysControlRayman;
         public bool showLiveScripts;
+        public bool emptyLevel;
         public static PersoController mainActor;
         public static YLT_RaymanModel rayman;
         public static Type[] persoScripts = new Type[0];
@@ -72,9 +73,9 @@ namespace RaymapGame
         public void Load() {
             Time.fixedDeltaTime = 1f / 144;
             FindObjectOfType<EnvHandler>().Enable();
-            
+
             // Remove colliders on everything but actual world collision
-            foreach (var col in FindObjectsOfType<Collider>())
+            foreach (var col in GameObject.Find("Actual World").GetComponentsInChildren<Collider>())
                 if (col.GetComponent<CollideComponent>() == null)
                     Destroy(col);
 
@@ -99,11 +100,34 @@ namespace RaymapGame
 
             // Find the player Rayman perso and set as Main Actor
             if (mainActor == null)
-                SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPersoName("Rayman"));
+                SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("Rayman"));
 
 
             onLoad.Invoke(this, EventArgs.Empty);
             loaded = true;
+
+            if (emptyLevel)
+                ClearLevel();
+        }
+
+
+        public static bool anyCollision;
+        public void ClearLevel() {
+            GameObject ray = null, cam = null;
+            foreach(Transform t in GameObject.Find("Dynamic World").transform) {
+                if (t.name.Contains("YLT_RaymanModel"))
+                    ray = t.gameObject;
+                else if (t.name.Contains("StdCam"))
+                    cam = t.gameObject;
+                else
+                    Destroy(t.gameObject);
+            }
+            GameObject.Find("Father Sector").SetActive(false);
+            /*foreach (Transform t in GameObject.Find("Father Sector").transform) {
+                t.gameObject.SetActive(false);
+            }*/
+
+            anyCollision = true;
         }
     }
 }

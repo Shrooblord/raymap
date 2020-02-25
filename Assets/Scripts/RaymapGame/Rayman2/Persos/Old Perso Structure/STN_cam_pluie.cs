@@ -9,7 +9,7 @@ namespace RaymapGame.Rayman2.Persos {
         Camera cam;
 
         protected override void OnStart() {
-            cam = GetPersoModel<StdCam>("StdCam");
+            cam = (StdCam)GetPerso("StdCam");
             SetRule("Follow");
         }
 

@@ -77,7 +77,7 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         protected override void OnStart() {
-            cam = GetPersoModel<StdCam>("StdCam");
+            cam = (StdCam)GetPerso("StdCam");
 
             switch (Main.lvlName)
             {
@@ -89,6 +89,8 @@ namespace RaymapGame.Rayman2.Persos {
                 default: hasSuperHelic = false; break;
             }
 
+            if (Main.main.emptyLevel)
+                pos = Vector3.zero;
             SetShadow(true);
             SetRule(StdRules.Air);
         }
