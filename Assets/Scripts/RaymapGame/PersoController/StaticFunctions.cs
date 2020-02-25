@@ -2,6 +2,7 @@
 //  By: Adsolution
 //================================
 using RaymapGame.Rayman2.Persos;
+using System;
 
 namespace RaymapGame {
     public partial class PersoController {
@@ -14,7 +15,10 @@ namespace RaymapGame {
             where PersoSubType : PersoController
             => FindObjectOfType<PersoSubType>();
 
-        public static PersoController GetPerso(string perso)
-            => FindObjectOfType(System.Type.GetType(perso)) as PersoController;
+        public static PersoController GetPerso(string perso) {
+            var t = Type.GetType($"{nameof(RaymapGame)}.{Main.gameName}.Persos.{perso}");
+            if (t != null) return FindObjectOfType(t) as PersoController;
+            return null;
+        }
     }
 }

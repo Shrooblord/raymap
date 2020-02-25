@@ -14,8 +14,8 @@ namespace RaymapGame {
         public CollideMaterial mat => collide.gameMaterial.collideMaterial;
         public bool isValid;
         public CollideType collideType => collide.geo.type;
-        public CollideMaterial.Type type {
-            get => (CollideMaterial.Type)mat.type;
+        public CollideMaterial.CollisionFlags_R2 type {
+            get => (CollideMaterial.CollisionFlags_R2)mat.type;
             set { mat.type = (ushort)type; }
         }
         

@@ -100,10 +100,11 @@ namespace RaymapGame
 
             // Find the player Rayman perso and set as Main Actor
             if (mainActor == null)
-                SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("Rayman"));
+                //SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("YLT_RaymanModel"));
+                SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("YLT_RaymanModel"));
 
 
-            onLoad.Invoke(this, EventArgs.Empty);
+                onLoad.Invoke(this, EventArgs.Empty);
             loaded = true;
 
             if (emptyLevel)
