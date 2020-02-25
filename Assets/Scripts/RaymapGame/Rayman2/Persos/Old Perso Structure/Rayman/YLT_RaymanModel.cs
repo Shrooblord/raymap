@@ -2,6 +2,8 @@
 //  By: Adsolution
 //================================
 
+using OpenSpace.Object;
+using OpenSpace;
 using UnityEngine;
 using static RaymapGame.InputEx;
 using static UnityEngine.Input;
@@ -111,14 +113,129 @@ namespace RaymapGame.Rayman2.Persos {
                 SetRule(StdRules.Climbing);
         }
 
+        int counter;
         PersoController shot;
         protected override void OnInputMainActor() {
             if (GetKeyDown(KeyCode.R))
                 Despawn();
 
             if (iShootDown) {
-                shot = GetPersoName("Alw_Projectile_Rayman");
-                shot.SetRule("Shoot");
+                //shot = GetPersoName("Alw_Projectile_Rayman");
+                //shot.SetRule("Shoot");
+
+                GameObject gameObject = new GameObject("Instanciated_Alw_Projectile_Rayman_Model_" + counter);
+
+                //Alw_Projectile_Rayman_Model projectile = (Alw_Projectile_Rayman_Model)gameObject.AddComponent(typeof(Alw_Projectile_Rayman_Model));
+
+                //Alw_Projectile_Rayman_Model projectile = gameObject.AddComponent<Alw_Projectile_Rayman_Model>();
+                //JCP_CHR_lums_basic_I9 projectile = gameObject.AddComponent<JCP_CHR_lums_basic_I9>();
+
+
+                //create perso descriptor
+                Perso p;
+                foreach (Perso sp in Main.controller.loader.globals.spawnablePersos) {
+                    if (sp.namePerso == "Alw_Projectile_Rayman") {
+
+                        p = new Perso(sp.offset, sp.SuperObject);
+
+                        p.nameFamily = sp.nameFamily;
+                        p.nameModel = sp.nameModel;
+                        p.namePerso = sp.namePerso;
+
+                        p.p3dData = sp.p3dData;
+
+                        Main.controller.initPersoCoreAndScripts(p, true);
+
+                        PersoBehaviour pb = p.Gao.GetComponent<PersoBehaviour>();
+
+                        #region oldCopy
+                        /*
+                        {
+                            p.nameFamily = sp.nameFamily;
+                            p.nameModel = sp.nameModel;
+                            p.namePerso = sp.namePerso;
+
+                            p.Gao.transform.parent = gameObject.transform;  //this call to p.Gao should also generate it when it didn't exist; see the getter for the Gao
+                            
+                            p.brain = sp.brain;
+                            p.collset = sp.collset;
+                            p.dynam = sp.dynam;
+                            p.fullName = sp.fullName;
+                            p.msWay = sp.msWay;
+
+                            //p.offset = sp.offset;                         //already set by the new Perso() call above
+                            p.off_3dData = sp.off_3dData;
+                            p.off_brain = sp.off_brain;
+                            p.off_camera = sp.off_camera;
+                            p.off_collSet = sp.off_collSet;
+                            p.off_dynam = sp.off_dynam;
+                            p.off_msLight = sp.off_msLight;
+                            p.off_msWay = sp.off_msWay;
+                            p.off_sectInfo = sp.off_sectInfo;
+                            p.off_stdGame = sp.off_stdGame;
+                            p.p3dData = sp.p3dData;
+                            p.sectInfo = sp.sectInfo;
+                            p.stdGame = sp.stdGame;
+                            //p.SuperObject = sp.SuperObject;               //already set by the new Perso() call above
+                        }
+                        */
+                        //populate all properties through copying
+
+                        //create PersoBehaviour and assign the new Perso to it
+                        //PersoBehaviour pb = (PersoBehaviour)p.Gao.AddComponent(typeof(PersoBehaviour));
+
+                        //pb.perso = p;
+
+                        //And now let's populate its values too
+                        /*
+                        {
+                            PersoBehaviour spPB = sp.Gao.GetComponent<PersoBehaviour>();
+                            pb.a3d = spPB.a3d;
+                            pb.animationSpeed = spPB.animationSpeed;
+                            pb.animLargo = spPB.animLargo;
+                            pb.animMontreal = spPB.animMontreal;
+                            pb.autoNextState = spPB.autoNextState;
+                            //pb.channelObjects = spPB.channelObjects;            //can't set this one; managed internally by the PB
+                            pb.clearTheBrain = spPB.clearTheBrain;
+                            pb.controller = spPB.controller;
+                            pb.currentFrame = spPB.currentFrame;
+                            //pb.currentState = spPB.currentState;                //can't set this one; managed internally by the PB
+                            pb.hideFlags = spPB.hideFlags;
+                            //pb.isActiveAndEnabled = spPB.isActiveAndEnabled;    //can't set this one; read-only
+                            pb.IsAlways = spPB.IsAlways;
+                            pb.IsEnabled = spPB.IsEnabled;
+                            //pb.isLoaded = spPB.isLoaded;                        //can't set this one; managed internally by the PB
+                            pb.morphDataArray = spPB.morphDataArray;
+                            pb.name = spPB.name;
+                            pb.playAnimation = spPB.playAnimation;
+                            pb.poListIndex = spPB.poListIndex;
+                            pb.poListNames = spPB.poListNames;
+                            pb.sector = spPB.sector;
+                            //pb.state = spPB.state;                              //can't set this one; managed internally by the PB
+                            pb.stateIndex = spPB.stateIndex;
+                            pb.stateNames = spPB.stateNames;                      //can't set this one; managed internally by the PB
+                                                                                  //pb.subObjects = spPB.subObjects;
+                            pb.tag = spPB.tag;
+                        }
+                        */
+#endregion
+
+                        //give it a kiss
+                        //pb.Init();
+
+                        //pull it in close
+                        //if (pb.isLoaded)
+                        //p.Gao.transform.position = pos;
+
+
+                        //finally, attach our projectile script to it so it functions like a boss
+                        //Alw_Projectile_Rayman_Model projectile = pb.gameObject.AddComponent<Alw_Projectile_Rayman_Model>();
+
+                        break;
+                    }
+                }
+
+                counter++;
             }
 
             switch (rule)

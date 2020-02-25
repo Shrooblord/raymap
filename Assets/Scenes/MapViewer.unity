@@ -956,7 +956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -200, y: 150}
+  m_AnchoredPosition: {x: -199.99997, y: 150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 0}
 --- !u!23 &1162811864
@@ -1109,7 +1109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: -150}
+  m_AnchoredPosition: {x: -199.99997, y: -150}
   m_SizeDelta: {x: -200, y: -150}
   m_Pivot: {x: 1, y: 1}
 --- !u!23 &1372588409
@@ -1481,6 +1481,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1604819676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1604819679}
+  - component: {fileID: 1604819678}
+  - component: {fileID: 1604819677}
+  m_Layer: 0
+  m_Name: TriggerVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1604819677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604819676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbb8bb3190bea941b5bd10cfaad1a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1604819678
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604819676}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1604819679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604819676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -225.26193, y: 75.138695, z: 388.1778}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1701416320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,6 +1757,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SHR_WP_GRP_Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 19803658561143279, guid: 13b06e8609be6c34d9de67e7f7cfe9e1,
+        type: 3}
+      propertyPath: turnOffSelectionColours
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19803658561143279, guid: 13b06e8609be6c34d9de67e7f7cfe9e1,
+        type: 3}
+      propertyPath: turnOffSelectionHighlight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19803658561143279, guid: 13b06e8609be6c34d9de67e7f7cfe9e1,
+        type: 3}
+      propertyPath: inboundConnectionColour.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19803658561143279, guid: 13b06e8609be6c34d9de67e7f7cfe9e1,
+        type: 3}
+      propertyPath: inboundConnectionColour.g
+      value: 0.6067236
+      objectReference: {fileID: 0}
+    - target: {fileID: 19803658561143279, guid: 13b06e8609be6c34d9de67e7f7cfe9e1,
+        type: 3}
+      propertyPath: inboundConnectionColour.b
+      value: 0.015686274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b06e8609be6c34d9de67e7f7cfe9e1, type: 3}

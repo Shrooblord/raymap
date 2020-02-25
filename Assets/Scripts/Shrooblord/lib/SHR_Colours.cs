@@ -2,7 +2,8 @@
 
 namespace Shrooblord.lib {
     public static class SHR_Colours {
-        public static Color purple = new Color(0.9f, 0.05f, 0.9f, 0.5f);
+        public static Color purple = new Color(0.9f, 0.05f, 0.9f);
+        public static Color lime = new Color(0.016f, 1f, 0.174f);
 
         public static Color Invert(Color col_in) {
             float hue, sat, val;

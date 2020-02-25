@@ -47,7 +47,7 @@ namespace RaymapGame {
             if (!interpolate) LogicLoop();
         }
 
-        protected void LateUpdate() {
+        protected virtual void LateUpdate() {
             if (visChanged) {
                 foreach (var mr in GetComponentsInChildren<MeshRenderer>())
                     mr.enabled = visible;
