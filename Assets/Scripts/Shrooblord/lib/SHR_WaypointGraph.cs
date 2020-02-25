@@ -27,7 +27,7 @@ namespace Shrooblord.lib {
             if (!Main.loaded) return;
 
             foreach (var n in persoNames) {
-                var p = PersoController.GetPersoName(n);
+                var p = PersoController.GetPerso(n);
                 if (p != null)
                     p.graph = this;
             }
