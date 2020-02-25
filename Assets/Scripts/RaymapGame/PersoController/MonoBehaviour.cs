@@ -51,6 +51,16 @@ namespace RaymapGame {
                     mr.enabled = visible;
                 visChanged = false;
             }
+            if (HD)
+                foreach (var mr in GetComponentsInChildren<MeshRenderer>()) {
+                    if (mr.material.name == "mat_gouraud (Instance)") {
+                        var tex = mr.material.GetTexture("_Tex0");
+                        mr.material = new Material(Shader.Find("Standard"));
+                        mr.material.mainTexture = tex;
+                        mr.receiveShadows = true;
+                        mr.material.SetFloat("_Glossiness", 0);
+                    }
+                }
         }
 
         protected void FixedUpdate() {

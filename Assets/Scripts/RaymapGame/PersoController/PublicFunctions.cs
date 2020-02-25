@@ -13,11 +13,11 @@ namespace RaymapGame {
 
         // Management
         public void Reset() {
-            SetRule("");
-            OnStart();
             pos = startPos;
             rot = startRot;
             vel = Vector3.zero;
+            SetRule("");
+            OnStart();
         }
         public void DisableForSeconds(float seconds) {
             velY = 0;

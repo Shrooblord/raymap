@@ -97,7 +97,7 @@ namespace RaymapGame.Rayman2.Persos {
                     else if (anim.IsSet(Anim.Rayman.SlideToRun))
                         anim.SetSpeed(30);
                     else
-                        anim.Set(Anim.Rayman.Run, 0, velXZ.magnitude * moveSpeed * 0.5f);
+                        anim.Set(Anim.Rayman.Run, 0, velXZ.magnitude * moveSpeed * 0.46f);
                 }
 
                 if (anim.currAnim == Anim.Rayman.HelicLandWalk || anim.currAnim == Anim.Rayman.LandRun)
