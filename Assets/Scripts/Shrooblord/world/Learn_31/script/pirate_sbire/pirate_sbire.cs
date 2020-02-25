@@ -1,102 +1,22 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+//================================
+//  By: Shrooblord
+//================================
+using System.Collections.Generic;
 using UnityEngine;
 using Shrooblord.lib;
 
 namespace RaymapGame.Rayman2.Persos {
-    #region Mind
-    //Pirate decision-making flags
-    public class Mind {
-        public enum WaypointState { 
-            Walking, Jumping, Drilling, Parachuting, MoonJumping, Teleporting,  //generic movement along Waypoint Path
-
-            StandingStill,                                                      //We are still in the process of pathing along the Waypoints, but right now we're not in motion
-
-            OffGrid,                                                            //We are currently not on the Waypoint Path, and don't care about it
-            SeekingGrid,                                                        //We are currently not on the Waypoint Path, but looking to get back onto it
-
-            NONE                                                                //Error: Waypoint Path null
-        };
-        public WaypointState wpState;
-        public bool newWPState; //true for the first tick that our WPS has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
-
-        public enum AttackState {
-            SeekingTarget, Aiming,                                              //acquiring target                      
-            
-            Shooting, TossingKeg,                                               //attacking at range
-            
-            Hooking, HookSlamming,                                              //melee attacks
-
-            Idle,                                                               //not currently interested in attacking
-
-            NONE                                                                //Error: I think I should have an enemy, but I don't / I've lost track of how I was supposed to interact with him
-        };
-        public AttackState atkState;
-        public bool newAtkState; //true for the first tick that our AS has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
-
-        //Abstract direction to push the incoming decision-making processes towards. When this value changes,
-        //  my behaviour should be noticeably different.
-        public enum Goal {
-            OnGuard,                                                            //Hey, did I just see something?
-            Patrol,                                                             //On-duty and looking for trouble
-            Follow,                                                             //da leada, leada, leada...
-            FindThePath,                                                        //The true way to enlightenment...
-
-            Exterminate,                                                        //Enemy sighted. Time to make some mashed potato.
-            Capture,                                                            //Freedom is an illusion. Here, I'll show you.
-            Terrify,                                                            //Break their wills!! RESISTANCE IS FUTILE
-            
-            Heal,                                                               //I'm hurt kinda bad
-            CallForBackup,                                                      //Come on, lads; the party's outside!
-
-            Flee,                                                               //I don't wanna live on this planet anymore
-            Surrender,                                                          //Please, I can't take any more...
-
-            Sleep,                                                              //I'd like to find a nice, chill place where I can rest in peace
-            Haul,                                                               //This big-ass thing needs going places.
-            Rodeo,                                                              //Giddy-up!
-        };
-        public Goal goal;
-        public bool newGoal; //true for the first tick that our Goal has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
-
-        //In combination with Goal and the current circumstances, Mood will help push certain decision-making more towards one or the other way
-        //  For example, an Angry Henchman will be more likely to just go for the kill, while a Desperate one might surrender or flee.
-        //  A Satisfied one with high health might be more reckless and willing to gloat,
-        //    while a Focussed one is driven, calculating, determined, and iron-willed.
-        public enum Mood { Chill, Satisfied, Focussed, Annoyed, Angry, Afraid, Desperate }
-        public Mood mood;
-        public bool newMood; //true for the first tick that our Mood has changed; triggers cascading functionality to abort previous processes and immediately switch, etc.
-
-        public List<string> DecisionQueue = new List<string>();                 //List of current decision and follow-up plans
-        public int DecisionQueueMaximum = 8;                                    //Maximum amount of steps I can think ahead in time to approach my goal
-
-        public Mind(WaypointState wpState, AttackState atkState, Goal goal, Mood mood) {
-            this.wpState = wpState;
-            this.atkState = atkState;
-            this.goal = goal;
-            this.mood = mood;
-        }
-
-        public Mind(Goal goal, Mood mood) {
-            this.wpState = WaypointState.NONE;
-            this.atkState = AttackState.NONE;
-
-            this.goal = goal;
-            this.mood = mood;
-        }
-
-        public Mind() { }
-    }
-    #endregion
-
-    public class JCP_FRH_sbire_gnak_I1 : PersoController {
+    /// <summary>
+    /// Robo-Pirate Henchman
+    /// </summary>
+    public partial class pirate_sbire : PersoController {
         #region Setup
         //Set up our Mind with the general feeling of what we're doing here and what we're feeling like at the moment.
-        public Mind mind = new Mind(
-            Mind.WaypointState.SeekingGrid,
-            Mind.AttackState.Idle,
-            Mind.Goal.Sleep,
-            Mind.Mood.Chill
+        public HenchmanMind mind = new HenchmanMind(
+            HenchmanMind.WaypointState.SeekingGrid,
+            HenchmanMind.AttackState.Idle,
+            HenchmanMind.Goal.Sleep,
+            HenchmanMind.Mood.Chill
         );
 
         //jumping
@@ -139,9 +59,9 @@ namespace RaymapGame.Rayman2.Persos {
         List<WPConnection> ConnectionHistory = new List<WPConnection>();   //keeps track of the last MaxRememberedConnections paths visited and attempts to avoid going back to those soon
 
         //SFX
-        private SFXPlayer snoreSFXPlayer;
-        private SFXPlayer landClankSFXPlayer;
-        private SFXPlayer idleSFXPlayer;
+        protected SFXPlayer snoreSFXPlayer;
+        protected SFXPlayer landClankSFXPlayer;
+        protected SFXPlayer idleSFXPlayer;
 
         //general behaviour flags
         private bool lookAtRay = false;
@@ -168,25 +88,9 @@ namespace RaymapGame.Rayman2.Persos {
         #endregion
 
         protected override void OnStart() {
-
-            //**** DELET THIS ****
-
-            Main.SetMainActor(this);
-            Main.showMainActorDebug = true;
-
-            //**** END OF DELET ****
-
             for (int i = 0; i < MaxRememberedConnections; i++) {
                 ConnectionHistory.Add(null);
             }
-
-            pos = new Vector3(-193.61f, 23.84f, 369.45f);
-            rot = Quaternion.Euler(0, 0, 0);
-
-            //Colour the Henchman. 1 = Red; 2 = Purple
-            GetComponent<PersoBehaviour>().poListIndex = 2;
-
-            SetRule("Sleeping");
 
             #region SFX
             //snoring
@@ -366,6 +270,12 @@ namespace RaymapGame.Rayman2.Persos {
             59: 54 dupe
         */
         #endregion
+        public static class Anim {
+            public const int
+                StateName1 = 0,
+                StateName2 = 1; //...etc
+        }
+
         #region animSFX
         public override AnimSFX[] animSfx => new AnimSFX[] {
             //running animation footstep plants
@@ -459,7 +369,7 @@ namespace RaymapGame.Rayman2.Persos {
                     (mind.DecisionQueue != null) ?
                         (mind.DecisionQueue.Count > i ? mind.DecisionQueue[i] : "NULL")
                     : "NULL");
-            }            
+            }
 
             DebugNewColumn();
             DebugNewColumn();
@@ -467,7 +377,7 @@ namespace RaymapGame.Rayman2.Persos {
             //DebugNewColumn();
 
             DebugLabel("WP State: " + mind.wpState);
-            DebugLabel("WP Current: " + ((WPCurrent != null) ? WPCurrent.name : "NULL")); 
+            DebugLabel("WP Current: " + ((WPCurrent != null) ? WPCurrent.name : "NULL"));
             DebugLabel("WP Target: " + ((WPTarget != null) ? WPTarget.name : "NULL"));
             DebugLabel("HDL: " + ((conn != null) ? ((conn.pathHandle != null) ? conn.pathHandle.name : "NULL") : "NULL"));
 
@@ -475,8 +385,11 @@ namespace RaymapGame.Rayman2.Persos {
             DebugLabel("Waypoint History");
             for (int i = 0; i < MaxRememberedConnections; i++) {
                 DebugLabel("[" + i.ToString() + "]",
-                    (ConnectionHistory[i] != null) ?
-                        (ConnectionHistory[i].pathHandle != null ? ConnectionHistory[i].pathHandle.name : "NULL")
+                    (ConnectionHistory != null) ? 
+                        ((ConnectionHistory.Count >= i && ConnectionHistory[i] != null) ?
+                            (ConnectionHistory[i].pathHandle != null ? ConnectionHistory[i].pathHandle.name
+                            : "NULL")
+                        : "NULL")
                     : "NULL");
             }
         }
@@ -507,7 +420,7 @@ namespace RaymapGame.Rayman2.Persos {
                 for (var i = 0; i < ConnectionHistory.Count; i++) {
                     WPConnection connHist = ConnectionHistory[i];
 
-                    if (connHist != null && connHist.wp != null) {
+                    if (connHist?.wp != null) {
                         ObjDrawText.Draw(connHist.pathHandle.transform, "[" + i.ToString() + "]", 500f, (GetComponent<PersoBehaviour>().poListIndex == 2) ? Color.red * 0.5f : SHR_Colours.purple);
                     }
                 }
@@ -557,10 +470,10 @@ namespace RaymapGame.Rayman2.Persos {
         //defaults to the oldest decision (top of the list)
         public void DeleteDecision(int index = 0) {
             if ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count >= index + 1)) mind.DecisionQueue.RemoveAt(index);
-        } 
+        }
 
         public string GetNextDecision() => ((mind.DecisionQueue != null) && (mind.DecisionQueue.Count > 0)) ? mind.DecisionQueue[0] : null;
-        
+
         #endregion
         #region Waypoints
         void GetNearestWaypoint() {
@@ -726,13 +639,13 @@ namespace RaymapGame.Rayman2.Persos {
 
             //We are currently off-grid but would like to get back to it; relocate to the nearest Waypoint.
             if (conn == null) {
-                if (mind.wpState == Mind.WaypointState.SeekingGrid) {
+                if (mind.wpState == HenchmanMind.WaypointState.SeekingGrid) {
                     GetNextTargetWaypoint(); //also updates the Waypoint history
 
                     if (WPTarget == null) {
                         GetNearestWaypoint();   //find a target to run to
-                    } else if (mind.goal != Mind.Goal.FindThePath) {
-                        mind.goal = Mind.Goal.FindThePath;
+                    } else if (mind.goal != HenchmanMind.Goal.FindThePath) {
+                        mind.goal = HenchmanMind.Goal.FindThePath;
                         mind.newGoal = true;
 
                         //no need to calculate any further or ponder other things; let's just go
@@ -743,9 +656,9 @@ namespace RaymapGame.Rayman2.Persos {
             }
 
             //We have a connection; are we on the grid, or still looking to join it?
-            if (mind.wpState == Mind.WaypointState.SeekingGrid) {
-                if (mind.goal != Mind.Goal.Patrol) {
-                    mind.goal = Mind.Goal.Patrol;
+            if (mind.wpState == HenchmanMind.WaypointState.SeekingGrid) {
+                if (mind.goal != HenchmanMind.Goal.Patrol) {
+                    mind.goal = HenchmanMind.Goal.Patrol;
                     mind.newGoal = true;
 
                     //no need to calculate any further or ponder other things; let's just go
@@ -755,8 +668,8 @@ namespace RaymapGame.Rayman2.Persos {
             }
 
             //Just chillin' on the beaten path
-            if ((mind.goal == Mind.Goal.Patrol) && (mind.wpState != Mind.WaypointState.NONE) && 
-                (mind.wpState != Mind.WaypointState.OffGrid) && (mind.wpState != Mind.WaypointState.SeekingGrid)) {
+            if ((mind.goal == HenchmanMind.Goal.Patrol) && (mind.wpState != HenchmanMind.WaypointState.NONE) &&
+                (mind.wpState != HenchmanMind.WaypointState.OffGrid) && (mind.wpState != HenchmanMind.WaypointState.SeekingGrid)) {
                 SetRule("WeighDecisions");
                 return;
             }
@@ -774,12 +687,12 @@ namespace RaymapGame.Rayman2.Persos {
             //We have a new plan! Let's see...
             if (mind.newGoal) {
                 switch (mind.goal) {
-                    case Mind.Goal.FindThePath:
+                    case HenchmanMind.Goal.FindThePath:
                         //If we are here, that means we are currently off-grid and looking for a way back in
                         EnqueueDecision("RunAround"); //run to the target (and, once there, we'll have a new connection to examine)
                         break;
 
-                    case Mind.Goal.Patrol:
+                    case HenchmanMind.Goal.Patrol:
                         EnqueueDecision("UseWaypointPath"); //start walking on the given path
                         EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
                         EnqueueDecision("UseWaypointPath");
@@ -807,7 +720,7 @@ namespace RaymapGame.Rayman2.Persos {
             } else {
                 //Stay the course and steady as she goes...
                 switch (mind.goal) {
-                    case Mind.Goal.Patrol:
+                    case HenchmanMind.Goal.Patrol:
                         EnqueueDecision("UseWaypointPath"); //start walking on the given path
                         EnqueueDecision("UseWaypointPath"); //let's just queue a couple to see what happens
                         EnqueueDecision("UseWaypointPath");
@@ -842,17 +755,17 @@ namespace RaymapGame.Rayman2.Persos {
             //Keep moving
             switch (conn.type) {
                 case WPConnection.Type.Jump:
-                    mind.wpState = Mind.WaypointState.Jumping;
+                    mind.wpState = HenchmanMind.WaypointState.Jumping;
                     SetRule("JumpAround");
                     break;
 
                 case WPConnection.Type.Drill:
-                    mind.wpState = Mind.WaypointState.Drilling;
+                    mind.wpState = HenchmanMind.WaypointState.Drilling;
                     SetRule("PrepareDrill");
                     break;
 
                 default:
-                    mind.wpState = Mind.WaypointState.Walking;
+                    mind.wpState = HenchmanMind.WaypointState.Walking;
                     SetRule("RunAround");
                     break;
             }
@@ -954,14 +867,14 @@ namespace RaymapGame.Rayman2.Persos {
         protected void Rule_Sleeping() {
             anim.Set(48);
 
-            snoringTimer.Start(3f, () => { snoreSFXPlayer.Play(); }, false);
+            snoringTimer.Start(3f, () => snoreSFXPlayer.Play(), false);
 
             //While sleeping, his """vision""" radius is greatly reduced, but he does have 360 degrees """field of view"""
             //  Then we can still use the same logic for detecting where Rayman is, but have it seem like the Pirate only noticed him because he "heard" Ray come close
             //...
 
             if (rayman != null) {
-                if (Vector3.Distance(pos, rayman.pos) < 6) {  //6
+                if (Vector3.Distance(pos, rayman.pos) < 600) {  //6
                     snoringTimer.Abort();
                     SetRule("WokeUp");
                 }
@@ -970,12 +883,14 @@ namespace RaymapGame.Rayman2.Persos {
 
         Timer wakeUpTimer = new Timer();
         void Rule_WokeUp() {
-            anim.Set(49);
+            if (newRule) {
+                anim.Set(49);
 
-            //timer for 1s
-            wakeUpTimer.Start(1f, () => {
-                SetRule("Surprise");
-            }, false);
+                //timer for 1s
+                wakeUpTimer.Start(1f, () => {
+                    SetRule("Surprise");
+                });
+            }
         }
 
         Timer surpriseTimer = new Timer();
@@ -1008,10 +923,11 @@ namespace RaymapGame.Rayman2.Persos {
                 return;
             }
 
-            StuckRunning.Start(8f, () => {
-                Debug.LogError(perso.name + ": Got stuck trying to reach Waypoint " + WPTarget + " from Waypoint " + WPCurrent + " at position " + transform.position.ToString() + "!");
-                SetRule("Decide");
-            }, false);
+            if (newRule)
+                StuckRunning.Start(8f, () => {
+                    Debug.LogError(perso.name + ": Got stuck trying to reach Waypoint " + WPTarget + " from Waypoint " + WPCurrent + " at position " + transform.position.ToString() + "!");
+                    SetRule("Decide");
+                });
         }
         #endregion
 
@@ -1023,7 +939,7 @@ namespace RaymapGame.Rayman2.Persos {
             //move and look at where we're headed
             if (!lookAtRay)
                 LookAt2D(WPTarget.transform.position, 180);
-            
+
             #region Paraboloid Movement Calculus
             //Paraboloid with start C and end T and apex H
             Vector3 C = WPCurrent.transform.position;
@@ -1089,7 +1005,7 @@ namespace RaymapGame.Rayman2.Persos {
             LandTimeout.Start(2, () => {
                 SetRule("Decide");
             }, false);
-            
+
             switch (anim.currAnim) {
                 case 13:                //jump declination loop
                     if (velY <= 0f) {
@@ -1122,7 +1038,7 @@ namespace RaymapGame.Rayman2.Persos {
             if (newRule) {
                 LookAt2D(rayman.pos, 180);
                 anim.Set(39); //submerging --> 27
-                DrillSubmergeTimer.Start(1.82f, () => SetRule("DrillTravelling"), false);
+                DrillSubmergeTimer.Start(1.82f, () => SetRule("DrillTravelling"));
             }
         }
 
@@ -1130,7 +1046,7 @@ namespace RaymapGame.Rayman2.Persos {
         void Rule_DrillTravelling() {
             if (newRule) {
                 anim.Set(27);   //go invisible while "drilling in the ground" --> 23
-                DrillEmergeTimer.Start(conn.drillTime, () => SetRule("DrillEmerge"), false);  //drill down for the amount of s specified in the Waypoint connection
+                DrillEmergeTimer.Start(conn.drillTime, () => SetRule("DrillEmerge"));  //drill down for the amount of s specified in the Waypoint connection
             }
         }
 
@@ -1140,7 +1056,7 @@ namespace RaymapGame.Rayman2.Persos {
                 pos = conn.wp.transform.position;
                 LookAt2D(rayman.pos, 180);
                 anim.Set(23); //--> 0 (idle)
-                DrillWindDownTimer.Start(0.934f, () => SetRule("Decide"), false);
+                DrillWindDownTimer.Start(0.934f, () => SetRule("Decide"));
             }
         }
 
