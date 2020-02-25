@@ -9,7 +9,6 @@ namespace RaymapGame.Rayman2.Persos {
 
             //**** DELET THIS ****
 
-            Main.SetMainActor(this);
             Main.showMainActorDebug = true;
 
             //**** END OF DELET ****

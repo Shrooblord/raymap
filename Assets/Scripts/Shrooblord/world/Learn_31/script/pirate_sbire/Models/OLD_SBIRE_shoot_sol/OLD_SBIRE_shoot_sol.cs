@@ -7,5 +7,6 @@ namespace RaymapGame.Rayman2.Persos {
     /// Robo-Pirate Henchman
     /// </summary>
     public partial class OLD_SBIRE_shoot_sol : pirate_sbire {
+        protected override void OnStart() => base.OnStart();
     }
 }
