@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+#if UNITY_EDITOR
 namespace RaymapGame.PersoEditor {
     public struct MethodBody : IInspectable {
         public MethodBody(params IInspectable[] body) {
@@ -28,3 +29,4 @@ namespace RaymapGame.PersoEditor {
         }
     }
 }
+#endif

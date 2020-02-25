@@ -75,6 +75,7 @@ public class Controller : MonoBehaviour {
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
+#if UNITY_EDITOR
 		if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
@@ -91,9 +92,24 @@ public class Controller : MonoBehaviour {
 				lvlName = UnitySettings.ProcessName + ".exe";
 			}
 		}
+#else
+        var file = new System.IO.StreamReader("settings.ini");
+        while (!file.EndOfStream) {
+            var line = file.ReadLine().Split('=');
+            switch (line[0]) {
+                case nameof(lvlName):
+                    lvlName = line[1];
+                    break;
+                case nameof(gameDataBinFolder):
+                    gameDataBinFolder = line[1];
+                    break;
+            }
+        }
+        file.Close();
+#endif
 
-		// Override loaded settings with args
-		for (int i = 0; i < args.Length; i++) {
+        // Override loaded settings with args
+        for (int i = 0; i < args.Length; i++) {
 			switch (args[i]) {
 				case "--lvl":
 				case "-l":
@@ -163,12 +179,13 @@ public class Controller : MonoBehaviour {
 		loader.collideMaterial = collideMaterial;
 		loader.collideTransparentMaterial = collideTransparentMaterial;
 		loader.baseLightMaterial = baseLightMaterial;
-		
+
+#if UNITY_EDITOR
 		loader.allowDeadPointers = UnitySettings.AllowDeadPointers;
 		loader.forceDisplayBackfaces = UnitySettings.ForceDisplayBackfaces;
 		loader.blockyMode = UnitySettings.BlockyMode;
 		loader.exportTextures = UnitySettings.SaveTextures;
-
+#endif
 		await Init();
 	}
 

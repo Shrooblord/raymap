@@ -1,7 +1,7 @@
 //================================
 //  By: Shrooblord
 //================================
-
+/*
 namespace RaymapGame.Rayman2.Persos {
     /// <summary>
     /// Robo-Pirate Henchman
@@ -10,3 +10,4 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnStart() => base.OnStart();
     }
 }
+*/
