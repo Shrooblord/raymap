@@ -143,6 +143,9 @@ namespace RaymapGame.Rayman2.Persos {
                         p.namePerso = sp.namePerso;
 
                         p.p3dData = sp.p3dData;
+                        p.stdGame = sp.stdGame;
+
+                        //p.collset = sp.collset.Clone();
 
                         Main.controller.initPersoCoreAndScripts(p, true);
 
