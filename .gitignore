@@ -20,4 +20,4 @@ Logs/
 Library/
 
 Assets/
-#!Assets/**/RaymapGame/
+!Assets/**/RaymapGame/
