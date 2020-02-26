@@ -117,13 +117,39 @@ namespace RaymapGame.Rayman2.Persos {
                 SetRule(StdRules.Climbing);
         }
 
+        bool chargingMagicFist = false;
         protected override void OnInputMainActor() {
             if (GetKeyDown(KeyCode.R))
                 Despawn();
 
+
+            //Shooting
+            Timer ShootCharge = new Timer();
+            RayMagicFist proj = null;
             if (iShootDown) {
-                PersoController proj = GetPerso("Alw_Projectile_Rayman_Model").Clone<RayMagicFist>(Vector3.zero, true);
-                proj.pos = pos + right + new Vector3(0, 0.5f, 0);
+                proj = GetPerso("Alw_Projectile_Rayman_Model").Clone<RayMagicFist>(Vector3.zero, true);
+                proj.pos = pos + right + new Vector3(0, 1.2f, 0);
+                
+                anim.Set(190);
+
+                //Check if the button is still being held down. If so, charge instead of shoot.
+                ShootCharge.Start(0.08f, () => {
+                    if (iShootDown) {
+                        chargingMagicFist = true;
+                        anim.Set(191);
+                    }
+                }, false);
+            }
+
+            if (iShootDown && chargingMagicFist) {
+                //proj.scale += 0.02f;
+            }
+
+            if (iShootUp) {
+                ShootCharge.Abort();
+                chargingMagicFist = false;
+                anim.Set(0);
+                proj.Release();
             }
 
 

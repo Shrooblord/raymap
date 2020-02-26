@@ -15,13 +15,21 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnStart() {
             //pos = rayman.pos;
             rot = rayman.rot;
+            SetRule("Charging");
+        }
+
+        public void Release() {
             moveSpeed = 23;
             SetFriction(100, 100);
-
             StartDieTimer.Start(1f, () => SetRule("Weakening"), false);
             SetRule("Shoot");
         }
 
+        #region Rules
+        protected void Rule_Charging() {
+            scale += 0.02f;
+        }
+ 
         Timer DieTimer = new Timer();
         protected void Rule_Shoot() {
             if (newRule) DieTimer.Start(2f, () => SetRule("Die"), false);
@@ -36,6 +44,7 @@ namespace RaymapGame.Rayman2.Persos {
         protected void Rule_Die() {
             Destroy(gameObject);
         }
+        #endregion
     }
 }
 

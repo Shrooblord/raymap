@@ -30,6 +30,124 @@ namespace RaymapGame.Rayman2.Anim {
             HelicIdle = 23,
             HelicDisable = 24,
 
+            //Joy
+            YeahRayman = 182,
+            Yahoo = 183,    //186 dupe
+            Yeah = 185,
+
+            //Hurt
+            GreatShock = 138,
+            PainPiroutte = 144,
+            HurtRecoil = 145,
+            PancakeStart = 169,
+            Pancake = 168,
+            PancakeRebound = 146,
+            HurtFlyingStart = 150,
+            HurtFlying = 149,
+            HurtHeadache = 153,
+            HurtHanging = 166,
+
+            //**SHOOTING**//
+            ShootLoopChuckAndJump = 193, //-->194
+            ShootLoopChuckAndJumpFollowThrough = 194, //-->192
+            ShootLoopApex = 189, //--> 193
+            ShootLoopBackUpTop = 192, //-->189
+
+            ChargeStart = 190,
+            ChargeHold = 191,
+
+
+            //STRAFING
+            //216
+            //...
+            //259
+            //278 charge while strafing backwards loop
+            //279 charge strafe right
+            //280 charge strafe left
+            //281 charge strafe backwards
+            //STRAFING END
+
+
+            AirShootLoopRecharge = 212,
+            AirShootLoopApex = 215,
+            AirShootLoopRelease = 213,
+            AirShootLoopFollowThrough = 214,
+
+            HelicShootWindUp = 26,
+            HelicShootChargeWindUp = 204,
+            HelicShootCharge = 201,
+            HelicShootChargeHold = 202,
+            HelicShootRecharge = 203,
+            HelicShoot = 25,
+
+            HangingShootWindup = 195,
+            HangingShootCharge = 196,
+            HangingShoot = 197,
+            HangingShootFollowThrough = 198,
+            HangingShootRecharge = 199,
+            HangingShootAnticipation = 200,
+
+            SwimShootWindup = 117,
+            SwimShoot = 116,
+            SwimShootWindDown = 210,
+            SwimShootWindDown2 = 211,
+            SwimShootLoopStart = 206,
+            SwimShootLoopApex = 208,
+            SwimShootLoopRelease = 207,
+            SwimShootLoopFollowThrough = 205,
+            SwimShootLoopRecharge = 209,
+
+            StrafeEndShootWindUp = 128,
+            StrafeEndShoot = 129,
+
+            //264-277   DUPES??
+            //290-293   DUPES??
+
+            //Teensie Dance
+            Prisyadka = 184,
+
+            //Basketball Idle
+            BasketballStart = 305,
+            BasketballDribbleLeft = 297,
+            BasketballPassLeftToRight = 295,
+            BasketballDribbleRight = 305,
+
+            BasketballJuggleLeftRigthStart = 307, //starts from the left side
+            BasketballJuggleLeftRight = 299,
+
+            BasketballSpinStart = 296,
+            BasketballSpin = 298,
+            BasketballSpinStop = 304,
+
+            BasketballJuggleRightToLeft = 300,
+            BaskeballJuggleBackForthStart = 303,
+            BasketballJuggleBackForthTransition = 301,
+            BasketballJuggleBackForthLoop = 302,
+            
+            BasketballStop = 308,
+
+            //Philosophy
+            RethinkLifeDecisions = 309,
+            PsyduckCosplay = 310,
+            Eureka = 311,
+
+            //Strafing//
+            StrafeRight = 58,
+
+            StrafeLeft = 60,
+            StrafeEndSides = 59,
+
+            StrafeStartForward = 65, //66 is a dupe?
+            StrafeForward = 61,
+            StrafeEndForward = 63,
+
+            StrafeBackward = 62,
+            StrafeEndBackward = 64,
+
+            StrafeTurnRight = 70,
+            StrafeTurnLeft = 71,
+
+            //Helico
             HelicLandIdle = 139,
             HelicLandWalk = 140,
 
