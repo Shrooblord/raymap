@@ -123,7 +123,7 @@ namespace RaymapGame.Rayman2.Persos {
 
             if (iShootDown) {
                 PersoController proj = GetPerso("Alw_Projectile_Rayman_Model").Clone<RayMagicFist>(Vector3.zero, true);
-                proj.pos += new Vector3(100, 100f, 0); //right + new Vector3(0, 0.5f, 0);
+                proj.pos = pos + right + new Vector3(0, 0.5f, 0);
             }
 
 
