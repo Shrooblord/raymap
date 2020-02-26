@@ -11,7 +11,7 @@ namespace RaymapGame {
         //========================================
         public static YLT_RaymanModel rayman => Main.rayman;
 
-        public static PersoSubType GerPerso<PersoSubType>()
+        public static PersoSubType GetPerso<PersoSubType>()
             where PersoSubType : PersoController
             => FindObjectOfType<PersoSubType>();
 
