@@ -44,7 +44,7 @@ namespace RaymapGame {
                 case "EntryAction":
                     return (T)(object)dsg.valueInput;
                 case "PersoController":
-                    return (T)(object)PersoController.GetPersoName(dsg.valuePerso.namePerso);
+                    return (T)(object)PersoController.GetPerso(dsg.valuePerso.namePerso);
                 case "State":
                     return (T)(object)dsg.valueAction?.ShortName;
                 case "SuperObject":

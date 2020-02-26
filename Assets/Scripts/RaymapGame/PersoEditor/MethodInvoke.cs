@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 namespace RaymapGame.PersoEditor {
     [System.Serializable]
     public struct MethodInvoke : IInspectable {
@@ -45,3 +46,4 @@ namespace RaymapGame.PersoEditor {
         }
     }
 }
+#endif

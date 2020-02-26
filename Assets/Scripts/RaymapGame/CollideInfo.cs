@@ -26,6 +26,11 @@ namespace RaymapGame {
                 collide = c.collide;
                 this.hit = hit;
             }
+            else if (Main.anyCollision) {
+                isValid = true;
+                collide = null;
+                this.hit = hit;
+            }
             else {
                 isValid = false;
                 collide = null;
@@ -39,28 +44,28 @@ namespace RaymapGame {
         }
 
 
-        bool Checks => isValid && collide?.gameMaterial?.collideMaterial != null;
+        bool Checks => Main.anyCollision || (isValid && collide?.gameMaterial?.collideMaterial != null);
         public bool None => !isValid;
         public bool Any => isValid;
         public bool Generic => isValid && collide?.gameMaterial?.collideMaterial == null;
         public bool AnyGround => Generic || GrabbableLedge || Trampoline;
         public bool AnyWall => Generic || GrabbableLedge || Slide || Trampoline || Wall || ClimbableWall;
 
-        public bool Slide => Checks && mat.Slide;
-        public bool Trampoline => Checks && mat.Trampoline;
-        public bool GrabbableLedge => Checks && mat.GrabbableLedge;
-        public bool Wall => Checks && mat.Wall;
-        public bool FlagUnknown => Checks && mat.FlagUnknown;
-        public bool HangableCeiling => Checks && mat.HangableCeiling;
-        public bool ClimbableWall => Checks && mat.ClimbableWall;
-        public bool Electric => Checks && mat.Electric;
-        public bool LavaDeathWarp => Checks && mat.LavaDeathWarp;
-        public bool FallTrigger => Checks && mat.FallTrigger;
-        public bool HurtTrigger => Checks && mat.HurtTrigger;
-        public bool DeathWarp => Checks && mat.DeathWarp;
-        public bool FlagUnk2 => Checks && mat.FlagUnk2;
-        public bool FlagUnk3 => Checks && mat.FlagUnk3;
-        public bool Water => Checks && mat.Water;
-        public bool NoCollision => Checks && mat.NoCollision;
+        public bool Slide => Checks && (!Main.anyCollision && mat.Slide);
+        public bool Trampoline => Checks && (!Main.anyCollision && mat.Trampoline);
+        public bool GrabbableLedge => Checks && (!Main.anyCollision && mat.GrabbableLedge);
+        public bool Wall => Checks && (!Main.anyCollision && mat.Wall);
+        public bool FlagUnknown => Checks && (!Main.anyCollision && mat.FlagUnknown);
+        public bool HangableCeiling => Checks && (!Main.anyCollision && mat.HangableCeiling);
+        public bool ClimbableWall => Checks && (!Main.anyCollision && mat.ClimbableWall);
+        public bool Electric => Checks && (!Main.anyCollision && mat.Electric);
+        public bool LavaDeathWarp => Checks && (!Main.anyCollision && mat.LavaDeathWarp);
+        public bool FallTrigger => Checks && (!Main.anyCollision && mat.FallTrigger);
+        public bool HurtTrigger => Checks && (!Main.anyCollision && mat.HurtTrigger);
+        public bool DeathWarp => Checks && (!Main.anyCollision && mat.DeathWarp);
+        public bool FlagUnk2 => Checks && (!Main.anyCollision && mat.FlagUnk2);
+        public bool FlagUnk3 => Checks && (!Main.anyCollision && mat.FlagUnk3);
+        public bool Water => Checks && (!Main.anyCollision && mat.Water);
+        public bool NoCollision => Checks && (!Main.anyCollision && mat.NoCollision);
     }
 }

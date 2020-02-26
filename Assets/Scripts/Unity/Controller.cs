@@ -75,6 +75,7 @@ public class Controller : MonoBehaviour {
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
+#if UNITY_EDITOR
 		if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
 			FileSystem.mode = FileSystem.Mode.Web;
 		}
@@ -91,9 +92,24 @@ public class Controller : MonoBehaviour {
 				lvlName = UnitySettings.ProcessName + ".exe";
 			}
 		}
+#else
+        var file = new System.IO.StreamReader("settings.ini");
+        while (!file.EndOfStream) {
+            var line = file.ReadLine().Split('=');
+            switch (line[0]) {
+                case nameof(lvlName):
+                    lvlName = line[1];
+                    break;
+                case nameof(gameDataBinFolder):
+                    gameDataBinFolder = line[1];
+                    break;
+            }
+        }
+        file.Close();
+#endif
 
-		// Override loaded settings with args
-		for (int i = 0; i < args.Length; i++) {
+        // Override loaded settings with args
+        for (int i = 0; i < args.Length; i++) {
 			switch (args[i]) {
 				case "--lvl":
 				case "-l":
@@ -163,12 +179,13 @@ public class Controller : MonoBehaviour {
 		loader.collideMaterial = collideMaterial;
 		loader.collideTransparentMaterial = collideTransparentMaterial;
 		loader.baseLightMaterial = baseLightMaterial;
-		
+
+#if UNITY_EDITOR
 		loader.allowDeadPointers = UnitySettings.AllowDeadPointers;
 		loader.forceDisplayBackfaces = UnitySettings.ForceDisplayBackfaces;
 		loader.blockyMode = UnitySettings.BlockyMode;
 		loader.exportTextures = UnitySettings.SaveTextures;
-
+#endif
 		await Init();
 	}
 
@@ -306,140 +323,152 @@ public class Controller : MonoBehaviour {
 		}
 	}
 
+	public void initPersoCoreAndScripts(Perso p, bool forceAlways = false, int i = 0) {
+        PersoBehaviour unityBehaviour = p.Gao.AddComponent<PersoBehaviour>();
+        unityBehaviour.controller = this;
+
+		if (forceAlways)
+			unityBehaviour.IsAlways = true;
+
+        if (loader.globals != null && loader.globals.spawnablePersos != null) {
+            if ((loader.globals.spawnablePersos.IndexOf(p) > -1)) {
+                unityBehaviour.IsAlways = true;
+                unityBehaviour.transform.position = new Vector3(i * 10, -1000, 0);
+            }
+        }
+        if (!unityBehaviour.IsAlways) {
+            if (p.sectInfo != null && p.sectInfo.off_sector != null) {
+                unityBehaviour.sector = sectorManager.sectors.FirstOrDefault(s => s.sector != null && s.sector.SuperObject.offset == p.sectInfo.off_sector);
+            } else {
+                SectorComponent sc = sectorManager.GetActiveSectorWrapper(p.Gao.transform.position);
+                unityBehaviour.sector = sc;
+            }
+        } else unityBehaviour.sector = null;
+        unityBehaviour.perso = p;
+        unityBehaviour.Init();
+
+        // Scripts
+        if (p.Gao) {
+            if (p.brain != null && p.brain.mind != null && p.brain.mind.AI_model != null) {
+                if (p.brain.mind.AI_model.behaviors_normal != null) {
+                    GameObject intelParent = new GameObject("Rule behaviours");
+                    intelParent.transform.parent = p.Gao.transform;
+                    Behavior[] normalBehaviors = p.brain.mind.AI_model.behaviors_normal;
+                    int iter = 0;
+                    foreach (Behavior behavior in normalBehaviors) {
+                        string shortName = behavior.GetShortName(p.brain.mind.AI_model, Behavior.BehaviorType.Intelligence, iter);
+                        GameObject behaviorGao = new GameObject(shortName);
+                        behaviorGao.transform.parent = intelParent.transform;
+                        foreach (Script script in behavior.scripts) {
+                            GameObject scriptGao = new GameObject("Script");
+                            scriptGao.transform.parent = behaviorGao.transform;
+                            ScriptComponent scriptComponent = scriptGao.AddComponent<ScriptComponent>();
+                            scriptComponent.SetScript(script, p);
+                        }
+                        if (behavior.firstScript != null) {
+                            ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
+                            scriptComponent.SetScript(behavior.firstScript, p);
+                        }
+                        if (iter == 0) {
+                            behaviorGao.name += " (Init)";
+                        }
+                        if ((behavior.scripts == null || behavior.scripts.Length == 0) && behavior.firstScript == null) {
+                            behaviorGao.name += " (Empty)";
+                        }
+                        iter++;
+                    }
+                }
+                if (p.brain.mind.AI_model.behaviors_reflex != null) {
+                    GameObject reflexParent = new GameObject("Reflex behaviours");
+                    reflexParent.transform.parent = p.Gao.transform;
+                    Behavior[] reflexBehaviors = p.brain.mind.AI_model.behaviors_reflex;
+                    int iter = 0;
+                    foreach (Behavior behavior in reflexBehaviors) {
+                        string shortName = behavior.GetShortName(p.brain.mind.AI_model, Behavior.BehaviorType.Reflex, iter);
+                        GameObject behaviorGao = new GameObject(shortName);
+                        behaviorGao.transform.parent = reflexParent.transform;
+                        foreach (Script script in behavior.scripts) {
+                            GameObject scriptGao = new GameObject("Script");
+                            scriptGao.transform.parent = behaviorGao.transform;
+                            ScriptComponent scriptComponent = scriptGao.AddComponent<ScriptComponent>();
+                            scriptComponent.SetScript(script, p);
+                        }
+                        if (behavior.firstScript != null) {
+                            ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
+                            scriptComponent.SetScript(behavior.firstScript, p);
+                        }
+                        if ((behavior.scripts == null || behavior.scripts.Length == 0) && behavior.firstScript == null) {
+                            behaviorGao.name += " (Empty)";
+                        }
+                        iter++;
+                    }
+                }
+                if (p.brain.mind.AI_model.macros != null) {
+                    GameObject macroParent = new GameObject("Macros");
+                    macroParent.transform.parent = p.Gao.transform;
+                    Macro[] macros = p.brain.mind.AI_model.macros;
+                    int iter = 0;
+
+                    foreach (Macro macro in macros) {
+                        GameObject behaviorGao = new GameObject(macro.GetShortName(p.brain.mind.AI_model, iter));
+                        behaviorGao.transform.parent = macroParent.transform;
+                        ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
+                        scriptComponent.SetScript(macro.script, p);
+                        iter++;
+                    }
+                }
+            }
+        }
+    }
+
+	public void initPersoDSGVars(Perso p) {
+        Moddable mod = null;
+        if (p.SuperObject != null && p.SuperObject.Gao != null) {
+            mod = p.SuperObject.Gao.GetComponent<Moddable>();
+            if (mod != null) {
+                mod.persoBehaviour = p.Gao.GetComponent<PersoBehaviour>();
+            }
+        }
+        if (p.Gao && p.brain != null && p.brain.mind != null && p.brain.mind.AI_model != null) {
+            // DsgVars
+            if (p.brain.mind.dsgMem != null || p.brain.mind.AI_model.dsgVar != null) {
+                DsgVarComponent dsgVarComponent = p.Gao.AddComponent<DsgVarComponent>();
+                dsgVarComponent.SetPerso(p);
+                if (mod != null) mod.dsgVarComponent = dsgVarComponent;
+            }
+            // Dynam
+            if (p.dynam != null && p.dynam.dynamics != null) {
+                DynamicsMechanicsComponent dynamicsBehaviour = p.Gao.AddComponent<DynamicsMechanicsComponent>();
+                dynamicsBehaviour.SetDynamics(p.dynam.dynamics);
+            }
+            // Mind
+            if (p.brain != null && p.brain.mind != null) {
+                MindComponent mindComponent = p.Gao.AddComponent<MindComponent>();
+                mindComponent.Init(p, p.brain.mind);
+                if (mod != null) mod.mindComponent = mindComponent;
+            }
+            // Custom Bits
+            if (p.stdGame != null) {
+                CustomBitsComponent c = p.Gao.AddComponent<CustomBitsComponent>();
+                c.stdGame = p.stdGame;
+                if (Settings.s.engineVersion == Settings.EngineVersion.R3) c.hasAiCustomBits = true;
+                c.Init();
+            }
+        }
+    }
+
 	async Task InitPersos() {
 		if (loader != null) {
 			for (int i = 0; i < loader.persos.Count; i++) {
-				detailedState = "Initializing persos: " + i + "/" + loader.persos.Count;
-				await WaitIfNecessary();
+                detailedState = "Initializing persos: " + i + "/" + loader.persos.Count;
+                await WaitIfNecessary();
 				Perso p = loader.persos[i];
-				PersoBehaviour unityBehaviour = p.Gao.AddComponent<PersoBehaviour>();
-				unityBehaviour.controller = this;
-				if (loader.globals != null && loader.globals.spawnablePersos != null) {
-					if (loader.globals.spawnablePersos.IndexOf(p) > -1) {
-						unityBehaviour.IsAlways = true;
-						unityBehaviour.transform.position = new Vector3(i * 10, -1000, 0);
-					}
-				}
-				if (!unityBehaviour.IsAlways) {
-					if (p.sectInfo != null && p.sectInfo.off_sector != null) {
-						unityBehaviour.sector = sectorManager.sectors.FirstOrDefault(s => s.sector != null && s.sector.SuperObject.offset == p.sectInfo.off_sector);
-					} else {
-						SectorComponent sc = sectorManager.GetActiveSectorWrapper(p.Gao.transform.position);
-						unityBehaviour.sector = sc;
-					}
-				} else unityBehaviour.sector = null;
-				unityBehaviour.perso = p;
-				unityBehaviour.Init();
-
-				// Scripts
-				if (p.Gao) {
-					if (p.brain != null && p.brain.mind != null && p.brain.mind.AI_model != null) {
-						if (p.brain.mind.AI_model.behaviors_normal != null) {
-							GameObject intelParent = new GameObject("Rule behaviours");
-							intelParent.transform.parent = p.Gao.transform;
-							Behavior[] normalBehaviors = p.brain.mind.AI_model.behaviors_normal;
-							int iter = 0;
-							foreach (Behavior behavior in normalBehaviors) {
-								string shortName = behavior.GetShortName(p.brain.mind.AI_model, Behavior.BehaviorType.Intelligence, iter);
-								GameObject behaviorGao = new GameObject(shortName);
-								behaviorGao.transform.parent = intelParent.transform;
-								foreach (Script script in behavior.scripts) {
-									GameObject scriptGao = new GameObject("Script");
-									scriptGao.transform.parent = behaviorGao.transform;
-									ScriptComponent scriptComponent = scriptGao.AddComponent<ScriptComponent>();
-									scriptComponent.SetScript(script, p);
-								}
-								if (behavior.firstScript != null) {
-									ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
-									scriptComponent.SetScript(behavior.firstScript, p);
-								}
-								if (iter == 0) {
-									behaviorGao.name += " (Init)";
-								}
-								if ((behavior.scripts == null || behavior.scripts.Length == 0) && behavior.firstScript == null) {
-									behaviorGao.name += " (Empty)";
-								}
-								iter++;
-							}
-						}
-						if (p.brain.mind.AI_model.behaviors_reflex != null) {
-							GameObject reflexParent = new GameObject("Reflex behaviours");
-							reflexParent.transform.parent = p.Gao.transform;
-							Behavior[] reflexBehaviors = p.brain.mind.AI_model.behaviors_reflex;
-							int iter = 0;
-							foreach (Behavior behavior in reflexBehaviors) {
-								string shortName = behavior.GetShortName(p.brain.mind.AI_model, Behavior.BehaviorType.Reflex, iter);
-								GameObject behaviorGao = new GameObject(shortName);
-								behaviorGao.transform.parent = reflexParent.transform;
-								foreach (Script script in behavior.scripts) {
-									GameObject scriptGao = new GameObject("Script");
-									scriptGao.transform.parent = behaviorGao.transform;
-									ScriptComponent scriptComponent = scriptGao.AddComponent<ScriptComponent>();
-									scriptComponent.SetScript(script, p);
-								}
-								if (behavior.firstScript != null) {
-									ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
-									scriptComponent.SetScript(behavior.firstScript, p);
-								}
-								if ((behavior.scripts == null || behavior.scripts.Length == 0) && behavior.firstScript == null) {
-									behaviorGao.name += " (Empty)";
-								}
-								iter++;
-							}
-						}
-						if (p.brain.mind.AI_model.macros != null) {
-							GameObject macroParent = new GameObject("Macros");
-							macroParent.transform.parent = p.Gao.transform;
-							Macro[] macros = p.brain.mind.AI_model.macros;
-							int iter = 0;
-
-							foreach (Macro macro in macros) {
-								GameObject behaviorGao = new GameObject(macro.GetShortName(p.brain.mind.AI_model, iter));
-								behaviorGao.transform.parent = macroParent.transform;
-								ScriptComponent scriptComponent = behaviorGao.AddComponent<ScriptComponent>();
-								scriptComponent.SetScript(macro.script, p);
-								iter++;
-							}
-						}
-					}
-				}
+				initPersoCoreAndScripts(p, false, i);
 			}
 			// Initialize DSGVars after all persos have their perso behaviours
 			for (int i = 0; i < loader.persos.Count; i++) {
 				Perso p = loader.persos[i];
-				Moddable mod = null;
-				if (p.SuperObject != null && p.SuperObject.Gao != null) {
-					mod = p.SuperObject.Gao.GetComponent<Moddable>();
-					if (mod != null) {
-						mod.persoBehaviour = p.Gao.GetComponent<PersoBehaviour>();
-					}
-				}
-				if (p.Gao && p.brain != null && p.brain.mind != null && p.brain.mind.AI_model != null) {
-					// DsgVars
-					if (p.brain.mind.dsgMem != null || p.brain.mind.AI_model.dsgVar != null) {
-						DsgVarComponent dsgVarComponent = p.Gao.AddComponent<DsgVarComponent>();
-						dsgVarComponent.SetPerso(p);
-						if (mod != null) mod.dsgVarComponent = dsgVarComponent;
-					}
-					// Dynam
-					if (p.dynam != null && p.dynam.dynamics != null) {
-						DynamicsMechanicsComponent dynamicsBehaviour = p.Gao.AddComponent<DynamicsMechanicsComponent>();
-						dynamicsBehaviour.SetDynamics(p.dynam.dynamics);
-					}
-					// Mind
-					if (p.brain != null && p.brain.mind != null) {
-						MindComponent mindComponent = p.Gao.AddComponent<MindComponent>();
-						mindComponent.Init(p, p.brain.mind);
-						if (mod != null) mod.mindComponent = mindComponent;
-					}
-					// Custom Bits
-					if (p.stdGame != null) {
-						CustomBitsComponent c = p.Gao.AddComponent<CustomBitsComponent>();
-						c.stdGame = p.stdGame;
-						if (Settings.s.engineVersion == Settings.EngineVersion.R3) c.hasAiCustomBits = true;
-						c.Init();
-					}
-				}
+				initPersoDSGVars(p);
 			}
 		}
 		if (loader is OpenSpace.Loader.R2ROMLoader) {

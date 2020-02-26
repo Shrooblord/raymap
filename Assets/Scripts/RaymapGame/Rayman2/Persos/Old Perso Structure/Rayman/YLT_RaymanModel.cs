@@ -2,9 +2,12 @@
 //  By: Adsolution
 //================================
 
+using OpenSpace.Object;
+using OpenSpace;
 using UnityEngine;
 using static RaymapGame.InputEx;
 using static UnityEngine.Input;
+using Shrooblord.lib;
 
 namespace RaymapGame.Rayman2.Persos {
     public partial class YLT_RaymanModel : PersoController {
@@ -75,7 +78,7 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         protected override void OnStart() {
-            cam = GetPersoModel<StdCam>("StdCam");
+            cam = (StdCam)GetPerso("StdCam");
 
             switch (Main.lvlName)
             {
@@ -87,6 +90,8 @@ namespace RaymapGame.Rayman2.Persos {
                 default: hasSuperHelic = false; break;
             }
 
+            if (Main.main.emptyLevel)
+                pos = Vector3.zero;
             SetShadow(true);
             SetRule(StdRules.Air);
         }
@@ -111,17 +116,17 @@ namespace RaymapGame.Rayman2.Persos {
                 SetRule(StdRules.Climbing);
         }
 
-        PersoController shot;
         protected override void OnInputMainActor() {
             if (GetKeyDown(KeyCode.R))
                 Despawn();
 
             if (iShootDown) {
-                shot = GetPersoName("Alw_Projectile_Rayman");
-                shot.SetRule("Shoot");
+                PersoController proj = GetPerso("Alw_Projectile_Rayman_Model").Clone<RayMagicFist>(Vector3.zero, true);
+                proj.pos = right + new Vector3(0, 0.5f, 0);
             }
 
-            switch (rule)
+
+                switch (rule)
             {
                 case StdRules.Ground:
                     if (iJumpDown)

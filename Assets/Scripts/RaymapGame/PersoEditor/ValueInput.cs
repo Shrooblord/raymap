@@ -8,6 +8,8 @@ using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 
+
+#if UNITY_EDITOR
 namespace RaymapGame.PersoEditor {
     [System.Serializable]
     public struct ValueInput : IInspectable {
@@ -60,3 +62,4 @@ namespace RaymapGame.PersoEditor {
         }
     }
 }
+#endif

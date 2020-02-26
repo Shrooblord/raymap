@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
 
+#if UNITY_EDITOR
 /* Allows the user to create custom labels that hover over in-Editor objects and are displayed while the camera is a certain distance away.
  * Eg.
  * 
@@ -29,3 +29,4 @@ public class ObjDrawText : MonoBehaviour {
         }
     }
 }
+#endif

@@ -88,13 +88,15 @@ namespace Shrooblord.lib {
         }
 
         private void colourSelection() {
-            colourGizmo = colourWaypointSelected;
-            outboundConnectionLineColour = outboundConnectionColourSelected;
-            inboundConnectionLineColour = inboundConnectionColourSelected;
+            if (!graph.turnOffSelectionHighlight) {
+                colourGizmo = colourWaypointSelected;
+                outboundConnectionLineColour = outboundConnectionColourSelected;
+                inboundConnectionLineColour = inboundConnectionColourSelected;
+            }
         }
 
         private void OnDrawGizmosSelected() {
-            colourSelection();
+                colourSelection();
         }
 
         private void OnDrawGizmos() {

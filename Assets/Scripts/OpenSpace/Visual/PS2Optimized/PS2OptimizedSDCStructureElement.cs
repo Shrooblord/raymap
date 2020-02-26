@@ -11,18 +11,18 @@ namespace OpenSpace.Visual.PS2Optimized {
 		public PS2OptimizedSDCStructure geo;
 		public int index;
 
-		public uint unk0;
+		public uint num_vertices_actual;
 		public uint num_vertices;
 		public uint num_uvs;
 		public uint unk3;
 		public Vertex[] vertices;
 		public UVUnoptimized[] uvUnoptimized;
-		public UV0[] uv0;
-		public UV1[] uv1;
-		public VertexColor[] blendWeights;
+		public TexCoord[] uv0;
+		public TexCoord[] uv1;
+		public TexCoordUnknown[] unknown;
 		public VectorForSinusEffect[] sinusState;
 
-		public UV0[][] uv_tex;
+		public VertexColor[][] colors;
 
 		public PS2OptimizedSDCStructureElement(PS2OptimizedSDCStructure geo, int index) {
 			this.geo = geo;
@@ -33,13 +33,14 @@ namespace OpenSpace.Visual.PS2Optimized {
 			offset = Pointer.Current(reader);
 			if (geo.Type == 4 || geo.Type == 5 || geo.Type == 6) {
 				// Optimized
-				unk0 = reader.ReadUInt32();
+				num_vertices_actual = reader.ReadUInt32();
 				num_vertices = reader.ReadUInt32();
 				num_uvs = reader.ReadUInt32();
 				unk3 = reader.ReadUInt32();
 			} else {
 				num_vertices = geo.num_triangles[index] * 3;
 				num_uvs = (num_vertices + 3) >> 2;
+				num_vertices_actual = num_vertices;
 			}
 			VisualMaterial vm = geo.visualMaterials[index];
 			bool hasUv0 = true, hasUv1 = false, hasUv4 = false;
@@ -66,29 +67,29 @@ namespace OpenSpace.Visual.PS2Optimized {
 				}
 			} else {
 				if (hasUv0) {
-					uv0 = new UV0[num_uvs];
+					uv0 = new TexCoord[num_uvs];
 					for (int i = 0; i < uv0.Length; i++) {
-						uv0[i] = new UV0(reader);
+						uv0[i] = new TexCoord(reader);
 					}
 				}
 				if (hasUv1) {
-					uv1 = new UV1[num_uvs];
+					uv1 = new TexCoord[num_uvs];
 					for (int i = 0; i < uv1.Length; i++) {
-						uv1[i] = new UV1(reader);
+						uv1[i] = new TexCoord(reader);
 					}
 				}
 				if (hasUv4) {
-					blendWeights = new VertexColor[num_vertices];
-					for (int i = 0; i < blendWeights.Length; i++) {
-						blendWeights[i] = new VertexColor(reader);
+					unknown = new TexCoordUnknown[num_vertices];
+					for (int i = 0; i < unknown.Length; i++) {
+						unknown[i] = new TexCoordUnknown(reader);
 					}
 				}
 			}
-			uv_tex = new UV0[num_textures][]; // Seem to be in a color-like format? 7F 7F 7F 80, repeated 4 times
-			for (int i = 0; i < uv_tex.Length; i++) {
-				uv_tex[i] = new UV0[num_uvs];
-				for (int j = 0; j < uv_tex[i].Length; j++) {
-					uv_tex[i][j] = new UV0(reader);
+			colors = new VertexColor[num_textures][]; // Seem to be in a color-like format? 7F 7F 7F 80, repeated 4 times
+			for (int i = 0; i < colors.Length; i++) {
+				colors[i] = new VertexColor[num_uvs];
+				for (int j = 0; j < colors[i].Length; j++) {
+					colors[i][j] = new VertexColor(reader);
 				}
 			}
 			if(geo.isSinus != 0) {
@@ -109,11 +110,62 @@ namespace OpenSpace.Visual.PS2Optimized {
 			}*/
 		}
 
+		public Vector3 GetUV(int index, int texIndex) {
+			Vector3 baseUV = Vector3.zero;
+			if (geo.Type == 1) {
+				baseUV = new Vector3(uvUnoptimized[index].u, uvUnoptimized[index].v, 1f);
+			} else {
+				byte uvFunction = 0;
+				if (geo.visualMaterials[this.index].textures.Count > texIndex) {
+					uvFunction = geo.visualMaterials[this.index].textures[texIndex].uvFunction;
+				}
+				switch (uvFunction) {
+					case 0: baseUV = GetUV0(index); break;
+					case 1: baseUV = GetUV1(index); break;
+				}
+			}
+			if (colors != null && texIndex < colors.Length) {
+				float weight = (float)(GetColor(texIndex, index).a) / 0x80;
+				baseUV = new Vector3(baseUV.x, baseUV.y, weight);
+			}
+			return baseUV;
+		}
+		/*public Vector3 GetNormal(int index) {
+			if (colors != null && colors.Length > 0) {
+				return GetWeight(0, index).Normal;
+			}
+			return Vector3.zero;
+		}*/
+
+		public Vector4 GetColor(int index) {
+			if (colors != null && colors.Length > 0) {
+				return GetColor(0, index).Color;
+			}
+			return Vector4.one;
+		}
 		public Vector3 GetUV0(int index) {
 			if (uv0 != null) {
 				int uv0Index = index / 4;
 				int indexInUV = index % 4;
-				UV0.UV uv = uv0[uv0Index].uv[indexInUV];
+				TexCoord.UV uv = uv0[uv0Index].uv[indexInUV];
+				return new Vector3(uv.u / 4096f, uv.v / 4096f, 1f);
+			}
+			return Vector3.zero;
+		}
+		public VertexColor.Col GetColor(int texIndex, int index) {
+			if (colors != null) {
+				int uv0Index = index / 4;
+				int indexInUV = index % 4;
+				VertexColor.Col w = colors[texIndex][uv0Index].uv[indexInUV];
+				return w;
+			}
+			return default;
+		}
+		public Vector3 GetUV1(int index) {
+			if (uv1 != null) {
+				int uv0Index = index / 4;
+				int indexInUV = index % 4;
+				TexCoord.UV uv = uv1[uv0Index].uv[indexInUV];
 				return new Vector3(uv.u / 4096f, uv.v / 4096f, 1f);
 			}
 			return Vector3.zero;
@@ -151,15 +203,13 @@ namespace OpenSpace.Visual.PS2Optimized {
 
 			// override object.GetHashCode
 			public override int GetHashCode() {
-				// TODO: write your implementation of GetHashCode() here
-				throw new NotImplementedException();
-				return base.GetHashCode();
+				return x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode() ^ w.GetHashCode();
 			}
 		}
-		public class UV0 {
+		public class TexCoord {
 			public UV[] uv;
 
-			public UV0(Reader reader) {
+			public TexCoord(Reader reader) {
 				uv = new UV[4];
 				for (int i = 0; i < 4; i++) {
 					uv[i] = new UV(reader);
@@ -176,17 +226,48 @@ namespace OpenSpace.Visual.PS2Optimized {
 				}
 			}
 		}
-		public class UV1 {
-			public uint unk0;
-			public uint unk1;
-			public uint unk2;
-			public uint unk3;
+		public class VertexColor {
+			public Col[] uv;
+			public VertexColor(Reader reader) {
+				uv = new Col[4];
+				for (int i = 0; i < 4; i++) {
+					uv[i] = new Col(reader);
+				}
+			}
+			public struct Col {
+				public byte r;
+				public byte g;
+				public byte b;
+				// Blend weight
+				public byte a;
+				public Col(Reader reader) {
+					r = reader.ReadByte();
+					g = reader.ReadByte();
+					b = reader.ReadByte();
+					a = reader.ReadByte();
+				}
 
-			public UV1(Reader reader) {
-				unk0 = reader.ReadUInt32();
-				unk1 = reader.ReadUInt32();
-				unk2 = reader.ReadUInt32();
-				unk3 = reader.ReadUInt32();
+				/*public Vector3 Normal {
+					get {
+						float x = ((this.x & 0x7F) / (float)0x7F) * (((this.x & 0x80) != 0) ? -1 : 1);
+						float y = ((this.y & 0x7F) / (float)0x7F) * (((this.y & 0x80) != 0) ? -1 : 1);
+						float z = ((this.z & 0x7F) / (float)0x7F) * (((this.z & 0x80) != 0) ? -1 : 1);
+						return new Vector3(x, z, y);
+					}
+				}*/
+				/*public Vector3 Normal {
+					get {
+						float x = (this.b - 128) / 127f;
+						float y = (this.g - 128) / 127f;
+						float z = (this.r - 128) / 127f;
+						return new Vector3(x, z, y);
+					}
+				}*/
+				public Vector4 Color {
+					get {
+						return new Vector4(r / 127f, g / 127f, b / 127f, 1f);
+					}
+				}
 			}
 		}
 		public class UVUnoptimized {
@@ -201,13 +282,13 @@ namespace OpenSpace.Visual.PS2Optimized {
 				w = reader.ReadSingle();
 			}
 		}
-		public class VertexColor {
+		public class TexCoordUnknown {
 			public float x;
 			public float y;
 			public float z;
 			public float w;
 
-			public VertexColor(Reader reader) {
+			public TexCoordUnknown(Reader reader) {
 				x = reader.ReadSingle();
 				y = reader.ReadSingle();
 				z = reader.ReadSingle();

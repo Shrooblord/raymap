@@ -15,6 +15,8 @@ namespace Shrooblord.lib {
     [ExecuteInEditMode]
     public class SHR_WaypointGraph : MonoBehaviour {
         //colour of the in/outgoing connections nubs on waypoint nodes
+        [Tooltip("Disable the highlighting of the Waypoints within this graph (useful for if you want to pick the graph colours).")]
+        public bool turnOffSelectionHighlight;
         public Color outboundConnectionColour = new Color(0x90f/255, 0, 255);
         public Color inboundConnectionColour = new Color(255, 0x9Bf/255, 0x04f/255);
 
@@ -25,7 +27,7 @@ namespace Shrooblord.lib {
             if (!Main.loaded) return;
 
             foreach (var n in persoNames) {
-                var p = PersoController.GetPersoName(n);
+                var p = PersoController.GetPerso(n);
                 if (p != null)
                     p.graph = this;
             }

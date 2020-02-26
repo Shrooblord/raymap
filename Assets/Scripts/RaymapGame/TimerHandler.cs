@@ -64,7 +64,7 @@ namespace RaymapGame {
         /// <param name="seconds">Duration in seconds.</param>
         /// <param name="onFinishAction">Invoked after the duration.</param>
         public void Start(float seconds, Action onFinishAction, bool reset = true) {
-            Start(seconds);
+            Start(seconds, reset);
             this.onFinishAction = onFinishAction;
         }
         public void Abort() {

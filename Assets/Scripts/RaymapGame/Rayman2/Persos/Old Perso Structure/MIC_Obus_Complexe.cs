@@ -53,7 +53,7 @@ namespace RaymapGame.Rayman2.Persos {
             if (t_runStart.finished) {
                 anim.SetSpeed(moveSpeed * 8);
                 moveSpeed = 8;
-                navRotYSpeed = 3;
+                navRotSpeed = 3;
                 NavTowards(rayman.pos);
 
                 col.StickToGround();

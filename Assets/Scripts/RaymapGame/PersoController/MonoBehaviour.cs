@@ -37,20 +37,32 @@ namespace RaymapGame {
 
         protected void Update() {
             if (isMainActor || (Main.main.alwaysControlRayman && this is YLT_RaymanModel)) {
-                perso.sector = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
                 OnInputMainActor();
             }
+
+            perso.sector = Main.controller.sectorManager.GetActiveSectorWrapper(pos);
+
             if (!ActiveChecks())
                 OnInput();
             if (!interpolate) LogicLoop();
         }
 
-        protected void LateUpdate() {
+        protected virtual void LateUpdate() {
             if (visChanged) {
                 foreach (var mr in GetComponentsInChildren<MeshRenderer>())
                     mr.enabled = visible;
                 visChanged = false;
             }
+            if (HD)
+                foreach (var mr in GetComponentsInChildren<MeshRenderer>()) {
+                    if (mr.material.name == "mat_gouraud (Instance)") {
+                        var tex = mr.material.GetTexture("_Tex0");
+                        mr.material = new Material(Shader.Find("Standard"));
+                        mr.material.mainTexture = tex;
+                        mr.receiveShadows = true;
+                        mr.material.SetFloat("_Glossiness", 0);
+                    }
+                }
         }
 
         protected void FixedUpdate() {

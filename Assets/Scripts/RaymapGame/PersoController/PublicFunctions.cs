@@ -4,6 +4,7 @@
 using UnityEngine;
 using OpenSpace.Collide;
 using static RaymapGame.InputEx;
+using System;
 
 namespace RaymapGame {
     public partial class PersoController {
@@ -13,11 +14,12 @@ namespace RaymapGame {
 
         // Management
         public void Reset() {
-            SetRule("");
-            OnStart();
             pos = startPos;
             rot = startRot;
             vel = Vector3.zero;
+            SetRule("");
+            DisableForSeconds(1.2f);
+            OnStart();
         }
         public void DisableForSeconds(float seconds) {
             velY = 0;
@@ -36,6 +38,56 @@ namespace RaymapGame {
             return default;
         }
 
+
+        //Clone a Perso -- by Shrooblord
+        static int counter;
+        public T Clone<T>(Vector3 offset, bool isAlways = false) where T : PersoController {
+            return (T)Clone(offset, typeof(T), isAlways);
+        }
+
+        /// <summary>
+        /// Create a copy of another Perso in the scene and potentially add custom behaviour to it.
+        /// @param Vector3 offset   offset from the to-be-cloned's position
+        /// @param bool [isAlways = false] Projectiles and the likes are "isAlways" objects. They do not have level loading and Sector data, but are always loaded.
+        /// @param Type [customContoller = null] Whether to add custom behaviour to this clone. Leave null to add the same behaviour as the original.
+        /// </summary>
+        public PersoController Clone(Vector3 offset, Type customController = null, bool isAlways = false) {
+            OpenSpace.Object.Perso clone;               //the clone to-be
+            OpenSpace.Object.Perso me = perso.perso;    //the template to clone from
+
+            //create perso descriptor
+            clone = new OpenSpace.Object.Perso(me.offset, me.SuperObject);  //SO will be null, but that's actually fine
+
+            clone.nameFamily = me.nameFamily;
+            clone.nameModel = me.nameModel;
+            clone.namePerso = me.namePerso + "_" + counter++;
+
+            clone.p3dData = me.p3dData;
+            clone.stdGame = me.stdGame;
+
+            clone.collset = me.collset.Clone(clone.Gao.transform);
+
+            Main.controller.initPersoCoreAndScripts(clone, isAlways);
+
+            PersoBehaviour pb = clone.Gao.GetComponent<PersoBehaviour>();
+
+            //give it a kiss
+            //pb.Init();
+
+            //pull it in close
+            if (pb.isLoaded)
+                clone.Gao.transform.position = pos + offset;
+
+            //finally, attach our original script to it so it functions like a boss; or the one the user provided
+            PersoController projectile;
+            if (customController != null) {
+                projectile = pb.gameObject.AddComponent(customController) as PersoController;
+            } else {
+                projectile = pb.gameObject.AddComponent(GetType()) as PersoController;
+            }
+
+            return projectile;
+        }
 
 
         // Visual
@@ -111,6 +163,10 @@ namespace RaymapGame {
         // Spacial
         public Vector3 forward
             => Matrix4x4.Rotate(rot).MultiplyVector(-Vector3.forward);
+        public Vector3 right
+            => Matrix4x4.Rotate(rot).MultiplyVector(-Vector3.right);
+        public Vector3 up
+            => Matrix4x4.Rotate(rot).MultiplyVector(Vector3.up);
         public float DistTo(Vector3 point)
             => Vector3.Distance(pos, point);
         public float DistTo2D(Vector3 point)
@@ -163,7 +219,7 @@ namespace RaymapGame {
 
         // Navigation
         public void NavDirection3D(Vector3 dir, bool tank = false) {
-            if (navRotYSpeed > 0) FaceDir2D(dir, navRotYSpeed);
+            if (navRotSpeed > 0) FaceDir2D(dir, navRotSpeed);
             var vec = tank ? forward : dir.normalized;
             velXZ += vec * fricXZ * moveSpeed * dt;
             velY += vec.y * fricY * moveSpeed * dt;
@@ -177,7 +233,7 @@ namespace RaymapGame {
         public void NavTowards(Vector3 target, bool tank = true)
             => NavTowards3D(new Vector3(target.x, pos.y, target.z), tank);
         public void NavForwards()
-            => NavTowards3D(pos - forward);
+            => NavTowards3D(pos + forward);
        
 
 
@@ -202,7 +258,7 @@ namespace RaymapGame {
             else return dist < ch.transform.localScale.magnitude;
         }
         public void NavToWaypoint(Waypoint wp) {
-            NavTowards(wp.pos);
+            NavTowards(wp.pos, false);
             waypoint = wp;
         }
 

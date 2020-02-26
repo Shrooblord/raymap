@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 // This script will allow you to mark -any- field as readonly with a single property attribute / property drawer. It's partially based on scottmontgomerie's answer.
 //This version also dispatches the property height based on how "expanded" the property is.
 //author: It3ration
@@ -25,3 +26,4 @@ public class ReadOnlyDrawer : PropertyDrawer {
         GUI.enabled = true;
     }
 }
+#endif

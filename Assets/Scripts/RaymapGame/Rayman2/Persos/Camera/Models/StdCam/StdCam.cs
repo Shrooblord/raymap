@@ -34,6 +34,8 @@ namespace RaymapGame.Rayman2.Persos {
 
 
         protected override void OnStart() {
+            if (Main.main.emptyLevel)
+                pos = Vector3.zero;
             col.wallEnabled = true;
             SetRule("Follow");
         }

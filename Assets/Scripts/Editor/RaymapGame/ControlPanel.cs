@@ -56,6 +56,34 @@ namespace RaymapGame {
         }
 
 
+
+        public static void ExportOBJ(int sector, int meshIndex) {
+            var mesh = GameObject.Find("Father Sector").transform
+                .GetChild(meshIndex)?.GetComponentsInChildren<MeshRenderer>();
+
+            string dir = $"Data/World/{Main.lvlName}/Sector{sector.ToString("00")}";
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            var obj = new StreamWriter($"{dir}/Mesh{meshIndex.ToString("00")}.obj");
+            obj.WriteLine($"# {Main.lvlName} -- Sector {sector} -- Mesh {meshIndex}");
+
+            for (int s = 0, i = 0; s < mesh.Length; s++) {
+                obj.WriteLine($"o SubMesh{s.ToString("00")}");
+                var m = mesh[s].GetComponent<MeshFilter>().sharedMesh;
+
+                foreach (var v in m.vertices)
+                    obj.WriteLine($"v {v.x} {v.z} {v.y}");
+                for (int t = 0; t < m.triangles.Length; t += 3)
+                    obj.WriteLine($"f {i++} {i++} {i++}");
+            }
+            obj.Close();
+        }
+
+
+
+
+
+
+
         static Timer t_error = new Timer();
 
         public static PersoBehaviour GetSelectedPersoBehaviour() {
@@ -123,45 +151,18 @@ namespace RaymapGame {
             GUILayout.EndHorizontal();
 
 
-
-            /*
-            Header("Perso Scripts");
-
+            Header("Geometry");
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Live Preview", GUILayout.Width(nameWidth));
-            if (GUILayout.Button("Reload Scripts")) {
-                Main.GetPersoScripts();
-            }
-            if (GUILayout.Button("Update Live Scene")) {
-                RescanLevel();
+            if (GUILayout.Button("Export Selected to OBJ (not working)")) {
+                if (Selection.activeObject.name.Contains("IPO "))
+                    ExportOBJ(
+                        Selection.activeGameObject.transform.parent.GetSiblingIndex(),
+                        Selection.activeGameObject.transform.GetSiblingIndex());
+                else
+                    Debug.LogError("Selection is not a sector mesh (\"IPO @ ...\").");
             }
             GUILayout.EndHorizontal();
-
-
-
-            float ind = 25;
-            int columns = Mathf.CeilToInt((Screen.width - ind) / 100);
-            float oWidth = Screen.width / columns;
-
-            foreach (var s in Main.persoScripts) {
-                int i = 0;
-                EditorGUILayout.ToggleLeft(s.Name, true);
-                foreach (var p in persos) {
-                    if (p.GetType() == s) {
-                        if (i == 0) {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Space(ind);
-                        }
-                        EditorGUILayout.ObjectField(p, typeof(PersoController), true, GUILayout.MaxWidth(oWidth));
-                        i++;
-                    }
-                    if (i > 0 && (i == columns || System.Array.IndexOf(persos, p) == persos.Length - 1)) {
-                        GUILayout.EndHorizontal();
-                        i = 0;
-                    }
-                }
-            }*/
         }
     }
 }

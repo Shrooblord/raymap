@@ -57,6 +57,11 @@ namespace OpenSpace.Visual {
 		public Color[] vertexColors = null;
 		public int lightmap_index = -1;
 
+		// R3 PS2
+		public Pointer off_sdc_mapping = null;
+		public ushort[] sdc_mapping;
+		public PS2OptimizedSDCStructureElement sdc = null;
+
         private SkinnedMeshRenderer OPT_s_mr = null;
         private SkinnedMeshRenderer s_mr = null;
         private Renderer OPT_mr = null;
@@ -85,6 +90,130 @@ namespace OpenSpace.Visual {
             this.offset = offset;
         }
 
+		private void CreateUnityMeshFromSDC() {
+			if (sdc.geo.Type == 6) {
+				// Just fill in things based on mapping
+				return;
+			}
+			BoneWeight[] new_boneWeights = null;
+			if (OPT_unityMesh != null) {
+				OPT_unityMesh = CopyMesh(OPT_unityMesh);
+			} else {
+				bool backfaceCulling = false;
+				int triangle_size = 3 * (int)(backfaceCulling ? 1 : 2);
+				if (sdc.geo.Type == 4 || sdc.geo.Type == 5 || sdc.geo.Type == 6) {
+					int[] triangles = new int[triangle_size * sdc.geo.num_triangles[sdc.index]];
+					OPT_unityMesh = new Mesh();
+					Vector3[] vertices = sdc.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
+					Array.Resize(ref vertices, (int)sdc.num_vertices_actual);
+					OPT_unityMesh.vertices = vertices;
+					new_boneWeights = geo.bones == null ? null : new BoneWeight[vertices.Length];
+					int currentTriInStrip = 0;
+					int triangleIndex = 0;
+					for (int v = 2; v < sdc.num_vertices_actual; v++) {
+						if (triangleIndex >= triangles.Length) MapLoader.Loader.print(offset + " - " + sdc.offset + " - " + sdc.geo.Type);
+						if (sdc.vertices[v].w == 1f) {
+							if ((currentTriInStrip) % 2 == 0) {
+								triangles[triangleIndex + 0] = v - 2;
+								triangles[triangleIndex + 1] = v - 1;
+								triangles[triangleIndex + 2] = v - 0;
+								if (!backfaceCulling) {
+									triangles[triangleIndex + 3] = v - 1;
+									triangles[triangleIndex + 4] = v - 2;
+									triangles[triangleIndex + 5] = v - 0;
+								}
+							} else {
+								triangles[triangleIndex + 0] = v - 1;
+								triangles[triangleIndex + 1] = v - 2;
+								triangles[triangleIndex + 2] = v - 0;
+								if (!backfaceCulling) {
+									triangles[triangleIndex + 3] = v - 2;
+									triangles[triangleIndex + 4] = v - 1;
+									triangles[triangleIndex + 5] = v - 0;
+								}
+							}
+							triangleIndex += triangle_size;
+							currentTriInStrip++;
+						} else {
+							currentTriInStrip = 0;
+						}
+					}
+
+					uint num_textures = Math.Max(1, visualMaterial.num_textures_in_material);
+					for (int t = 0; t < num_textures; t++) {
+						List<Vector3> uv = Enumerable.Range(0, vertices.Length).Select(v => sdc.GetUV(v, t)).ToList();
+						OPT_unityMesh.SetUVs(t, uv.ToArray());
+					}
+					/*Vector3[] normals = Enumerable.Range(0, vertices.Length).Select(i => sdc.GetNormal(i)).ToArray();
+					OPT_unityMesh.normals = normals;*/
+					/*for (int i = 0; i < normals.Length; i++) {
+						GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+						g.transform.position = vertices[i] + normals[i];
+						g.transform.localScale = Vector3.one * 0.2f;
+					}*/
+					Vector4[] colors = Enumerable.Range(0, vertices.Length).Select(i => sdc.GetColor(i)).ToArray();
+					OPT_unityMesh.SetUVs((int)num_textures, colors);
+					OPT_unityMesh.RecalculateNormals();
+					/*m.triangles = Enumerable.Range(0, sdcEl.vertices.Length).ToArray();
+					Debug.LogWarning(sdcEl.offset + " - " + sdc.Type + " - " + (m.triangles.Length / 3) + " - " + (m.triangles.Length % 3) + " - " + sdc.num_triangles[sdcIndex]);
+					*/
+					OPT_unityMesh.triangles = triangles;
+					//m.uv = sdcEl.uvUnoptimized.Select(uv => new Vector2(uv.u, uv.v)).ToArray();
+					//m.uv = 
+					//OPT_unityMesh.RecalculateNormals();
+				} else {
+					OPT_unityMesh = new Mesh();
+					Vector3[] vertices = sdc.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
+					OPT_unityMesh.vertices = vertices;
+					OPT_unityMesh.triangles = Enumerable.Range(0, vertices.Length).ToArray();
+					uint num_textures = Math.Max(1, visualMaterial.num_textures_in_material);
+					for (int t = 0; t < num_textures; t++) {
+						List<Vector3> uv = Enumerable.Range(0, vertices.Length).Select(v => sdc.GetUV(v, t)).ToList();
+						OPT_unityMesh.SetUVs(t, uv.ToArray());
+					}
+					Vector4[] colors = Enumerable.Range(0, vertices.Length).Select(i => sdc.GetColor(i)).ToArray();
+					OPT_unityMesh.SetUVs((int)num_textures, colors);
+					OPT_unityMesh.RecalculateNormals();
+					//m.uv = 
+					//OPT_unityMesh.RecalculateNormals();
+				}
+
+				if (new_boneWeights != null) {
+					OPT_unityMesh.boneWeights = new_boneWeights;
+					OPT_unityMesh.bindposes = geo.bones.bindPoses;
+				}
+			}
+			GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
+			if (OPT_gao != gao) {
+				OPT_gao.transform.SetParent(gao.transform);
+			} else {
+				gao.name = "[Optimized] " + gao.name;
+				gao.name += " - " + sdc.offset;
+			}
+			if (geo.bones != null) {
+				OPT_mr = OPT_gao.AddComponent<SkinnedMeshRenderer>();
+				OPT_s_mr = (SkinnedMeshRenderer)OPT_mr;
+				OPT_s_mr.bones = geo.bones.bones;
+				OPT_s_mr.rootBone = geo.bones.bones[0];
+				OPT_s_mr.sharedMesh = CopyMesh(OPT_unityMesh);
+
+				BoxCollider bc = OPT_gao.AddComponent<BoxCollider>();
+				bc.center = OPT_s_mr.bounds.center;
+				bc.size = OPT_s_mr.bounds.size;
+			} else {
+				MeshFilter mf = OPT_gao.AddComponent<MeshFilter>();
+				mf.sharedMesh = OPT_unityMesh;
+				OPT_mr = OPT_gao.AddComponent<MeshRenderer>();
+
+				try {
+					MeshCollider mc = OPT_gao.AddComponent<MeshCollider>();
+					mc.isTrigger = false;
+					//mc.cookingOptions = MeshColliderCookingOptions.None;
+					//mc.sharedMesh = OPT_unityMesh;
+				} catch (Exception) { }
+			}
+		}
+
         private void CreateUnityMesh() {
             /*if (mesh.bones != null) {
                 for (int j = 0; j < mesh.bones.num_bones; j++) {
@@ -98,14 +227,16 @@ namespace OpenSpace.Visual {
             uint num_textures = 0;
             if (visualMaterial != null) {
                 num_textures = visualMaterial.num_textures;
-            }
-
+			}
 			uint triangle_size = 3 * (uint)(backfaceCulling ? 1 : 2);
+
+			if (sdc != null) {
+				CreateUnityMeshFromSDC();
+			}
 
 
 			// Create mesh from unoptimized data
-			if (num_triangles > 0) {
-				uint triangles_index = 0;
+			if ((sdc == null || sdc.geo.Type == 6) && num_triangles > 0) {
 				Vector3[] new_vertices = new Vector3[num_triangles * 3];
 				Vector3[] new_normals = new Vector3[num_triangles * 3];
 				Vector3[][] new_uvs = new Vector3[num_textures][];
@@ -114,7 +245,6 @@ namespace OpenSpace.Visual {
 					new_uvs[um] = new Vector3[num_triangles * 3];
 				}
 				int[] unityTriangles = new int[num_triangles * triangle_size];
-				triangles_index = 0;
 				for (int um = 0; um < num_textures; um++) {
 					for (int j = 0; j < num_triangles * 3; j++) {
 						uint uvMap = (uint)visualMaterial.textures[um].uvFunction % num_uvMaps;
@@ -132,6 +262,7 @@ namespace OpenSpace.Visual {
 					}
 				}
 				//print("Loading disconnected triangles at " + String.Format("0x{0:X}", fs.Position));
+				uint triangles_index = 0;
 				for (int j = 0; j < num_triangles; j++, triangles_index += triangle_size) {
 					int i0 = triangles[(j * 3) + 0], m0 = (j * 3) + 0; // Old index, mapped index
 					int i1 = triangles[(j * 3) + 1], m1 = (j * 3) + 1;
@@ -219,7 +350,7 @@ namespace OpenSpace.Visual {
 
 			// Create mesh from optimized data
 			long OPT_num_triangles_total = ((OPT_num_triangleStrip > 2 ? OPT_num_triangleStrip - 2 : 0) + OPT_num_disconnectedTriangles) * (backfaceCulling ? 1 : 2);
-            if (OPT_num_triangles_total > 0 && num_triangles <= 0) {
+            if (sdc == null && OPT_num_triangles_total > 0 && num_triangles <= 0) {
 				uint triangles_index = 0;
 				Vector3[] new_vertices = new Vector3[OPT_num_mapping_entries];
                 Vector3[] new_normals = new Vector3[OPT_num_mapping_entries];
@@ -330,7 +461,7 @@ namespace OpenSpace.Visual {
             if (visualMaterial != null) {
                 //gao.name += " " + visualMaterial.offset + " - " + (visualMaterial.textures.Count > 0 ? visualMaterial.textures[0].offset.ToString() : "NULL" );
                 Material unityMat = visualMaterial.GetMaterial(materialHints);
-				if (vertexColors != null & unityMat != null) unityMat.SetVector("_Tex2Params", new Vector4(60, 0, 0, 0));
+				if (((sdc != null && sdc.geo.Type != 6) || vertexColors != null) && unityMat != null) unityMat.SetVector("_Tex2Params", new Vector4(60, 0, 0, 0));
                 bool receiveShadows = (visualMaterial.properties & VisualMaterial.property_receiveShadows) != 0;
                 bool scroll = visualMaterial.ScrollingEnabled;
                 /*if (num_uvMaps > 1) {
@@ -469,8 +600,21 @@ namespace OpenSpace.Visual {
 					sm.num_mapping_lightmap = reader.ReadUInt16();
 					reader.ReadUInt16();
 				} else if (Settings.s.engineVersion == Settings.EngineVersion.R3) {
-					reader.ReadUInt32();
-					reader.ReadUInt32();
+					if (Settings.s.platform != Settings.Platform.PS2) {
+						reader.ReadUInt32();
+						reader.ReadUInt32();
+					} else {
+						// PS2
+						reader.ReadUInt32();
+						sm.off_sdc_mapping = Pointer.Read(reader);
+						Pointer.DoAt(ref reader, sm.off_sdc_mapping, () => {
+							uint length = reader.ReadUInt32();
+							sm.sdc_mapping = new ushort[length];
+							for (int i = 0; i < length; i++) {
+								sm.sdc_mapping[i] = reader.ReadUInt16();
+							}
+						});
+					}
 				} else if (Settings.s.engineVersion == Settings.EngineVersion.Montreal) {
 					reader.ReadUInt32();
 				}
@@ -497,10 +641,6 @@ namespace OpenSpace.Visual {
 					sm.OPT_off_disconnectedTriangles = Pointer.Read(reader);
 					if (Settings.s.hasNames) sm.name += reader.ReadString(0x34);
 				} else if(Settings.s.platform == Settings.Platform.PS2) {
-					sm.OPT_off_mapping_vertices = Pointer.Read(reader); // shorts_offset1 (1st array of size num_shorts, max_num_vertices)
-					sm.OPT_num_mapping_entries = reader.ReadUInt16(); // num_shorts
-					reader.ReadUInt16();
-					reader.ReadUInt32();
 					reader.ReadUInt32();
 					sm.isVisibleInPortal = reader.ReadByte();
 					reader.ReadByte();
@@ -509,6 +649,8 @@ namespace OpenSpace.Visual {
 					reader.ReadUInt32();
 					reader.ReadUInt32();
 					reader.ReadUInt32();
+					sm.OPT_num_mapping_entries = 0;
+					sm.OPT_off_mapping_vertices = null;
 					sm.OPT_off_mapping_uvs = null;
 					sm.OPT_num_triangleStrip = 0;
 					sm.OPT_num_disconnectedTriangles = 0;
