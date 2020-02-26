@@ -119,7 +119,7 @@ namespace RaymapGame.Rayman2.Persos {
                 Despawn();
 
             if (iShootDown) {
-                shot = GetPerso("Alw_Projectile_Rayman");
+                shot = GetPerso<Alw_Projectile_Rayman_Model>();
                 shot.SetRule("Shoot");
             }
 

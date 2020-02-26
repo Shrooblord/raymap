@@ -58,7 +58,7 @@ namespace RaymapGame {
 
 
         public static void ExportOBJ(int sector, int meshIndex) {
-            var mesh = Main.controller.sectorManager.sectors[sector]?.transform
+            var mesh = GameObject.Find("Father Sector").transform
                 .GetChild(meshIndex)?.GetComponentsInChildren<MeshRenderer>();
 
             string dir = $"Data/World/{Main.lvlName}/Sector{sector.ToString("00")}";
@@ -71,9 +71,9 @@ namespace RaymapGame {
                 var m = mesh[s].GetComponent<MeshFilter>().sharedMesh;
 
                 foreach (var v in m.vertices)
-                    obj.WriteLine($"v: {v.x} {v.z} {v.y}");
+                    obj.WriteLine($"v {v.x} {v.z} {v.y}");
                 for (int t = 0; t < m.triangles.Length; t += 3)
-                    obj.WriteLine($"f: {i++} {i++} {i++}");
+                    obj.WriteLine($"f {i++} {i++} {i++}");
             }
             obj.Close();
         }
@@ -154,11 +154,15 @@ namespace RaymapGame {
             Header("Geometry");
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Export Selected to OBJ")) {
-                ExportOBJ(
-                    Selection.activeGameObject.transform.parent.GetSiblingIndex(),
-                    Selection.activeGameObject.transform.GetSiblingIndex());
+            if (GUILayout.Button("Export Selected to OBJ (not working)")) {
+                if (Selection.activeObject.name.Contains("IPO "))
+                    ExportOBJ(
+                        Selection.activeGameObject.transform.parent.GetSiblingIndex(),
+                        Selection.activeGameObject.transform.GetSiblingIndex());
+                else
+                    Debug.LogError("Selection is not a sector mesh (\"IPO @ ...\").");
             }
+            GUILayout.EndHorizontal();
         }
     }
 }

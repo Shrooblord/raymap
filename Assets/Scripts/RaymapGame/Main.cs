@@ -41,8 +41,8 @@ namespace RaymapGame
 
         public static Type[] GetPersoScripts() {
             return persoScripts = (from t in System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
-                            where t.IsClass && t.Namespace == $"RaymapGame.{gameName}.Persos" && !t.IsAbstract
-                            select t).ToArray();
+            where t.IsClass && t.Namespace == $"{nameof(RaymapGame)}.{gameName}.Persos" && !t.IsAbstract
+            select t).ToArray();
         }
 
 
@@ -100,8 +100,7 @@ namespace RaymapGame
 
             // Find the player Rayman perso and set as Main Actor
             if (mainActor == null)
-                //SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("YLT_RaymanModel"));
-                SetMainActor(rayman = (YLT_RaymanModel)PersoController.GetPerso("YLT_RaymanModel"));
+                SetMainActor(rayman = PersoController.GetPerso<YLT_RaymanModel>());
 
 
                 onLoad.Invoke(this, EventArgs.Empty);
@@ -124,10 +123,6 @@ namespace RaymapGame
                     Destroy(t.gameObject);
             }
             GameObject.Find("Father Sector").SetActive(false);
-            /*foreach (Transform t in GameObject.Find("Father Sector").transform) {
-                t.gameObject.SetActive(false);
-            }*/
-
             anyCollision = true;
         }
     }

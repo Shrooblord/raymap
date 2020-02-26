@@ -177,7 +177,7 @@ namespace RaymapGame {
         public void NavTowards(Vector3 target, bool tank = true)
             => NavTowards3D(new Vector3(target.x, pos.y, target.z), tank);
         public void NavForwards()
-            => NavTowards3D(pos - forward);
+            => NavTowards3D(pos + forward);
        
 
 
@@ -202,7 +202,7 @@ namespace RaymapGame {
             else return dist < ch.transform.localScale.magnitude;
         }
         public void NavToWaypoint(Waypoint wp) {
-            NavTowards(wp.pos);
+            NavTowards(wp.pos, false);
             waypoint = wp;
         }
 
