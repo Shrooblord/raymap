@@ -13,7 +13,7 @@ namespace RaymapGame.Rayman2.Persos {
     public partial class RayMagicFist : Alw_Projectile_Rayman_Model {
         Timer StartDieTimer = new Timer();
         protected override void OnStart() {
-            pos = rayman.pos;
+            //pos = rayman.pos;
             rot = rayman.rot;
             moveSpeed = 23;
             SetFriction(100, 100);
@@ -29,7 +29,7 @@ namespace RaymapGame.Rayman2.Persos {
         }
 
         protected void Rule_Weakening() {
-            if (newRule) anim.Set(0);
+            if (newRule) anim.Set(1);
             NavForwards();
         }
 

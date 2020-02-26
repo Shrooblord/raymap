@@ -39,7 +39,8 @@ namespace RaymapGame.Rayman2.Persos {
         protected override void OnDebug() {
             DebugLabel("Helic Active", helic);
             DebugLabel("Has Super Helic", hasSuperHelic);
-            DebugLabel("Cam rule", cam.rule);
+            if (cam != null)
+                DebugLabel("Cam rule", cam.rule);
         }
 
         public override float activeRadius => 100000;
@@ -122,7 +123,7 @@ namespace RaymapGame.Rayman2.Persos {
 
             if (iShootDown) {
                 PersoController proj = GetPerso("Alw_Projectile_Rayman_Model").Clone<RayMagicFist>(Vector3.zero, true);
-                proj.pos = right + new Vector3(0, 0.5f, 0);
+                proj.pos += new Vector3(100, 100f, 0); //right + new Vector3(0, 0.5f, 0);
             }
 
 

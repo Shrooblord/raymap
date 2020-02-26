@@ -20,16 +20,18 @@ namespace RaymapGame {
             foreach (var m in GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(x => !x.IsPublic && x.Name.StartsWith("Rule_")))
                 rules.Add(m.Name.Replace("Rule_", ""), m);
-        }
 
-        protected void Start() {
+            //position and setup
             col.controller = this;
             pos = transform.position;
             rot = transform.rotation;
             startPos = pos;
             startRot = rot;
+
             OnStart();
         }
+
+        protected void Start() {}
 
         bool ActiveChecks() => t_disable.active
             //|| outOfSector
