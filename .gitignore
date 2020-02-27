@@ -4,7 +4,10 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
-/vendor/
+vendor
+vendor/
+bin
+bin/
 
 # Visual Studio 2015 cache directory
 /.vs/
