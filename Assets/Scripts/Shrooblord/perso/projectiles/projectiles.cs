@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 namespace RaymapGame.Rayman2.Persos {
     /// <summary>
     /// Magic Fist
@@ -20,3 +21,4 @@ namespace RaymapGame.Rayman2.Persos {
 		}
     }
 }
+*/
