@@ -93,7 +93,7 @@ public class Controller : MonoBehaviour {
 			}
 		}
 #else
-        var file = new System.IO.StreamReader("settings.ini");
+        var file = new System.IO.StreamReader("../settings.ini");
         while (!file.EndOfStream) {
             var line = file.ReadLine().Split('=');
             switch (line[0]) {
