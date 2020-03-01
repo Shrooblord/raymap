@@ -17,10 +17,12 @@ namespace OpenSpace {
 			[Description("Rayman 2 (N64)")] Rayman2N64,
 			[Description("Rayman 2 (DS)")] Rayman2DS,
 			[Description("Rayman 2 (3DS)")] Rayman23DS,
-			[Description("Rayman 2 Demo 1 (PC)")] Rayman2PCDemo1,
-			[Description("Rayman 2 Demo 2 (PC)")] Rayman2PCDemo2,
+			[Description("R2 (PC) Demo 1 (1999/08/19)")] Rayman2PCDemo1,
+			[Description("R2 (PC) Demo 2 (1999/09/11)")] Rayman2PCDemo2,
 			[Description("Rayman M (PC)")] RaymanMPC,
+			[Description("Rayman M (PS2)")] RaymanMPS2,
 			[Description("Rayman Arena (PC)")] RaymanArenaPC,
+			[Description("Rayman Arena (PS2)")] RaymanArenaPS2,
 			[Description("Rayman Arena (GC)")] RaymanArenaGC,
 			[Description("Rayman Arena Demo (GC)")] RaymanArenaGCDemo,
 			[Description("Rayman Arena (Xbox)")] RaymanArenaXbox,
@@ -28,6 +30,10 @@ namespace OpenSpace {
 			[Description("Rayman 3 (PC)")] Rayman3PC,
 			[Description("Rayman 3 (GC)")] Rayman3GC,
 			[Description("Rayman 3 (PS2)")] Rayman3PS2,
+			[Description("R3 (PS2) Demo (2002/08/07)")] Rayman3PS2Demo_2002_08_07,
+			[Description("R3 (PS2) Dev Build (2002/09/06)")] Rayman3PS2DevBuild,
+			[Description("R3 (PS2) Demo (2002/10/29)")] Rayman3PS2Demo_2002_10_29,
+			[Description("R3 (PS2) Demo (2002/12/18)")] Rayman3PS2Demo_2002_12_18,
 			[Description("Rayman 3 (Xbox)")] Rayman3Xbox,
 			[Description("Rayman 3 (Xbox 360)")] Rayman3Xbox360,
 			[Description("Rayman 3 (PS3)")] Rayman3PS3,
@@ -50,13 +56,19 @@ namespace OpenSpace {
 			{ "r3_gc", Mode.Rayman3GC },
 			{ "r3_pc", Mode.Rayman3PC },
 			{ "r3_ps2", Mode.Rayman3PS2 },
+			{ "r3_demo_ps2_20020807", Mode.Rayman3PS2Demo_2002_08_07 },
+			{ "r3_devbuild_ps2", Mode.Rayman3PS2DevBuild },
+			{ "r3_demo_ps2_20021029", Mode.Rayman3PS2Demo_2002_10_29 },
+			{ "r3_demo_ps2_20021218", Mode.Rayman3PS2Demo_2002_12_18 },
 			{ "r3_xbox", Mode.Rayman3Xbox },
 			{ "r3_xbox360", Mode.Rayman3Xbox360 },
 			{ "r3_ps3", Mode.Rayman3PS3 },
 			{ "ra_gc", Mode.RaymanArenaGC },
 			{ "ra_demo_gc", Mode.RaymanArenaGCDemo },
 			{ "ra_xbox", Mode.RaymanArenaXbox },
+			{ "ra_ps2", Mode.RaymanArenaPS2 },
 			{ "ra_pc", Mode.RaymanArenaPC },
+			{ "rm_ps2", Mode.RaymanMPS2 },
 			{ "rm_pc", Mode.RaymanMPC },
 			{ "r2_pc", Mode.Rayman2PC },
 			{ "r2_dc", Mode.Rayman2DC },
@@ -214,9 +226,72 @@ namespace OpenSpace {
 			luminosity = 0.5f,
 			saturate = false,
 			caps = new Dictionary<CapsType, Caps>() {
-				{ CapsType.LevelFile, Caps.None },
-				{ CapsType.Fix, Caps.None },
-				{ CapsType.TextureFile, Caps.Normal },
+				{ CapsType.All, Caps.All }
+			},
+		};
+		public static Settings R3PS2Demo_20020807 = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.R3,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			hasMemorySupport = false,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
+			},
+		};
+		public static Settings R3PS2DevBuild = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.R3,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			hasMemorySupport = false,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
+			},
+		};
+		public static Settings R3PS2Demo_20021029 = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.R3,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			hasMemorySupport = false,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
+			},
+		};
+		public static Settings R3PS2Demo_20021218 = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.R3,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			hasMemorySupport = false,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			hasNames = true,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
 			},
 		};
 		public static Settings R3Xbox = new Settings() {
@@ -293,6 +368,21 @@ namespace OpenSpace {
 				{ CapsType.TextureFile, Caps.Normal },
 			},
 		};
+		public static Settings RMPS2 = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.RM,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
+			},
+		};
 		public static Settings RAPC = new Settings() {
             engineVersion = EngineVersion.R3,
             game = Game.RA,
@@ -310,7 +400,22 @@ namespace OpenSpace {
 				{ CapsType.TextureFile, Caps.Normal },
 			},
 		};
-        public static Settings RAGC = new Settings() {
+		public static Settings RAPS2 = new Settings() {
+			engineVersion = EngineVersion.R3,
+			game = Game.RA,
+			platform = Platform.PS2,
+			endian = Endian.Little,
+			linkedListType = LinkedListType.Minimize,
+			hasDeformations = true,
+			aiTypes = AITypes.R3,
+			textureAnimationSpeedModifier = 10f,
+			luminosity = 0.5f,
+			saturate = false,
+			caps = new Dictionary<CapsType, Caps>() {
+				{ CapsType.All, Caps.All }
+			},
+		};
+		public static Settings RAGC = new Settings() {
             engineVersion = EngineVersion.R3,
             game = Game.RA,
             platform = Platform.GC,
@@ -756,7 +861,9 @@ namespace OpenSpace {
 			{ Mode.Rayman2PCDemo1, R2PCDemo1 },
 			{ Mode.Rayman2PCDemo2, R2PCDemo2 },
 			{ Mode.RaymanMPC, RMPC },
+			{ Mode.RaymanMPS2, RMPS2 },
 			{ Mode.RaymanArenaPC, RAPC },
+			{ Mode.RaymanArenaPS2, RAPS2 },
 			{ Mode.RaymanArenaGC, RAGC },
 			{ Mode.RaymanArenaGCDemo, RAGCDemo },
 			{ Mode.RaymanArenaXbox, RAXbox },
@@ -764,6 +871,10 @@ namespace OpenSpace {
 			{ Mode.Rayman3PC, R3PC },
 			{ Mode.Rayman3GC, R3GC },
 			{ Mode.Rayman3PS2, R3PS2 },
+			{ Mode.Rayman3PS2Demo_2002_08_07, R3PS2Demo_20020807 },
+			{ Mode.Rayman3PS2DevBuild, R3PS2DevBuild },
+			{ Mode.Rayman3PS2Demo_2002_10_29, R3PS2Demo_20021029 },
+			{ Mode.Rayman3PS2Demo_2002_12_18, R3PS2Demo_20021218 },
 			{ Mode.Rayman3Xbox, R3Xbox },
 			{ Mode.Rayman3Xbox360, R3Xbox360 },
 			{ Mode.Rayman3PS3, R3PS3 },
