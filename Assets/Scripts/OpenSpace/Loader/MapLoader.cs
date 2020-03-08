@@ -421,7 +421,7 @@ MonoBehaviour.print(str);
             string ptrPath = path + ".ptr";
             if (FileSystem.FileExists(lvlPath)) {
                 Array.Resize(ref files_array, files_array.Length + 1);
-                LVL lvl = new LVL(lvlName, lvlPath, id);
+				LVL lvl = new LVL(lvlName, lvlPath, id);
                 files_array[files_array.Length - 1] = lvl;
                 if (FileSystem.FileExists(ptrPath)) {
                     lvl.ReadPTR(ptrPath);
@@ -656,7 +656,10 @@ MonoBehaviour.print(str);
 				} else if (Settings.s.platform == Settings.Platform.PS2) {
 					Dictionary<uint, int> texturesSeenFile = new Dictionary<uint, int>();
 					bool hasNames = (Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.RA);
-					TBF fixTBF = new TBF(paths["fix.tbf"], hasNames: hasNames);
+					TBF fixTBF = null;
+					if (FileSystem.FileExists(paths["fix.tbf"])) {
+						fixTBF = new TBF(paths["fix.tbf"], hasNames: hasNames);
+					}
 
 					for (int i = 0; i < num_textures; i++) {
 						uint file_texture = reader.ReadUInt32();
@@ -665,20 +668,27 @@ MonoBehaviour.print(str);
 							texturesSeenFile[file_texture] = 0;
 						}
 						//string type = "";
-						Texture2D tex = null;
-						if (file_texture == 0) {
-							if (hasNames) {
-								tex = fixTBF.GetTextureByName(textures[i].name);
-							} else {
-								tex = fixTBF.textures[i];
+						if (fixTBF != null) {
+							Texture2D tex = null;
+							if (file_texture == 0) {
+								if (hasNames) {
+									tex = fixTBF.GetTextureByName(textures[i].name);
+								} else {
+									tex = fixTBF.textures[i];
+								}
+								//type = string.Format("{0:X4}", fixTBF.headers[i].flags);
 							}
-							//type = string.Format("{0:X4}", fixTBF.headers[i].flags);
+							if (exportTextures && !hasNames) {
+								Util.ByteArrayToFile(gameDataBinFolder + "textures/" + /*type + "/" +*/ textures[i].name.Substring(0, textures[i].name.LastIndexOf('.')) + ".png", tex.EncodeToPNG());
+							}
+							textures[i].Texture = tex;
+							texturesSeenFile[file_texture]++;
 						}
-						if (exportTextures) {
-							Util.ByteArrayToFile(gameDataBinFolder + "textures/" + /*type + "/" +*/ textures[i].name.Substring(0, textures[i].name.LastIndexOf('.')) + ".png", tex.EncodeToPNG());
+					}
+					if (exportTextures && hasNames && fixTBF != null) {
+						for (int i = 0; i < fixTBF.Count; i++) {
+							Util.ByteArrayToFile(gameDataBinFolder + "textures/" + /*type + "/" +*/ fixTBF.headers[i].name.ToLower().Substring(0, fixTBF.headers[i].name.LastIndexOf('.')) + ".png", fixTBF.headers[i].texture.EncodeToPNG());
 						}
-						textures[i].Texture = tex;
-						texturesSeenFile[file_texture]++;
 					}
 				} else if(Settings.s.platform == Settings.Platform.PS3) {
 					Dictionary<uint, int> texturesSeenFile = new Dictionary<uint, int>();
@@ -743,13 +753,16 @@ MonoBehaviour.print(str);
                 num_textures_lvl = reader.ReadUInt32();
                 num_textures_total = num_textures_fix + num_textures_lvl;
             } else {
-				if (Settings.s.platform == Settings.Platform.PS2) {
+				if (Settings.s.platform == Settings.Platform.PS2
+					&& (Settings.s.game == Settings.Game.R3
+					|| Settings.s.game == Settings.Game.DDPK)) {
 					num_textures_lvl = reader.ReadUInt32();
 					num_textures_fix = (uint)textures.Length;
 					num_textures_total = num_textures_fix + num_textures_lvl;
 				} else {
-					num_textures_total = Settings.s.platform == Settings.Platform.GC ? reader.ReadUInt32() : 1024;
-					num_textures_fix = Settings.s.platform == Settings.Platform.GC ? (uint)textures.Length : reader.ReadUInt32();
+					bool readTotal = (Settings.s.platform == Settings.Platform.GC || Settings.s.platform == Settings.Platform.PS2);
+					num_textures_total = readTotal ? reader.ReadUInt32() : 1024;
+					num_textures_fix = readTotal ? (uint)textures.Length : reader.ReadUInt32();
 					num_textures_lvl = num_textures_total - num_textures_fix;
 				}
             }
@@ -845,11 +858,20 @@ MonoBehaviour.print(str);
 			} else if (Settings.s.platform == Settings.Platform.PS2) {
 				// Load textures from TPL
 				TBF fixTBF = null;
+
+				bool hasNames = (Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.RA);
 				TBF lvlTBF = new TBF(paths["lvl.tbf"]);
 				TBF transitTBF = hasTransit ? new TBF(paths["transit.tbf"]) : null;
 				print("Lvl TBF Texture count: " + lvlTBF.Count);
 				if (hasTransit) print("Transit TBF Texture count: " + transitTBF.Count);
 				Dictionary<uint, int> texturesSeenFile = new Dictionary<uint, int>();
+				if (Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.RA) {
+					for (uint i = 0; i < num_textures_fix; i++) {
+						Texture2D tex = lvlTBF.textures[i];
+						textures[i].Texture = tex;
+					}
+					texturesSeenFile[2] = (int)num_textures_fix;
+				}
 				for (uint i = num_textures_fix; i < num_textures_total; i++) {
 					uint file_texture = reader.ReadUInt32();
 					if (file_texture == 0xC0DE2005 || textures[i] == null) continue; // texture is undefined
@@ -859,10 +881,14 @@ MonoBehaviour.print(str);
 					Texture2D tex = null;
 					//string type = "";
 					if (file_texture == 0) {
-						if (fixTBF == null) fixTBF = new TBF(paths["fix.tbf"]);
-						tex = fixTBF.textures[(int)num_textures_fix + texturesSeenFile[file_texture]];
+						if (fixTBF == null) fixTBF = new TBF(paths["fix.tbf"], hasNames: hasNames);
+						if (hasNames) {
+							tex = fixTBF.GetTextureByName(textures[i].name);
+						} else {
+							tex = fixTBF.textures[(int)num_textures_fix + texturesSeenFile[file_texture]];
+						}
 						//type = string.Format("{0:X4}", fixTBF.headers[(int)num_textures_fix + texturesSeenFile[file_texture]].flags);
-						if (Settings.s.game == Settings.Game.RA) {
+						if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 							if (!texturesSeenFile.ContainsKey(2)) texturesSeenFile[2] = 0;
 							texturesSeenFile[2]++;
 						}

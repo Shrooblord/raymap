@@ -61,7 +61,7 @@ namespace OpenSpace.Visual.PS2Optimized {
 			for (int i = 0; i < num_vertices; i++) {
 				vertices[i] = new Vertex(reader);
 			}
-			if (geo.Type == 1) {
+			if (geo.Type == 1 && Settings.s.game == Settings.Game.R3) {
 				uvUnoptimized = new UVUnoptimized[num_vertices];
 				for (int i = 0; i < uvUnoptimized.Length; i++) {
 					uvUnoptimized[i] = new UVUnoptimized(reader);
@@ -119,7 +119,7 @@ namespace OpenSpace.Visual.PS2Optimized {
 
 		public Vector3 GetUV(int index, int texIndex, bool applyBlendWeight) {
 			Vector3 baseUV = Vector3.zero;
-			if (geo.Type == 1) {
+			if (geo.Type == 1 && Settings.s.game == Settings.Game.R3) {
 				baseUV = new Vector3(uvUnoptimized[index].u, uvUnoptimized[index].v, 1f);
 			} else {
 				byte uvFunction = 0;
@@ -148,6 +148,12 @@ namespace OpenSpace.Visual.PS2Optimized {
 		public Vector4 GetColor(int index) {
 			if (colors != null && colors.Length > 0) {
 				return GetColor(0, index).Color;
+				/*Vector4 currentCol = Vector4.one;
+				for (int i = 0; i < colors.Length; i++) {
+					Vector4 col = GetColor(i, index).ColorAndAlpha;
+					if (i == 0 || col.w > 0) currentCol = new Vector4(col.x, col.y, col.z, 1f);
+				}
+				return currentCol;*/
 			}
 			return Vector4.one;
 		}
@@ -274,6 +280,11 @@ namespace OpenSpace.Visual.PS2Optimized {
 				public Vector4 Color {
 					get {
 						return new Vector4(r / 127f, g / 127f, b / 127f, 1f);
+					}
+				}
+				public Vector4 ColorAndAlpha {
+					get {
+						return new Vector4(r / 127f, g / 127f, b / 127f, a / 0x80);
 					}
 				}
 			}
