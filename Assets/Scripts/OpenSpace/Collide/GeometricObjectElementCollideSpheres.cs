@@ -47,6 +47,10 @@ namespace OpenSpace.Collide {
                 sphere_gao.transform.SetParent(gao.transform);
                 MeshFilter mf = sphere_gao.GetComponent<MeshFilter>();
                 MeshRenderer mr = sphere_gao.GetComponent<MeshRenderer>();
+                CollideComponent cc = sphere_gao.AddComponent<CollideComponent>();
+                cc.collide = this;
+                cc.type = geo.type;
+                cc.index = (int)i;
                 //MonoBehaviour.Destroy(sphere_gao.GetComponent<SphereCollider>());
                 sphere_gao.transform.localPosition = geo.vertices[spheres[i].centerPoint];
                 sphere_gao.transform.localScale = Vector3.one * spheres[i].radius * 2; // default Unity sphere radius is 0.5
@@ -124,6 +128,11 @@ namespace OpenSpace.Collide {
             sm.geo = mesh;
             sm.Reset();
             return sm;
+        }
+
+        public GameMaterial GetMaterial(int? index) {
+            if (!index.HasValue) return null;
+            return spheres[index.Value].gameMaterial;
         }
     }
 }
